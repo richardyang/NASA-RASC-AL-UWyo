@@ -1,0 +1,6 @@
+<launch>
+	<node name="Servo" pkg="PhidgetServo" type="PhidgetServo" />
+        <node name="Driver" pkg="RO_Driver" type="RO_Driver" />
+	<node name="RO_Joy" pkg="RO_Joy" type="RO_Joy" />
+	<node name="RO_Arm" pkg="RO_Arm" type="ArmDriver" />
+</launch>

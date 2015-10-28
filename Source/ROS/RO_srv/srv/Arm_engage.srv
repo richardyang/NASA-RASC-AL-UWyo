@@ -1,0 +1,3 @@
+bool state
+---
+int32 error

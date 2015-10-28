@@ -1,0 +1,18 @@
+<package>
+  <description brief="RO_Arm">
+
+     RO_Arm
+
+  </description>
+  <author>carter</author>
+  <license>BSD</license>
+  <review status="unreviewed" notes=""/>
+  <url>http://ros.org/wiki/RO_Arm</url>
+  <depend package="roscpp"/>
+  <depend package="PhidgetServo"/>
+  <depend package="corobot_msgs"/>
+  <depend package="corobot_srvs"/>
+  <depend package="RO_srv"/>
+</package>
+
+
