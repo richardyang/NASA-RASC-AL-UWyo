@@ -10,7 +10,7 @@ Author -- John Ross Petrutiu
 #####################
 
   PIN #   |   COMPONENT
- ----------+----------------------
+ ---------+----------------------
     3     |   Rear Servo
     5     |   Front Servos (BOTH SERVOS)
     6     |   Arm - BASE
