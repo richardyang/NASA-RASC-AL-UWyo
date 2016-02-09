@@ -1,0 +1,11 @@
+
+To pull changes from Github: 
+  $ cd /path/to/your/local/RoboOps-Senior-Design
+  $ git pull
+
+
+To push changes to Github:
+  $ cd /path/to/your/local/RoboOps-Senior-Design
+  $ git add --all .
+  $ git commit -m "Brief description of your commit"
+  $ git push origin master
