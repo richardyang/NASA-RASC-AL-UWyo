@@ -23,6 +23,7 @@ There are 3 Channels the Arduino will listen to:
 
 
   === "arm_cmd" message array indexes ===
+
     [Controls Arm Servos]
     +-------+-----------------------------+
     | INDEX | DESCRIPTION                 |
@@ -33,7 +34,9 @@ There are 3 Channels the Arduino will listen to:
     |   3   | Servo - Arm Wrist           |
     +-------+-----------------------------+
 
+
   === "drive_steer" message array indexes ===
+
     [Controls Drive Servos]
     +-------+-----------------------------+
     | INDEX | DESCRIPTION                 |
@@ -42,7 +45,9 @@ There are 3 Channels the Arduino will listen to:
     |   1   | Servo - Front Wheels (BOTH) |
     +-------+-----------------------------+
 
+
   === "drive_speed" message array indexes ===
+
     [Controls Drive DC Motors]
     +-------+-----------------------------+
     | INDEX | DESCRIPTION                 |
