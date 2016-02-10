@@ -130,9 +130,9 @@ void update_drive_motors(const std_msgs::UInt16MultiArray& cmd_msg) {
 }
 
 // Subscribe to rostopic "arm_cmd" and "drive_cmd"
-ros::Subscriber<std_msgs::UInt16MultiArray> sub_arm("arm_servos", update_arm_servos);
-ros::Subscriber<std_msgs::UInt16MultiArray> sub_drive_servos("drive_servos", update_drive_servos);
-ros::Subscriber<std_msgs::UInt16MultiArray> sub_drive_motors("drive_motors", update_drive_motors)
+ros::Subscriber<std_msgs::UInt16MultiArray> sub_arm("arm_cmd", update_arm_servos);
+ros::Subscriber<std_msgs::UInt16MultiArray> sub_drive_servos("drive_steer", update_drive_servos);
+ros::Subscriber<std_msgs::UInt16MultiArray> sub_drive_motors("drive_speed", update_drive_motors)
 
 
 /* ### setup() ###

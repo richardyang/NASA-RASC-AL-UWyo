@@ -1,0 +1,60 @@
+####################################################
+###                 README FOR                   ###
+###       "simple_command_line_control.ino"      ###
+####################################################
+
+### INTRODUCTION ###
+  "simple_command_line_control.ino" takes commands over USB, via ROS Serial and ROS Topics.
+
+
+### DEPENDENCIES ###
+  ---> ROS packages for ARDUINO
+  ---> ADAFRUIT MOTOR SHIELD packages for ARDUINO
+
+
+### HOW TO USE ###
+
+A command is passed in the form of a "UInt16MultiArray", to the relevant ROS Topic Channel.
+
+There are 3 Channels the Arduino will listen to:
+  1)  "arm_cmd"       ---   Commands for the Arm Servos
+  2)  "drive_steer"   ---   Commands for the Steering Servos
+  3)  "drive_speed"   ---   Commands for the DC Motors
+
+
+  === "arm_cmd" message array indexes ===
+    [Controls Arm Servos]
+    +-------+-----------------------------+
+    | INDEX | DESCRIPTION                 |
+    +-------+-----------------------------+
+    |   0   | Servo - Arm Base            |
+    |   1   | Servo - Arm Shoulder        |
+    |   2   | Servo - Arm Elbow           |
+    |   3   | Servo - Arm Wrist           |
+    +-------+-----------------------------+
+
+  === "drive_steer" message array indexes ===
+    [Controls Drive Servos]
+    +-------+-----------------------------+
+    | INDEX | DESCRIPTION                 |
+    +-------+-----------------------------+
+    |   0   | Servo - Rear Wheel          |
+    |   1   | Servo - Front Wheels (BOTH) |
+    +-------+-----------------------------+
+
+  === "drive_speed" message array indexes ===
+    [Controls Drive DC Motors]
+    +-------+-----------------------------+
+    | INDEX | DESCRIPTION                 |
+    +-------+-----------------------------+
+    |   0   | Motor - Front Left wheel    |
+    |   1   | Motor - Front Right wheel   |
+    |   2   | Motor - Rear wheel          |
+    |  N/A  | Motor - Left Side (BOTH)    |
+    |  N/A  | Motor - Right Side (BOTH)   |
+    +-------+-----------------------------+
+
+
+
+
+### END OF DOC ###
