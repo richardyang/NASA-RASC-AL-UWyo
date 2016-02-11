@@ -25,7 +25,7 @@
 #include <std_msgs/Int16.h>
 
 // SPEED CHANGE DELAY
-int const speed_change_delay = 10;
+int const speed_change_delay = 5;
 
 // ROS NODE HANDLE
 ros::NodeHandle nh;

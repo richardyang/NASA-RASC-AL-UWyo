@@ -28,7 +28,7 @@ int main(int argc, char **argv)
     ros::init(argc, argv, "Richards_Dick");
     ros::NodeHandle n;
     ros::Publisher cmd_drive_steer = n.advertise<std_msgs::UInt16MultiArray>("drive_steer", 1000);
-    ros::Publisher cmd_drive_speed = n.advertise<std_msgs::UInt16MultiArray>("drive_speed", 1000);
+    ros::Publisher cmd_drive_speed = n.advertise<std_msgs::Int16>("drive_speed", 1000);
     //ros::Publisher servo_cb_R = n.advertise<std_msgs::UInt16>("servo_R", 1000);
     //ros::Publisher servo_cb_L = n.advertise<std_msgs::UInt16>("servo_L", 1000);
     ros::Rate loop_rate(15);
@@ -38,7 +38,8 @@ int main(int argc, char **argv)
     drive_servos.data.clear();
     drive_servos.data.push_back(90);
     drive_servos.data.push_back(90);
-    std_msgs::Int16 motor_speed = 0;
+    std_msgs::Int16 motor_speed;
+    motor_speed.data = 0;
     //left.data=10;
 
     while (ros::ok())
@@ -80,7 +81,7 @@ int main(int argc, char **argv)
 
         std::cout << "Front servo angle: " << drive_servos.data[1] << std::endl;
         std::cout << "Back servo angle: " << drive_servos.data[0] << std::endl;
-        //std::cout << "Current left servo position:" << left.data << std::endl;
+        std::cout << "Motor speed: " << motor_speed.data << std::endl;
         cmd_drive_steer.publish(drive_servos);
         cmd_drive_speed.publish(motor_speed);
         //servo_cb_R.publish(right);

@@ -58,6 +58,7 @@ CMakeFiles/servo_publisher.dir/src/servo_publisher.cpp.o: /opt/ros/indigo/includ
 CMakeFiles/servo_publisher.dir/src/servo_publisher.cpp.o: /opt/ros/indigo/include/ros/wall_timer.h
 CMakeFiles/servo_publisher.dir/src/servo_publisher.cpp.o: /opt/ros/indigo/include/ros/wall_timer_options.h
 CMakeFiles/servo_publisher.dir/src/servo_publisher.cpp.o: /opt/ros/indigo/include/rosconsole/macros_generated.h
+CMakeFiles/servo_publisher.dir/src/servo_publisher.cpp.o: /opt/ros/indigo/include/std_msgs/Int16.h
 CMakeFiles/servo_publisher.dir/src/servo_publisher.cpp.o: /opt/ros/indigo/include/std_msgs/MultiArrayDimension.h
 CMakeFiles/servo_publisher.dir/src/servo_publisher.cpp.o: /opt/ros/indigo/include/std_msgs/MultiArrayLayout.h
 CMakeFiles/servo_publisher.dir/src/servo_publisher.cpp.o: /opt/ros/indigo/include/std_msgs/String.h
