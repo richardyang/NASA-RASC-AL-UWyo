@@ -1,0 +1,4 @@
+On the rover:
+	$ roscore&
+	$ cd ~/ros-pkg/RoboOps/launch/
+	$ roslaunch arduino.launch
