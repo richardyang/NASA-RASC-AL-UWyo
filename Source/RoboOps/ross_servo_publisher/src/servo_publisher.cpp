@@ -1,5 +1,6 @@
 #include "ros/ros.h"
 #include "std_msgs/String.h"
+#include <std_msgs/Int16.h>
 #include <std_msgs/UInt16.h>
 #include <std_msgs/UInt16MultiArray.h>
 #include <inttypes.h>
@@ -37,12 +38,14 @@ int main(int argc, char **argv)
     drive_servos.data.clear();
     drive_servos.data.push_back(90);
     drive_servos.data.push_back(90);
+    std_msgs::Int16 motor_speed = 0;
     //left.data=10;
 
     while (ros::ok())
     {
         int c = getch();
         switch(c) {
+            // DRIVE SERVOS
             case 'a':
              std::cout << "a pressed" << std::endl;
              drive_servos.data[0]=(drive_servos.data[0]<=15)?(15):(drive_servos.data[0]-5);
@@ -58,24 +61,20 @@ int main(int argc, char **argv)
              drive_servos.data[0]=(90);
              drive_servos.data[1]=(90);
             break;
-            /*
-            case 'q':
-             std::cout << 'a pressed' << std::endl;
-             left.data=(left.data>=170)?(170):(left.data+5);
+            
+            // MOTORS
+            case 'w':
+             std::cout << "w pressed" << std::endl;
+             motor_speed.data=(motor_speed.data>=250)?(250):(motor_speed.data+50);
             break;
-            case 'e':
-             std::cout << 'd pressed' << std::endl;
-             left.data=(left.data>=170)?(170):(left.data-5);
+            case 's':
+             std::cout << "s pressed" << std::endl;
+             motor_speed.data=(motor_speed.data<=-250)?(-250):(motor_speed.data-50);
             break;
-            case 'a':
-             std::cout << 'a pressed' << std::endl;
-//             left.data=(left.data>=170)?(170):(left.data+5);
+            case 'x':
+             std::cout << "x pressed" << std::endl;
+             motor_speed.data=(0);
             break;
-            case 'd':
-             std::cout << 'a pressed' << std::endl;
-//             left.data=(left.data>=170)?(170):(left.data+5);
-            break;
-            */
         }
 
 
@@ -83,6 +82,7 @@ int main(int argc, char **argv)
         std::cout << "Back servo angle: " << drive_servos.data[0] << std::endl;
         //std::cout << "Current left servo position:" << left.data << std::endl;
         cmd_drive_steer.publish(drive_servos);
+        cmd_drive_speed.publish(motor_speed);
         //servo_cb_R.publish(right);
         //servo_cb_L.publish(left);
         ros::spinOnce();
