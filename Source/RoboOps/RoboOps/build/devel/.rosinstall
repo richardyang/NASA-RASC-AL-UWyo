@@ -1,0 +1,2 @@
+- setup-file:
+    local-name: /home/richard/ros_pkg/RoboOps/build/devel/setup.sh

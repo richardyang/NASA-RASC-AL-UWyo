@@ -1,0 +1,17 @@
+<package>
+  <description brief="RoboOps">
+
+     RoboOps
+
+  </description>
+  <author>richard</author>
+  <license>BSD</license>
+  <review status="unreviewed" notes=""/>
+  <url>http://ros.org/wiki/RoboOps</url>
+  <depend package="std_msgs"/>
+  <depend package="rospy"/>
+  <depend package="roscpp"/>
+
+</package>
+
+
