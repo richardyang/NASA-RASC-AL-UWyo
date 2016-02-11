@@ -48,16 +48,11 @@ void publish(String msg) {
 }
 
 void update_arm_servos(const std_msgs::UInt16MultiArray&  cmd_msg){
-  arm_servos[0].write(cmd_msg.data[0]);
-//publish("WRITE: " + String(5) + " - " + String(cmd_msg.data[5]));
-
-publish(String(sizeof(arm_servos)));
-
-  for(int i = 0; i < sizeof(arm_servos); i++){
-		//publish("WRITE: " + String(i) + " - " + String(cmd_msg.data[i]));
-		arm_servos[i].write(cmd_msg.data[i]);
-                //publish("READ: " + String(arm_servos[i].read()));
-	}
+  //arm_servos[0].write(cmd_msg.data[0]);
+  publish("WRITE: " + String(0) + " - " + String(cmd_msg.data[0]));
+  publish("WRITE: " + String(1) + " - " + String(cmd_msg.data[1]));
+  drive_servos[0].write(cmd_msg.data[0]);
+  drive_servos[1].write(cmd_msg.data[1]);
 
 //publish("READ: " + String(0) + " - " + String(arm_servos[0].read()));
 }
@@ -70,7 +65,7 @@ void update_drive_servos(const std_msgs::UInt16MultiArray& cmd_msg){
 
 // Subscribe to rostopic "arm_cmd" and "drive_cmd"
 ros::Subscriber<std_msgs::UInt16MultiArray> sub_arm("arm_cmd", update_arm_servos);
-ros::Subscriber<std_msgs::UInt16MultiArray> sub_drive("drive_cmd", update_arm_servos);
+ros::Subscriber<std_msgs::UInt16MultiArray> sub_drive("drive_cmd", update_drive_servos);
 
 void setup(){
   nh.initNode();

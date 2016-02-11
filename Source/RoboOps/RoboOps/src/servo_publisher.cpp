@@ -40,17 +40,25 @@ int main(int argc, char **argv)
              std::cout << 'w pressed' << std::endl;
              right.data=(right.data>=170)?(170):(right.data+5);
             break;
-            case 'a':
-             std::cout << 'a pressed' << std::endl;
-//             left.data=(left.data>=170)?(170):(left.data+5);
-            break;
             case 's':
              std::cout << 's pressed' << std::endl;
              right.data=(right.data<=10)?(10):(right.data-5);
             break;
-            case 'd':
+            case 'q':
+             std::cout << 'a pressed' << std::endl;
+//             left.data=(left.data>=170)?(170):(left.data+5);
+            break;
+            case 'e':
              std::cout << 'd pressed' << std::endl;
 //             left.data=(left.data>=170)?(170):(left.data-5);
+            break;
+            case 'a':
+             std::cout << 'a pressed' << std::endl;
+//             left.data=(left.data>=170)?(170):(left.data+5);
+            break;
+            case 'd':
+             std::cout << 'a pressed' << std::endl;
+//             left.data=(left.data>=170)?(170):(left.data+5);
             break;
         }
 
