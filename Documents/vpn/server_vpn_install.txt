@@ -1,0 +1,67 @@
+user@server:~$ sudo apt-get update
+user@server:~$ sudo apt-get install openvpn easy-rsa
+user@server:~$ gunzip -c /usr/share/doc/openvpn/examples/sample-config-files/server.conf.gz > /etc/openvpn/server.conf
+user@server:~$ vim /etc/openvpn/server.conf
+                    Change line #87 from dh dh1024.pem to dh dh2048.pem
+                    Uncomment line #162 "client-config-dir ccd" and change ccd to staticClients
+                    Uncomment line #187 ';push "redirect-gateway def1 bypass-dhcp"'
+                    Uncomment lines #195 and 196
+                          ';push "dhcp-option DNS 208.67.222.222"'
+                          ';push "dhcp-option DNS 208.67.220.220"'
+                    Uncomment line #204 'client-to-client'
+                    Uncomment lines #262 and 263
+                    Save and exit vim
+
+user@server:~$ mkdir /etc/openvpn/staticClients
+user@server:~$ echo 1 > /proc/sys/net/ipv4/ip_forward
+user@server:~$ vim /etc/sysctl.conf
+                      Uncomment line #28 '#net.ipv4.ip_forward=1'
+                      Save and exit vim
+
+user@server:~$ ufw allow ssh
+user@server:~$ ufw allow 1194/udp
+user@server:~$ vim /etc/default/ufw
+                    Change line #19 from "DEFAULT_FORWARD_POLICY='DECLINE'" to "DEFAULT_FORWARD_POLICY='ACCEPT'"
+                    Save and exit vim
+
+user@server:~$ vim /etc/ufw/before.rules
+                    Add the following lines starting at line #11
+                        # START OPENVPN RULES
+                        # NAT table rules
+                        *nat
+                        :POSTROUTING ACCEPT [0:0]
+                        # Allow traffic from OpenVPN client to eth0
+                        -A POSTROUTING -s 10.8.0.0/8 -o eth0 -j MASQUERADE
+                        COMMIT
+                        # END OPENVPN RULES
+                    Save and quit vim
+
+user@server:~$ ufw enable
+                    Answer y when asked to proceed
+
+user@server:~$ cp -r /usr/share/easy-rsa/ /etc/openvpn
+user@server:~$ mkdir /etc/openvpn/easy-rsa/keys
+user@server:~$ vim /etc/openvpn/easy-rsa/vars
+                    change 'export KEY_PROVINCE="TX"' to 'export KEY_PROVINCE="WY"'
+                    change 'export KEY_CITY="Dallas"' to 'export KEY_CITY="Laramie"'
+                    change 'export KEY_ORG="My Company Name"' to 'export KEY_ORG="CowboyRobotics"'
+                    change 'export KEY_EMAIL="sammy@example.com"' to 'export KEY_EMAIL="your_email@email.com"'
+                    change 'export KEY_OU="MYOrganizationalUnit"' to 'export KEY_OU="Computer Science"'
+                    change the export KEY_NAME to "server"
+                    Save and quit vim
+
+user@server:~$ openssl dhparam -out /etc/openvpn/dh2048.pem 2048
+user@server:~$ cd /etc/openvpn/easy-rsa
+user@server:~$ . ./vars
+user@server:~$ ./clean-all
+user@server:~$ ./build-ca
+user@server:~$ ./build-key-server server    //have server the same as what you set the key name to and answer y to the prompted questions
+user@server:~$ cp /etc/openvpn/easy-rsa/keys/{server.crt,server.key,ca.crt} /etc/openvpn
+user@server:~$ ls /etc/openvpn
+user@server:~$ service openvpn start
+user@server:~$ service openvpn status       //should say that the server is running, if not something went wrong in copying the files
+user@server:~$ ./build-key [client1]        //Repeat this process for each client but with a different name
+user@server:~$ cp /usr/share/doc/openvpn/examples/sample-config-files/client.conf /etc/openvpn/easy-rsa/keys/client.ovpn
+
+              At this point the client1.crt, client1.key, client.ovpn and ca.crt files get transfered to the client
+                and the command scp root@your-server-ip:/etc/openvpn/easy-rsa/keys/client1.key Downloads/ can be used for that
