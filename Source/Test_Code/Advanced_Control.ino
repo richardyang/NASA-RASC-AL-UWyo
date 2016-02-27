@@ -29,7 +29,7 @@ int main(int argc, char **argv)
     ros::NodeHandle n;
     ros::Publisher cmd_drive_steer = n.advertise<std_msgs::UInt16MultiArray>("drive_steer", 1000);
     ros::Publisher cmd_drive_speed = n.advertise<std_msgs::Int16>("drive_speed", 1000);
-     ros::Publisher cmd_arm = n.advertise<std_msgs::UInt16MultiArray>("arm", 1000);
+    ros::Publisher cmd_arm = n.advertise<std_msgs::UInt16MultiArray>("arm_cmd", 1000);
     //ros::Publisher servo_cb_R = n.advertise<std_msgs::UInt16>("servo_R", 1000);
     //ros::Publisher servo_cb_L = n.advertise<std_msgs::UInt16>("servo_L", 1000);
     ros::Rate loop_rate(15);
@@ -41,6 +41,10 @@ int main(int argc, char **argv)
     arm_servos.data.clear();
     drive_servos.data.push_back(90);
     drive_servos.data.push_back(90);
+    arm_servos.data.push_back(90);
+    arm_servos.data.push_back(90);
+    arm_servos.data.push_back(90);
+    arm_servos.data.push_back(90);
     std_msgs::Int16 motor_speed;
     motor_speed.data = 0;
     //left.data=10;
@@ -83,47 +87,47 @@ int main(int argc, char **argv)
             
             // Moves the BASE of the arm to the (1)right or the (3)left
             case '1':
-            std::cout << '1 pressed base servo goes left' << std::endl;
+            std::cout << "1 pressed base servo goes left" << std::endl;
             arm_servos.data[0]=(arm_servos.data[0]<=15)?(15):(arm_servos.data[0]-5);
             break;
             case '3':
-            std::cout << '3 pressed base servo goes right' << std::endl;
+            std::cout << "3 pressed base servo goes right" << std::endl;
             arm_servos.data[0]=(arm_servos.data[0]>165)?(165):(arm_servos.data[0]+5);
             break;
            
             // Moves the SHOULDER of the arm (7)up or (4)down
             case '7':
-            std::cout << '7 pressed shoulder servo goes up' << std::endl;
+            std::cout << "7 pressed shoulder servo goes up" << std::endl;
             arm_servos.data[1]=(arm_servos.data[1]>165)?(165):(arm_servos.data[1]+5);
             break;
             case '4':
-            std::cout << '4 pressed shoulder servo goes down' << std::endl;
+            std::cout << "4 pressed shoulder servo goes down" << std::endl;
             arm_servos.data[1]=(arm_servos.data[1]<=15)?(15):(arm_servos.data[1]-5);
             break;
             
             // Moves the ELBOW of the arm (8)up or (5)down
             case '8':
-            std::cout << '8 pressed elbow servo goes up' << std::endl;
+            std::cout << "8 pressed elbow servo goes up" << std::endl;
             arm_servos.data[2]=(arm_servos.data[2]>165)?(165):(arm_servos.data[2]+5);
             break;
             case '5':
-            std::cout << '5 pressed elbow servo goes down' << std::endl;
+            std::cout << "5 pressed elbow servo goes down" << std::endl;
             arm_servos.data[2]=(arm_servos.data[2]<=15)?(15):(arm_servos.data[2]-5);
             break;
             
             // Moves the WRIST of the arm (9)up or (6)down
             case '9':
-            std::cout << '9 pressed wrist servo goes up' << std::endl;
+            std::cout << "9 pressed wrist servo goes up" << std::endl;
             arm_servos.data[3]=(arm_servos.data[3]>165)?(165):(arm_servos.data[3]+5);
             break;
             case '6':
-            std::cout << '6 pressed wrist servo  goes down'' << std::endl;
+            std::cout << "6 pressed wrist servo  goes down" << std::endl;
             arm_servos.data[3]=(arm_servos.data[2]<=15)?(15):(arm_servos.data[2]-5);
             break;
             
             //(0)Ready position that moves the SHOULDER (60 degrees) nad the ELBOW (90 degrees) of the arm at the same time
             case '0':
-            std::cout << '0 pressed ready position' << std::endl;
+            std::cout << "0 pressed ready position" << std::endl;
             arm_servos.data[1]=60;
             arm_servos.data[2]=80;
             break;
