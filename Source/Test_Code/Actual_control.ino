@@ -46,7 +46,7 @@ void publish(String msg) {
   str_msg.data = temp;
   chatter.publish(&str_msg);
 }
-
+// This controls each servo in the array relating the the chat of the servos numbers in the top of the file 
 void update_arm_servos(const std_msgs::UInt16MultiArray&  cmd_msg){
   arm_servos[0].write(cmd_msg.data[0]);  //base
   arm_servos[1].write(cmd_msg.data[1]);  //shoulder
