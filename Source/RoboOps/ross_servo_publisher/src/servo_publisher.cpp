@@ -25,7 +25,7 @@ int main(int argc, char **argv)
 {
 
 
-    ros::init(argc, argv, "Richards_Dick");
+    ros::init(argc, argv, "Richards_Node"); //You know what you wrote...
     ros::NodeHandle n;
     ros::Publisher cmd_drive_steer = n.advertise<std_msgs::UInt16MultiArray>("drive_steer", 1000);
     ros::Publisher cmd_drive_speed = n.advertise<std_msgs::Int16>("drive_speed", 1000);
