@@ -1,3 +1,6 @@
+To clone Github repository:
+  $ cd /path/for/local/RoboOps-Senior-Design
+  $ git clone [git url]
 
 To pull changes from Github: 
   $ cd /path/to/your/local/RoboOps-Senior-Design
@@ -7,5 +10,6 @@ To pull changes from Github:
 To push changes to Github:
   $ cd /path/to/your/local/RoboOps-Senior-Design
   $ git add --all .
+  $ git status
   $ git commit -m "Brief description of your commit"
   $ git push origin master
