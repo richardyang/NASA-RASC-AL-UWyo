@@ -1,4 +1,4 @@
-To clone Github repository:
+To clone Github directory:
   $ cd /path/for/local/RoboOps-Senior-Design
   $ git clone [git url]
 
