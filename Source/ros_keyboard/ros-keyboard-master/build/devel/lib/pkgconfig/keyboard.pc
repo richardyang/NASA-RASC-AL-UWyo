@@ -1,0 +1,8 @@
+prefix=/home/jr/github/RoboOps-Senior-Design/Source/ros_keyboard/ros-keyboard-master/build/devel
+
+Name: keyboard
+Description: Description of keyboard
+Version: 0.1.1
+Cflags: -I/home/jr/github/RoboOps-Senior-Design/Source/ros_keyboard/ros-keyboard-master/build/devel/include
+Libs: -L/home/jr/github/RoboOps-Senior-Design/Source/ros_keyboard/ros-keyboard-master/build/devel/lib 
+Requires: roscpp std_msgs message_runtime

@@ -1,0 +1,31 @@
+
+##########################################################
+### To build and run this package on your own computer ###
+##########################################################
+
+
+First execute:
+  $ cd /PATH/TO/YOUR/DIR
+
+1) Add the directory's path to your ROS_PACKAGE_PATH environment variable:
+	$ export ROS_PACKAGE_PATH=$ROS_PACKAGE_PATH:/PATH/TO/YOUR/DIR/
+
+2) MAKE YOUR OWN PACKAGE DIRECTORY!!!
+	$ roscreate-pkg <YOUR_PACKAGE_NAME>
+
+3) Copy the "src" folder (which should be in /Source/RoboOps) to your directory:
+	$ cp ./PATH/TO/SOURCE/PACKAGE/src /PATH/TO/YOUR/DIR/<YOUR_PACKAGE_NAME>
+
+4) Add "/src" files to "CMakeLists.txt"
+	rosbuild_add_executable(<NODE_NAME> src/<NODE_NAME>.cpp)
+
+5) Add dependencies to "manifest.xml"
+	<depend package="std_msgs"/>
+	<depend package="rospy"/>
+	<depend package="roscpp"/>
+
+6) Run "make" and "rosmake" in your package directory:
+	$ make && rosmake
+
+Finally, to run this node:
+	$ rosrun <YOUR_PACKAGE_NAME> <YOUR_NODE_NAME>
