@@ -1,0 +1,18 @@
+<package>
+  <description brief="manual_keyboard_control">
+
+     manual_keyboard_control
+
+  </description>
+  <author>richard</author>
+  <license>BSD</license>
+  <review status="unreviewed" notes=""/>
+  <url>http://ros.org/wiki/manual_keyboard_control</url>
+  <depend package="std_msgs"/>
+  <depend package="rospy"/>
+  <depend package="roscpp"/>
+  <depend package="keyboard"/>
+
+</package>
+
+

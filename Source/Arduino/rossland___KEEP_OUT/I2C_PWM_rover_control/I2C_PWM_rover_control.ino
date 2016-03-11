@@ -4,75 +4,67 @@
  #include <WProgram.h>
 #endif
 
-// Main ROS library
+#include <avr/pgmspace.h>             // Enable use of PROGMEM
 #include <ros.h>
-// For communication over ROS
-#include <std_msgs/String.h>
 #include "std_msgs/MultiArrayLayout.h"
 #include "std_msgs/MultiArrayDimension.h"
 #include "std_msgs/Int16MultiArray.h"
-// PWM control
-#include <Wire.h>
-#include <Adafruit_PWMServoDriver.h>
+#include <Wire.h>                     // For I2C
+#include <Adafruit_PWMServoDriver.h>  // For I2C PWM board
 
-/*###############################################################################################*/
-//  --- TESTING AND DEBUG
 
 /* Testing Commands:
   $ rosrun rosserial_python serial_node.py _port:=/dev/<PORT NUMBER>
   $ rostopic pub arm_cmd std_msgs/UInt16MultiArray '{data: [<I2C_INDEX>, <servo_1>, etc.]}' */
-
-// Debugging publisher - publishes to "chatter"
-std_msgs::String str_msg;
-ros::Publisher chatter("chatter", &str_msg);
-void publish(String msg) {
-  char const * temp = msg.c_str();
-  str_msg.data = temp;
-  chatter.publish(&str_msg);
-}
-/*###############################################################################################*/
-
+*/
 
 // PWM constants
-#define PWM_FREQUENCY 50
-#define PWM_RESOLUTION 4096
+const PROGMEM int PWM_FREQUENCY = 50;
+const PROGMEM int PWM_RESOLUTION = 4096;
 // Arm servo constants - Hitec HS-785HB 
-#define ARM_SERVO_MIN  126      // "-315 degrees", minimum pulse length count (out of 4096@50Hz)
-#define ARM_SERVO_MAX  504      // "+315 degrees", maximum pulse length count (out of 4096@50Hz)
-#define ARM_SERVO_NEUTRAL 315   // "0 degrees", zeroed pulse length count (out of 4096@50Hz)
-#define ARM_SERVO_FULL_TURN 216 // "360 degrees", one full rotation pulse length delta (4096@50Hz)
-// Steer servo constants
-#define STEER_MIN_PWM 200
-#define STEER_MAX_PWM 550
-// Drive motor constants
-#define DRIVE_MIN_PWM 200
-#define SPEED_MAX_PWM 550
+const PROGMEM int ARM_SERVO_MIN = 126;        // "-315 degrees", min pulse length count (out of 4096@50Hz)
+const PROGMEM int ARM_SERVO_MAX = 504;        // "+315 degrees", max pulse length count (out of 4096@50Hz)
+const PROGMEM int ARM_SERVO_NEUTRAL = 315;    // "0 degrees", center pulse length count (out of 4096@50Hz)
+const PROGMEM int ARM_SERVO_FULL_TURN = 216;  // "360 degrees", one full rotation
+// Steering servo constants
+const PROGMEM int STEER_MIN_PWM = 200;  // Max steering pwm
+const PROGMEM int STEER_MAX_PWM = 550;  // Min steering pwm
+// DC motor constants
+const PROGMEM int DRIVE_MIN_PWM = 200;  // Max DC motor pwm
+const PROGMEM int SPEED_MAX_PWM = 550;  // Min DC motor pwm
+
+// Pin constants
+const PROGMEM int VACUUM_PIN = 7;
+
 
 /* Servo and DC Motor reference
-        || I2C |  MSG  | ARRAY | DESCRIPTION               |
-        || PIN | INDEX | INDEX |                           |
-========++=====+=======+=======+===========================+
-        ||  0  |   0   |   0   | Arm Base                  |
-  Arm   ||  1  |   1   |   1   | Arm Shoulder              |
- Servos ||  2  |   2   |   2   | Arm Elbow                 |
-        ||  3  |   3   |   3   | Arm Wrist                 |
---------++-----+-------+-------+---------------------------+
-  Drive ||     |       |       | Back Wheels (BOTH)        |
- Servos ||     |       |       | Front Wheel               |
---------++-----+-------+-------+---------------------------+
-        ||     |       |       | Front Left wheel          |
-  Drive ||     |       |       | Front Right wheel         |
-   DC   ||     |       |       | Side Left Wheels (BOTH)   |
- Motors ||     |       |       | Side Right Wheels (BOTH)  |
-        ||     |       |       | Rear Wheel                |
---------++-----+-------+-------+---------------------------+  */
++--------+-----+-------+-------+---------------------------+
+| `-..-` ‖ I2C |  MSG  | ARRAY | DESCRIPTION               |
+| .-``-. ‖ PIN | INDEX | INDEX |                           |
++========+=====+=======+=======+===========================+
+|        ‖  0  |   0   |   0   | Arm Base                  |
+|  Arm   ‖  1  |   1   |   1   | Arm Shoulder              |
+| Servos ‖  2  |   2   |   2   | Arm Elbow                 |
+|        ‖  3  |   3   |   3   | Arm Wrist                 |
++--------+-----+-------+-------+---------------------------+
+|  Drive ‖  4  |   0   |   0   | Back Wheel                |
+| Servos ‖  5  |   1   |   1   | Front Right Wheel         |
+|        ‖  6  |   2   |   2   | Front Left Wheel          |
++--------+-----+-------+-------+---------------------------+
+|  Mast  ‖  8  |   0   |   0   | Mast Servo                |
++--------+-----+-------+-------+---------------------------+
+|        ‖ 11  |   0   |   0   | Rear Wheel                |
+|  Drive ‖ 12  |   1   |   1   | Side Right Wheels (BOTH)  |
+|   DC   ‖ 13  |   2   |   2   | Side Left Wheels (BOTH)   |
+| Motors ‖ 14  |   3   |   3   | Front Right Wheel         |
+|        ‖ 15  |   4   |   4   | Front Left Wheels         |
++--------+-----+-------+-------+---------------------------+  */
 
 // I2C PWM variables
 Adafruit_PWMServoDriver pwm = Adafruit_PWMServoDriver();
 
 // ROS node handle
 ros::NodeHandle nh;
-
 
 
 /***** arm_angle_to_pulse()
@@ -108,6 +100,16 @@ void manual_arm_servo_update(const std_msgs::Int16MultiArray& cmd_msg) {
   // Get servo servo number and angle from cmd_msg
   uint8_t servo_number = (uint8_t) cmd_msg.data[0];
   int16_t new_servo_angle = (int16_t) cmd_msg.data[1];
+
+  // Vacuum pump toggle
+  if (servo_number == 4) {
+    if (new_servo_angle == 0) {
+      digitalWrite(VACUUM_PIN, LOW);
+    } else {
+      digitalWrite(VACUUM_PIN, HIGH);
+    }
+    return;
+  }
 
   // Calculate and set pulse
   double pulse = arm_angle_to_pulse(new_servo_angle);
@@ -151,24 +153,25 @@ ros::Subscriber<std_msgs::Int16MultiArray> sub_arm_manual("arm_cmd_manual", manu
 
 
 void setup(){
-  // Initialize ROS node handle
-  nh.initNode();
+  nh.initNode();    // Initialize ROS node handle
 
-  // Initializ ROS subscribers and publishers
-  nh.advertise(chatter);
-  nh.subscribe(sub_arm_manual);
+  nh.subscribe(sub_arm_manual);   // Subcribe to manual arm control topic
   //nh.subscribe(sub_drive_steer_manual);
   //nh.subscribe(sub_drive_speed_manual);
 
-  // Initialize Adafruit I2C PWM board
+  // Initialize I2C PWM board
   pwm.begin();
   pwm.setPWMFreq(PWM_FREQUENCY);
 
-  // Initialize arm positions
+  // Send arm servos to home position
   pwm.setPWM(0, 0, ARM_SERVO_NEUTRAL);
   pwm.setPWM(1, 0, ARM_SERVO_NEUTRAL);
   pwm.setPWM(2, 0, ARM_SERVO_NEUTRAL);
   pwm.setPWM(3, 0, ARM_SERVO_NEUTRAL);
+
+  // Initialize vacuum pump controls
+  pinMode(VACUUM_PIN, OUTPUT);
+  digitalWrite(VACUUM_PIN, LOW);
 }
 
 void loop(){
