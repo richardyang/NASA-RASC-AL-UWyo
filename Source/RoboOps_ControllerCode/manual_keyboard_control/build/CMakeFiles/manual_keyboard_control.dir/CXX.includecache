@@ -23,10 +23,6 @@ sstream
 -
 stdio.h
 -
-termios.h
--
-unistd.h
--
 
 /opt/ros/indigo/include/XmlRpcDecl.h
 ros/macros.h

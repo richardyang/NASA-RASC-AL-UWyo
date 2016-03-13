@@ -47,18 +47,32 @@ const PROGMEM int VACUUM_PIN = 7;
 | Servos ‖  2  |   2   |   2   | Arm Elbow                 |
 |        ‖  3  |   3   |   3   | Arm Wrist                 |
 +--------+-----+-------+-------+---------------------------+
-|  Drive ‖  4  |   0   |   0   | Back Wheel                |
+|  Drive ‖  4  |   0   |   0   | Rear Wheel                |
 | Servos ‖  5  |   1   |   1   | Front Right Wheel         |
 |        ‖  6  |   2   |   2   | Front Left Wheel          |
 +--------+-----+-------+-------+---------------------------+
 |  Mast  ‖  8  |   0   |   0   | Mast Servo                |
-+--------+-----+-------+-------+---------------------------+
++--------+-----+-------+-------+---------------------------+           
 |        ‖ 11  |   0   |   0   | Rear Wheel                |
 |  Drive ‖ 12  |   1   |   1   | Side Right Wheels (BOTH)  |
 |   DC   ‖ 13  |   2   |   2   | Side Left Wheels (BOTH)   |
 | Motors ‖ 14  |   3   |   3   | Front Right Wheel         |
 |        ‖ 15  |   4   |   4   | Front Left Wheels         |
 +--------+-----+-------+-------+---------------------------+  */
+// I2C pins
+const PROGMEM int ARM_BASE_PIN = 0;
+const PROGMEM int ARM_SHOULDER_PIN = 1;
+const PROGMEM int ARM_ELBOW_PIN = 2;
+const PROGMEM int ARM_WRIST_PIN = 3;  
+const PROGMEM int DRIVE_MOTOR_REAR_PIN = 4;
+const PROGMEM int DRIVE_MOTOR_FRONT_RIGHT_PIN = 5;
+const PROGMEM int DRIVE_MOTOR_FRONT_LEFT_PIN = 6;
+const PROGMEM int MAST_PIN = 8;
+const PROGMEM int STEER_SERVO_REAR_PIN = 11;
+const PROGMEM int STEER_SERVO_SIDE_RIGHT_PIN = 12;
+const PROGMEM int STEER_SERVO_SIDE_LEFT_PIN = 13;
+const PROGMEM int STEER_SERVO_FRONT_RIGHT_PIN = 14;
+const PROGMEM int STEER_SERVO_FRONT_LEFT_PIN = 15;
 
 // I2C PWM variables
 Adafruit_PWMServoDriver pwm = Adafruit_PWMServoDriver();
@@ -70,45 +84,47 @@ ros::NodeHandle nh;
 /***** arm_angle_to_pulse()
   Converts a servo angle (0 - 180) into a PWM pulse
   @INPUT int - new arm servo angle
-  @RETURN double - pwm pulse 
-*/
+  @RETURN double - pwm pulse
+
+  PWM_pulse = <neurtal_pwm> + (angle/360) * <full_turn_pwm>     */
 uint16_t arm_angle_to_pulse(int int_angle) {
-  // Typecast angle to double to prevent overflow
-  double angle = int_angle * 1.0;
-
-  // PWM = <neurtal_pwm> + (angle/360) * <full_turn_pwm>
+  double angle = int_angle * 1.0;  // Typecast angle to double to prevent overflow
   uint16_t pulse = (uint16_t) (ARM_SERVO_NEUTRAL + ((angle*ARM_SERVO_FULL_TURN)/360));
-
-  // Check if pulse is a sentinel, or in allowed range
+  // Check if within range
   if (pulse < ARM_SERVO_MIN) {
     pulse = (uint16_t) ARM_SERVO_MIN;
   } else if (pulse > ARM_SERVO_MAX) { 
     pulse = (uint16_t) ARM_SERVO_MAX;
   }
-
   return pulse;
 }
 
-/***** manual_arm_servo_update()
+/***** manual_arm_cmd_update()
   Interpreter for manual arm servo messages.
     Updates A SINGLE SERVO.
   @INPUT std_msgs::UInt16MultiArray cmd_msg
     [0] - servo number
-    [1] - new servo angle                       
-*/
-void manual_arm_servo_update(const std_msgs::Int16MultiArray& cmd_msg) {
-  // Get servo servo number and angle from cmd_msg
+    [1] - new servo angle                                       */
+void manual_arm_cmd_update(const std_msgs::Int16MultiArray& cmd_msg) {
   uint8_t servo_number = (uint8_t) cmd_msg.data[0];
   int16_t new_servo_angle = (int16_t) cmd_msg.data[1];
 
   // Vacuum pump toggle
-  if (servo_number == 4) {
+  if (servo_number == 0) {
+    servo_number = ARM_BASE_PIN;
+  } else if (servo_number == 1) {
+    servo_number = ARM_SHOULDER_PIN;
+  } else if (servo_number == 2) {
+    servo_number = ARM_ELBOW_PIN;
+  } else if (servo_number == 3) {
+    servo_number = ARM_WRIST_PIN;
+  } else if (servo_number == 4) {
     if (new_servo_angle == 0) {
       digitalWrite(VACUUM_PIN, LOW);
     } else {
       digitalWrite(VACUUM_PIN, HIGH);
     }
-    return;
+    return;   // No angle to update... just return
   }
 
   // Calculate and set pulse
@@ -147,7 +163,7 @@ void manual_drive_motor_update(const std_msgs::Int16MultiArray& cmd_msg) {
    + arm_cmd_manual       - manually set arm servo angles
    + drive_steer_manual   - manually set steering servo angles
    + drive_speed_manual   - manually set motor speeds             */
-ros::Subscriber<std_msgs::Int16MultiArray> sub_arm_manual("arm_cmd_manual", manual_arm_servo_update);
+ros::Subscriber<std_msgs::Int16MultiArray> sub_arm_manual("arm_cmd_manual", manual_arm_cmd_update);
 //ros::Subscriber<std_msgs::UInt16MultiArray> sub_drive_steer_manual("drive_steer_manual", manual_drive_servo_update);
 //ros::Subscriber<std_msgs::UInt16MultiArray> sub_drive_speed_manual("drive_speed_manual", manual_drive_motor_update);
 
@@ -178,3 +194,4 @@ void loop(){
   nh.spinOnce();
   delay(1);
 }
+                                                                                      

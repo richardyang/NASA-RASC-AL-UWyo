@@ -6,8 +6,6 @@
 #include <inttypes.h>
 #include <sstream>
 #include <stdio.h>
-#include <termios.h> //termios, TCSANOW, ECHO, ICANON
-#include <unistd.h> //STDIN_FILENO
 
 /*
 Commands:
@@ -218,7 +216,7 @@ int main(int argc, char **argv) {
         if (keys[keyboard::Key::KEY_b]) {
             CURRENT_VACUUM_STATE = !CURRENT_VACUUM_STATE;
             keys[keyboard::Key::KEY_b] = false;
-            arm_servo_message.data[0] = 4;
+            arm_servo_message.data[0] = 4;  
             CURRENT_VACUUM_STATE ? arm_servo_message.data[1] = 1 : arm_servo_message.data[1] = 0;
             arm_cmd_manual->publish(arm_servo_message);
         }
