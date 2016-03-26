@@ -122,9 +122,9 @@ void publish_drive_motor_update(int servo_index) {
     drive_cmd_manual->publish(drive_motor_message);
 }
 
-/***** initialize_arrays() ***
+/***** initialize_servos() ***
     Initialize all message and servo arrays */
-void initialize_arrays() {
+void initialize_servos() {
 	// Initialize arm servo update message array
     arm_servo_message.data.clear();
     arm_servo_message.data.push_back(0);
@@ -157,7 +157,45 @@ void initialize_arrays() {
     drive_motor[2] = 0;
     drive_motor[3] = 0;
     drive_motor[4] = 0;
+
+    //Put all servos at 0 degrees
+    for (int i = 0; i < 4; i++) {
+        publish_arm_servo_update(i);
+    }
+
+    for (int i = 0; i < 3; i++) {
+        publish_steer_servo_update(i);
+    }
+
+    for (int i = 0; i < 5; i++) {
+        publish_drive_motor_update(i);
+    }  
 }
+
+/***** initialize_key_states() ***
+    Initialize default key press states */
+void initialize_key_states() {
+    keys[keyboard::Key::KEY_n] = false; // Base CCW
+    keys[keyboard::Key::KEY_m] = false; // Base CW
+    keys[keyboard::Key::KEY_u] = false; // Shoulder back
+    keys[keyboard::Key::KEY_j] = false; // Shoulder forward
+    keys[keyboard::Key::KEY_i] = false; // Elbow up
+    keys[keyboard::Key::KEY_k] = false; // Elbow down
+    keys[keyboard::Key::KEY_o] = false; // Wrist forward
+    keys[keyboard::Key::KEY_l] = false; // Wrist backward
+    keys[keyboard::Key::KEY_p] = false; // Return home 
+    keys[keyboard::Key::KEY_b] = false; // Toggle vacuum
+
+    keys[keyboard::Key::KEY_q] = false; // Steer CCW
+    keys[keyboard::Key::KEY_e] = false; // Steer CW
+    keys[keyboard::Key::KEY_r] = false; // Steer back to straight
+
+    keys[keyboard::Key::KEY_w] = false; // Drive forward
+    keys[keyboard::Key::KEY_s] = false; // Drive backward
+    keys[keyboard::Key::KEY_x] = false; // Stop motors
+
+}
+
 
 int main(int argc, char **argv) {
     // Initialize ROS elements
@@ -176,24 +214,8 @@ int main(int argc, char **argv) {
 
     std::cout << "STARTED PWM PUBLISHER!!!" << std::endl;
 
-    initialize_arrays();
-
-    //Put all servos at 0 degrees
-    for (int i = 0; i < 4; i++) {
-        publish_arm_servo_update(i);
-    }    
-
-    // Array of pressed keys
-    keys[keyboard::Key::KEY_n] = false; // Base CCW
-    keys[keyboard::Key::KEY_m] = false; // Base CW
-    keys[keyboard::Key::KEY_u] = false; // Shoulder back
-    keys[keyboard::Key::KEY_j] = false; // Shoulder forward
-    keys[keyboard::Key::KEY_i] = false; // Elbow up
-    keys[keyboard::Key::KEY_k] = false; // Elbow down
-    keys[keyboard::Key::KEY_o] = false; // Wrist forward
-    keys[keyboard::Key::KEY_l] = false; // Wrist backward
-    keys[keyboard::Key::KEY_p] = false; // Return home 
-    keys[keyboard::Key::KEY_b] = false; // Toggle vacuum
+    initialize_servos();      
+    initialize_key_states();
 
     while (ros::ok())
     {
@@ -284,6 +306,52 @@ int main(int argc, char **argv) {
             arm_servo_message.data[0] = 4;  
             CURRENT_VACUUM_STATE ? arm_servo_message.data[1] = 1 : arm_servo_message.data[1] = 0;
             arm_cmd_manual->publish(arm_servo_message);
+        }
+
+        // Steering (q and e and r)
+        // q = CCW; e = cw
+        if (keys[keyboard::Key::KEY_q]) {
+            steer_servo[STEER_BACK] -= 1;
+            steer_servo[STEER_FRONT_RIGHT] -= 1;
+            steer_servo[STEER_FRONT_LEFT] -= 1;
+            publish_steer_servo_update(steer_servo_message);
+        } else if (keys[keyboard::Key::KEY_e]) {
+            steer_servo[STEER_BACK] += 1;
+            steer_servo[STEER_FRONT_RIGHT] += 1;
+            steer_servo[STEER_FRONT_LEFT] += 1;
+            publish_steer_servo_update(steer_servo_message);
+        }
+		if (keys[keyboard::Key::KEY_r]) {
+            steer_servo[STEER_BACK] = 0;
+            steer_servo[STEER_FRONT_RIGHT] = 0;
+            steer_servo[STEER_FRONT_LEFT] = 0;
+            publish_steer_servo_update(steer_servo_message);
+        }
+
+        // Drive motors (w and s and x)
+        // q = CCW; e = cw
+        if (keys[keyboard::Key::KEY_w]) {
+            drive_motor[DRIVE_REAR] += 1;
+            drive_motor[DRIVE_SIDE_RIGHT] += 1;
+            drive_motor[DRIVE_SIDE_LEFT] += 1;
+            drive_motor[DRIVE_FRONT_RIGHT] += 1;
+            drive_motor[DRIVE_FRONT_LEFT] += 1;
+            publish_drive_motor_update(drive_motor_message);
+        } else if (keys[keyboard::Key::KEY_s]) {
+            drive_motor[DRIVE_REAR] -= 1;
+            drive_motor[DRIVE_SIDE_RIGHT] -= 1;
+            drive_motor[DRIVE_SIDE_LEFT] -= 1;
+            drive_motor[DRIVE_FRONT_RIGHT] -= 1;
+            drive_motor[DRIVE_FRONT_LEFT] -= 1;
+            publish_drive_motor_update(drive_motor_message);
+        }
+		if (keys[keyboard::Key::KEY_x]) {
+            drive_motor[DRIVE_REAR] = 0;
+            drive_motor[DRIVE_SIDE_RIGHT] = 0;
+            drive_motor[DRIVE_SIDE_LEFT] = 0;
+            drive_motor[DRIVE_FRONT_RIGHT] = 0;
+            drive_motor[DRIVE_FRONT_LEFT] = 0;
+            publish_drive_motor_update(drive_motor_message);
         }
 
         ros::spinOnce();
