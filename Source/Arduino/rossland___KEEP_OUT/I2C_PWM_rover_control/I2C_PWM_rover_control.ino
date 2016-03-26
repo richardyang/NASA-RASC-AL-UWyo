@@ -16,7 +16,6 @@
 /* Testing Commands:
   $ rosrun rosserial_python serial_node.py _port:=/dev/<PORT NUMBER>
   $ rostopic pub arm_cmd std_msgs/UInt16MultiArray '{data: [<I2C_INDEX>, <servo_1>, etc.]}' */
-*/
 
 // PWM constants
 const PROGMEM int PWM_FREQUENCY = 50;
