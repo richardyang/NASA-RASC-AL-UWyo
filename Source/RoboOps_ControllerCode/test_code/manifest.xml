@@ -1,0 +1,19 @@
+<package>
+  <description brief="test_code">
+
+     test_code
+
+  </description>
+  <author>jr</author>
+  <license>BSD</license>
+  <review status="unreviewed" notes=""/>
+  <url>http://ros.org/wiki/test_code</url>
+
+  
+	<depend package="std_msgs"/>
+	<depend package="rospy"/>
+	<depend package="roscpp"/>
+
+</package>
+
+

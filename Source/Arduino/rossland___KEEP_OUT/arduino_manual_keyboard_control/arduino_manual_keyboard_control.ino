@@ -184,6 +184,8 @@ uint16_t drive_angle_to_pulse(int int_angle) {
   Callback function for updating arm servos.
 */
 void manual_arm_cmd_callback(const std_msgs::Int16MultiArray& cmd_msg) {
+
+  
   uint8_t servo_number = (uint8_t) cmd_msg.data[0];
   int16_t new_servo_angle = (int16_t) cmd_msg.data[1];
 
@@ -214,6 +216,7 @@ void manual_arm_cmd_callback(const std_msgs::Int16MultiArray& cmd_msg) {
   Callback function for updating drive servos.
 */
 void manual_drive_servo_callback(const std_msgs::Int16MultiArray& cmdMsg) {
+
   uint16_t pulse;
   int16_t newAngle;
   // Update rear steer servo
@@ -241,7 +244,7 @@ void manual_drive_servo_callback(const std_msgs::Int16MultiArray& cmdMsg) {
   Here's some math:
     PWM_pulse = <neurtal_pwm> + (angle/360) * <full_turn_pwm>  
 */
-void pthread_motor_helper(int motor_index, int drive_pwm_pin, drive_activate_pin) {
+void pthread_motor_helper(int motor_index, int drive_pwm_pin, int drive_activate_pin) {
   /* 
     0 < MIN_REVERSE_SPEED < STATIONARY_PWM < MIN_FORWARD_SPEED < 4096
 
@@ -271,7 +274,8 @@ void pthread_motor_helper(int motor_index, int drive_pwm_pin, drive_activate_pin
   }
 
   // Check if within range for activate pin ("STATIONARY_PWM" +- 5%)
-  if (MIN_FORWARD_SPEED_PWM > pulse && pulse > MIN_REVERSE_SPEED_PWM) {
+  if (MIN_FORWARD_SPEED_PWM > CURRENT_MOTOR_PWM[motor_index] 
+    && CURRENT_MOTOR_PWM[motor_index] > MIN_REVERSE_SPEED_PWM) {
     // Deactivate motor and set to "STATIONARY_PWM"
     //  (if the speed is too low, the H-BRIDGE MIGHT OVERHEAT)
     CURRENT_MOTOR_PWM[motor_index] = STATIONARY_PWM ;
@@ -284,10 +288,10 @@ void pthread_motor_helper(int motor_index, int drive_pwm_pin, drive_activate_pin
   pwm.setPWM(drive_pwm_pin, 0, CURRENT_MOTOR_PWM[motor_index]);
 }
 
-static int pthread_update_DC_motors(struct pt *pt) {
+static int pthread_update_DC_motors(struct pt * pt) {
   static unsigned long timestamp = 0;
-  PT_BEGIN(pt)
-  while(1) {
+  PT_BEGIN(pt);
+  while(true) {
     PT_WAIT_UNTIL(pt, (long)millis() - (long)timestamp > MOTOR_PTHREAD_DELAY);
     timestamp = millis();
     pthread_motor_helper(DRIVE_ARRAY_INDEX_REAR,
@@ -306,6 +310,7 @@ static int pthread_update_DC_motors(struct pt *pt) {
                          DRIVE_PWM_PIN_FRONT_LEFT,
                          DRIVE_ACTIVATE_PIN_FRONT_LEFT);
   }
+  PT_END(pt);
 }
 
 /***** drive_speed_to_pulse() ###
@@ -327,7 +332,7 @@ uint16_t drive_speed_to_pulse(int int_speed) {
     pulse = MIN_PWM_VALUE;
   } else if (MIN_FORWARD_SPEED_PWM > pulse && pulse > MIN_REVERSE_SPEED_PWM) {
     // Too close to "STATIONARY_PWM"... set to "STATIONARY_PWM"
-    pulse = STATIONARY_PWM 
+    pulse = STATIONARY_PWM;
   }
   return pulse;
 }
@@ -336,26 +341,28 @@ uint16_t drive_speed_to_pulse(int int_speed) {
   Callback function for updating drive motors.
 */
 void manual_drive_callback(const std_msgs::Int16MultiArray& cmd_msg) {
+
+
   uint16_t pulse;
   int16_t newSpeed;
   // Update rear drive motor
-  newSpeed = (int16_t) cmdMsg.data[0];
+  newSpeed = (int16_t) cmd_msg.data[0];
   TARGET_MOTOR_PWM[0] = drive_speed_to_pulse(newSpeed);
 
   // Update side right drive motors
-  newSpeed = (int16_t) cmdMsg.data[1];
+  newSpeed = (int16_t) cmd_msg.data[1];
   TARGET_MOTOR_PWM[1] = drive_speed_to_pulse(newSpeed);
 
   // Update side left drive motors
-  newSpeed = (int16_t) cmdMsg.data[2];
+  newSpeed = (int16_t) cmd_msg.data[2];
   TARGET_MOTOR_PWM[2] = drive_speed_to_pulse(newSpeed);
 
   // Update front right drive motor
-  newSpeed = (int16_t) cmdMsg.data[3];
+  newSpeed = (int16_t) cmd_msg.data[3];
   TARGET_MOTOR_PWM[3] = drive_speed_to_pulse(newSpeed);
 
   // Update front left drive motor
-  newSpeed = (int16_t) cmdMsg.data[4];
+  newSpeed = (int16_t) cmd_msg.data[4];
   TARGET_MOTOR_PWM[4] = drive_speed_to_pulse(newSpeed);
 }
 
@@ -365,8 +372,8 @@ void manual_drive_callback(const std_msgs::Int16MultiArray& cmd_msg) {
    + drive_steer_manual   - manually set steering servo angles
    + drive_speed_manual   - manually set motor speeds             */
 ros::Subscriber<std_msgs::Int16MultiArray> sub_arm_manual("arm_cmd_manual", manual_arm_cmd_callback);
-ros::Subscriber<std_msgs::Int16MultiArray> sub_drive_steer_manual("drive_steer_manual", manual_drive_servo_callback);
-ros::Subscriber<std_msgs::Int16MultiArray> sub_drive_speed_manual("drive_speed_manual", manual_drive_callback);
+ros::Subscriber<std_msgs::Int16MultiArray> sub_drive_steer_manual("steer_cmd_manual", manual_drive_servo_callback);
+ros::Subscriber<std_msgs::Int16MultiArray> sub_drive_speed_manual("drive_cmd_manual", manual_drive_callback);
 
 
 void setup(){
@@ -374,6 +381,7 @@ void setup(){
   nh.subscribe(sub_arm_manual);         // Subcribe to manual arm control topic
   nh.subscribe(sub_drive_steer_manual); // Subcribe to manual steering control topic
   nh.subscribe(sub_drive_speed_manual); // Subcribe to manual speed control topic
+
 
   // Initialize I2C PWM board
   pwm.begin();
@@ -420,8 +428,8 @@ void setup(){
 }
 
 void loop(){
-  pthread_update_DC_motors(motor_protothread);
+  pthread_update_DC_motors(&motor_protothread);
   nh.spinOnce();
-  delay(1);
+  delay(10);
 }
                                                                                       
