@@ -71,10 +71,9 @@ std_msgs::Int16MultiArray arm_servo_message;
 
 // Steer servo array
 int16_t steer_servo[3];
-std_msgs::Int16MultiArray steer_servo_message;
 
 // Drive motor array
-int16_t drive_motor[5];
+int16_t drive_motors[8];
 std_msgs::Int16MultiArray drive_motor_message;
 
 
@@ -104,25 +103,18 @@ void publish_arm_servo_update(int servo_index) {
     arm_cmd_manual->publish(arm_servo_message);
 }
 
-/***** publish_steer_servo_update() ***
-    Publishes a new angle for the specified steer servo.
-    @INPUT int servo_index - index of servo to be published     */
-void publish_steer_servo_update() {
-    steer_servo_message.data[0] = steer_servo[0];
-    steer_servo_message.data[1] = steer_servo[1];
-    steer_servo_message.data[2] = steer_servo[2];
-    steer_cmd_manual->publish(steer_servo_message);
-}
-
 /***** publish_drive_motor_update() ***
     Publishes a new angle for the specified drive servo.
     @INPUT int servo_index - index of servo to be published     */
 void publish_drive_motor_update() {
-    drive_motor_message.data[0] = drive_motor[0];
-    drive_motor_message.data[1] = drive_motor[1];
-    drive_motor_message.data[2] = drive_motor[2];
-    drive_motor_message.data[3] = drive_motor[3];
-    drive_motor_message.data[4] = drive_motor[4];
+    drive_motor_message.data[0] = drive_motors[0];
+    drive_motor_message.data[1] = drive_motors[1];
+    drive_motor_message.data[2] = drive_motors[2];
+    drive_motor_message.data[3] = drive_motors[3];
+    drive_motor_message.data[4] = drive_motors[4];
+    drive_motor_message.data[5] = steer_servo[0];
+    drive_motor_message.data[6] = steer_servo[1];
+    drive_motor_message.data[7] = steer_servo[2];
     drive_cmd_manual->publish(drive_motor_message);
 }
 
@@ -141,17 +133,6 @@ void initialize_servos() {
     arm_servo[2] = 0;
     arm_servo[3] = 0;
 
-    // Initialize steer servo update message array
-    steer_servo_message.data.clear();
-    steer_servo_message.data.push_back(0);
-    steer_servo_message.data.push_back(0);
-    steer_servo_message.data.push_back(0);
-
-    // Initialize steer servo array
-    steer_servo[0] = 0;
-    steer_servo[1] = 0;
-    steer_servo[2] = 0;
-
     // Initialize drive motor update message array
     drive_motor_message.data.clear();
     drive_motor_message.data.push_back(0);
@@ -159,21 +140,27 @@ void initialize_servos() {
     drive_motor_message.data.push_back(0);
     drive_motor_message.data.push_back(0);
     drive_motor_message.data.push_back(0);
+    drive_motor_message.data.push_back(0);
+    drive_motor_message.data.push_back(0);
+    drive_motor_message.data.push_back(0);
+
+    // Initialize steer servo array
+    steer_servo[0] = 0;
+    steer_servo[1] = 0;
+    steer_servo[2] = 0;
 
     // Initialize drive motor array
-    drive_motor[0] = 0;
-    drive_motor[1] = 0;
-    drive_motor[2] = 0;
-    drive_motor[3] = 0;
-    drive_motor[4] = 0;
+    drive_motors[0] = 0;
+    drive_motors[1] = 0;
+    drive_motors[2] = 0;
+    drive_motors[3] = 0;
+    drive_motors[4] = 0;
 
     // Put all arm servos at 0 degrees
     for (int i = 0; i < 4; i++) {
         publish_arm_servo_update(i);
     }
 
-    // Put all steer servos at 0 degrees
-		publish_steer_servo_update();
 
 		// Set all drive motor speeds to 0
     publish_drive_motor_update();
@@ -213,11 +200,9 @@ int main(int argc, char **argv) {
 
     // Publishers to motor controller
 		arm_cmd_manual = new ros::Publisher();
-		steer_cmd_manual = new ros::Publisher();
 		drive_cmd_manual = new ros::Publisher();
 
     *arm_cmd_manual = n.advertise<std_msgs::Int16MultiArray>("arm_cmd_manual", 1000);
-    *steer_cmd_manual = n.advertise<std_msgs::Int16MultiArray>("steer_cmd_manual", 1000);
     *drive_cmd_manual = n.advertise<std_msgs::Int16MultiArray>("drive_cmd_manual", 1000);
     
     // Keyboard subscribers
@@ -320,48 +305,49 @@ int main(int argc, char **argv) {
             arm_cmd_manual->publish(arm_servo_message);
         }
 
-        // Steering (q and e and r)
+        // Steering (a and d and f)
         // q = CCW; e = cw
-        if (keys[keyboard::Key::KEY_q]) {
-            steer_servo[STEER_BACK] -= 1;
-            steer_servo[STEER_FRONT_RIGHT] -= 1;
-            steer_servo[STEER_FRONT_LEFT] -= 1;
-            publish_steer_servo_update();
-        } else if (keys[keyboard::Key::KEY_e]) {
-            steer_servo[STEER_BACK] += 1;
-            steer_servo[STEER_FRONT_RIGHT] += 1;
-            steer_servo[STEER_FRONT_LEFT] += 1;
-            publish_steer_servo_update();
+        if (keys[keyboard::Key::KEY_a]) {
+            steer_servo[STEER_BACK] += 3;
+            steer_servo[STEER_FRONT_RIGHT] += 3;
+            steer_servo[STEER_FRONT_LEFT] += 3;
+            publish_drive_motor_update();
+        } else if (keys[keyboard::Key::KEY_d]) {
+            steer_servo[STEER_BACK] -= 3;
+            steer_servo[STEER_FRONT_RIGHT] -= 3;
+            steer_servo[STEER_FRONT_LEFT] -= 3;
+            publish_drive_motor_update();
         }
-				if (keys[keyboard::Key::KEY_r]) {
-		            steer_servo[STEER_BACK] = 0;
-		            steer_servo[STEER_FRONT_RIGHT] = 0;
-		            steer_servo[STEER_FRONT_LEFT] = 0;
-		            publish_steer_servo_update();
-		    }
+	    if (keys[keyboard::Key::KEY_f]) {
+            steer_servo[STEER_BACK] = 0;
+            steer_servo[STEER_FRONT_RIGHT] = 0;
+            steer_servo[STEER_FRONT_LEFT] = 0;
+            publish_drive_motor_update();
+        }
 
         // Drive motors (w and s and x)
         if (keys[keyboard::Key::KEY_w]) {
-            drive_motor[DRIVE_REAR] += 1;
-            drive_motor[DRIVE_SIDE_RIGHT] += 1;
-            drive_motor[DRIVE_SIDE_LEFT] += 1;
-            drive_motor[DRIVE_FRONT_RIGHT] += 1;
-            drive_motor[DRIVE_FRONT_LEFT] += 1;
+
+            (drive_motors[DRIVE_REAR] < 2000) ? drive_motors[DRIVE_REAR] += 100 : drive_motors[DRIVE_REAR] = 2000;
+            (drive_motors[DRIVE_SIDE_RIGHT] < 2000) ? drive_motors[DRIVE_SIDE_RIGHT] += 100 : drive_motors[DRIVE_SIDE_RIGHT] = 2000;
+            (drive_motors[DRIVE_SIDE_LEFT] < 2000) ? drive_motors[DRIVE_SIDE_LEFT] += 100 : drive_motors[DRIVE_SIDE_LEFT] = 2000;
+            (drive_motors[STEER_FRONT_RIGHT] < 2000) ? drive_motors[DRIVE_FRONT_RIGHT] += 100 : drive_motors[DRIVE_FRONT_RIGHT] = 2000;
+            (drive_motors[DRIVE_FRONT_LEFT] < 2000) ? drive_motors[DRIVE_FRONT_LEFT] += 100 : drive_motors[DRIVE_FRONT_LEFT] = 2000;
             publish_drive_motor_update();
         } else if (keys[keyboard::Key::KEY_s]) {
-            drive_motor[DRIVE_REAR] -= 1;
-            drive_motor[DRIVE_SIDE_RIGHT] -= 1;
-            drive_motor[DRIVE_SIDE_LEFT] -= 1;
-            drive_motor[DRIVE_FRONT_RIGHT] -= 1;
-            drive_motor[DRIVE_FRONT_LEFT] -= 1;
+            (drive_motors[DRIVE_REAR] > -2000) ? drive_motors[DRIVE_REAR] -= 100 : drive_motors[DRIVE_REAR] = -2000;
+            (drive_motors[DRIVE_SIDE_RIGHT] > -2000) ? drive_motors[DRIVE_SIDE_RIGHT] -= 100 : drive_motors[DRIVE_SIDE_RIGHT] = -2000;
+            (drive_motors[DRIVE_SIDE_LEFT] > -2000) ? drive_motors[DRIVE_SIDE_LEFT] -= 100 : drive_motors[DRIVE_SIDE_LEFT] = -2000;
+            (drive_motors[STEER_FRONT_RIGHT] > -2000) ? drive_motors[DRIVE_FRONT_RIGHT] -= 100 : drive_motors[DRIVE_FRONT_RIGHT] = -2000;
+            (drive_motors[DRIVE_FRONT_LEFT] > -2000) ? drive_motors[DRIVE_FRONT_LEFT] -= 100 : drive_motors[DRIVE_FRONT_LEFT] = -2000;
             publish_drive_motor_update();
         }
 				if (keys[keyboard::Key::KEY_x]) {
-            drive_motor[DRIVE_REAR] = 0;
-            drive_motor[DRIVE_SIDE_RIGHT] = 0;
-            drive_motor[DRIVE_SIDE_LEFT] = 0;
-            drive_motor[DRIVE_FRONT_RIGHT] = 0;
-            drive_motor[DRIVE_FRONT_LEFT] = 0;
+            drive_motors[DRIVE_REAR] = 0;
+            drive_motors[DRIVE_SIDE_RIGHT] = 0;
+            drive_motors[DRIVE_SIDE_LEFT] = 0;
+            drive_motors[DRIVE_FRONT_RIGHT] = 0;
+            drive_motors[DRIVE_FRONT_LEFT] = 0;
             publish_drive_motor_update();
         }
 

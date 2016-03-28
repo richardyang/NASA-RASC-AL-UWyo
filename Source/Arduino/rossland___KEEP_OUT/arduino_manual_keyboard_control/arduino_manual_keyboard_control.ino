@@ -65,15 +65,16 @@ const PROGMEM int ARM_SERVO_NEUTRAL   = 315;  // "0 degrees", center pulse lengt
 const PROGMEM int ARM_SERVO_FULL_TURN = 216;  // "360 degrees", one full rotation
 
 //----------   S T E E R I N G   S E R V O   C O N S T A N T S   ----------
-const PROGMEM int STEER_MIN       = 200;
-const PROGMEM int STEER_MAX       = 500; 
-const PROGMEM int STEER_NEUTRAL   = 400;
-const PROGMEM int STEER_FULL_TURN = 200;
+const PROGMEM int STEER_MIN       = 105;
+const PROGMEM int STEER_MAX       = 495; 
+const PROGMEM int STEER_NEUTRAL   = 295;
+const PROGMEM int STEER_FULL_TURN = 720;
+//const PROGMEM int STEER_FULL_TURN = 716; // <--- ACTUAL VALUE
 
 //----------   D C   M O T O R   C O N S T A N T S   ----------
 // # If the motor pwms are too close to neutral (4096/2 +- ~5%)
-const PROGMEM int MIN_FORWARD_SPEED_PWM = 2200; // Max DC motor pwm
-const PROGMEM int MIN_REVERSE_SPEED_PWM = 1992; // Min DC motor pwm
+const PROGMEM int MIN_FORWARD_SPEED_PWM = 2248; // Max DC motor pwm
+const PROGMEM int MIN_REVERSE_SPEED_PWM = 1848; // Min DC motor pwm
 const PROGMEM int STATIONARY_PWM        = 2048; // Stopped DC motor pwm
 
 
@@ -136,6 +137,8 @@ const PROGMEM int MOTOR_PTHREAD_DELAY = 20; // Motor speed update delay (in ms)
 uint16_t TARGET_MOTOR_PWM[5];               // Target pulse for DC motors
 uint16_t CURRENT_MOTOR_PWM[5];              // Target pulse for DC motors
 
+const PROGMEM int motor_increment = 50;
+
 //----------    O T H E R   V A R I A B L E S    ----------
 // ROS node handle (makes everything work)
 ros::NodeHandle nh;
@@ -150,7 +153,7 @@ Adafruit_PWMServoDriver pwm = Adafruit_PWMServoDriver();
 
 /***** Converting angles to PWM pulses
   These functions convert a servo angles (in degrees) into a PWM pulses
-  Both arm_angle_to_pulse() and drive_angle_to_pulse() simply call angle_to_pulse()
+  Both arm_angle_to_pulse() and steer_angle_to_pulse() simply call angle_to_pulse()
     with the appropriate values
 
   Here's some math:
@@ -161,7 +164,7 @@ uint16_t angle_to_pulse(int int_angle,
                         int servo_min, int servo_max) {
   // Typecast angle to double to prevent overflow
   double angle = int_angle * 1.0;
-  uint16_t pulse = (uint16_t) (servo_neutral + ((angle*servo_full_turn)/360));
+  uint16_t pulse = (uint16_t) (servo_neutral + (((long)angle*(long)servo_full_turn)/360));
   // Check if within range
   if (pulse < servo_min) { 
     pulse = (uint16_t) servo_min; 
@@ -174,9 +177,9 @@ uint16_t arm_angle_to_pulse(int int_angle) {
   return angle_to_pulse(int_angle, ARM_SERVO_NEUTRAL, 
     ARM_SERVO_FULL_TURN, ARM_SERVO_MIN, ARM_SERVO_MAX);
 }
-uint16_t drive_angle_to_pulse(int int_angle) {
-  return angle_to_pulse(int_angle, ARM_SERVO_NEUTRAL, 
-    ARM_SERVO_FULL_TURN, ARM_SERVO_MIN, ARM_SERVO_MAX);
+uint16_t steer_angle_to_pulse(int int_angle) {
+  return angle_to_pulse(int_angle, STEER_NEUTRAL, 
+    STEER_FULL_TURN, STEER_MIN, STEER_MAX);
 }
 
 
@@ -215,30 +218,30 @@ void manual_arm_cmd_callback(const std_msgs::Int16MultiArray& cmd_msg) {
 /***** manual_drive_servo_callback() ###
   Callback function for updating drive servos.
 */
-void manual_drive_servo_callback(const std_msgs::Int16MultiArray& cmdMsg) {
+void manual_drive_servo_callback(const std_msgs::Int16MultiArray& cmd_msg) {
 
   uint16_t pulse;
   int16_t newAngle;
   // Update rear steer servo
-  newAngle = (int16_t) cmdMsg.data[0];
-  pulse = drive_angle_to_pulse(newAngle);
+  newAngle = -((int16_t) cmd_msg.data[0]);
+  pulse = steer_angle_to_pulse(newAngle);
   pwm.setPWM(STEER_PWM_PIN_REAR, 0, pulse);
 
   // Update front right steer servo
-  newAngle = (int16_t) cmdMsg.data[1];
-  pulse = drive_angle_to_pulse(newAngle);
+  newAngle = (int16_t) cmd_msg.data[1];
+  pulse = steer_angle_to_pulse(newAngle);
   pwm.setPWM(STEER_PWM_PIN_FRONT_RIGHT, 0, pulse);
 
   // Update front left steer servo
-  newAngle = (int16_t) cmdMsg.data[2];
-  pulse = drive_angle_to_pulse(newAngle);
+  newAngle = (int16_t) cmd_msg.data[2];
+  pulse = steer_angle_to_pulse(newAngle);
   pwm.setPWM(STEER_PWM_PIN_FRONT_LEFT, 0, pulse);
 }
 
 
 /***** Converting angles to PWM pulses
   These functions convert a servo angles (in degrees) into a PWM pulses
-  Both arm_angle_to_pulse() and drive_angle_to_pulse() simply call angle_to_pulse()
+  Both arm_angle_to_pulse() and steer_angle_to_pulse() simply call angle_to_pulse()
     with the appropriate values
 
   Here's some math:
@@ -261,13 +264,13 @@ void pthread_motor_helper(int motor_index, int drive_pwm_pin, int drive_activate
     if (CURRENT_MOTOR_PWM[motor_index] == STATIONARY_PWM ) {
       CURRENT_MOTOR_PWM[motor_index] = MIN_FORWARD_SPEED_PWM;
     } else {
-      CURRENT_MOTOR_PWM[motor_index]++;
+      CURRENT_MOTOR_PWM[motor_index] += motor_increment;
     }
   } else if (TARGET_MOTOR_PWM[motor_index] < CURRENT_MOTOR_PWM[motor_index]) {
     if (CURRENT_MOTOR_PWM[motor_index] == STATIONARY_PWM ) {
       CURRENT_MOTOR_PWM[motor_index] = MIN_REVERSE_SPEED_PWM;
     } else {
-      CURRENT_MOTOR_PWM[motor_index]--;
+      CURRENT_MOTOR_PWM[motor_index] -= motor_increment;
     }
   } else {
     return;   // Exit if there is nothing to change
@@ -344,26 +347,41 @@ void manual_drive_callback(const std_msgs::Int16MultiArray& cmd_msg) {
 
 
   uint16_t pulse;
-  int16_t newSpeed;
+  int16_t newValue;
   // Update rear drive motor
-  newSpeed = (int16_t) cmd_msg.data[0];
-  TARGET_MOTOR_PWM[0] = drive_speed_to_pulse(newSpeed);
+  newValue = -((int16_t) cmd_msg.data[0]);
+  TARGET_MOTOR_PWM[0] = drive_speed_to_pulse(motor_increment * (newValue/motor_increment));
 
   // Update side right drive motors
-  newSpeed = (int16_t) cmd_msg.data[1];
-  TARGET_MOTOR_PWM[1] = drive_speed_to_pulse(newSpeed);
+  newValue = (int16_t) cmd_msg.data[1];
+  TARGET_MOTOR_PWM[1] = drive_speed_to_pulse(motor_increment * (newValue/motor_increment));
 
   // Update side left drive motors
-  newSpeed = (int16_t) cmd_msg.data[2];
-  TARGET_MOTOR_PWM[2] = drive_speed_to_pulse(newSpeed);
+  newValue = -((int16_t) cmd_msg.data[2]);
+  TARGET_MOTOR_PWM[2] = drive_speed_to_pulse(motor_increment * (newValue/motor_increment));
 
   // Update front right drive motor
-  newSpeed = (int16_t) cmd_msg.data[3];
-  TARGET_MOTOR_PWM[3] = drive_speed_to_pulse(newSpeed);
+  newValue = (int16_t) cmd_msg.data[3];
+  TARGET_MOTOR_PWM[3] = drive_speed_to_pulse(motor_increment * (newValue/motor_increment));
 
   // Update front left drive motor
-  newSpeed = (int16_t) cmd_msg.data[4];
-  TARGET_MOTOR_PWM[4] = drive_speed_to_pulse(newSpeed);
+  newValue = -((int16_t) cmd_msg.data[4]);
+  TARGET_MOTOR_PWM[4] = drive_speed_to_pulse(motor_increment * (newValue/motor_increment));
+
+  // Update rear steer servo
+  newValue = (int16_t) cmd_msg.data[5];
+  pulse = steer_angle_to_pulse(newValue);
+  pwm.setPWM(STEER_PWM_PIN_REAR, 0, pulse);
+
+  // Update front right steer servo
+  newValue = (int16_t) cmd_msg.data[6];
+  pulse = steer_angle_to_pulse(newValue);
+  pwm.setPWM(STEER_PWM_PIN_FRONT_RIGHT, 0, pulse);
+
+  // Update front left steer servo
+  newValue = (int16_t) cmd_msg.data[7];
+  pulse = steer_angle_to_pulse(newValue);
+  pwm.setPWM(STEER_PWM_PIN_FRONT_LEFT, 0, pulse);
 }
 
 
@@ -372,14 +390,13 @@ void manual_drive_callback(const std_msgs::Int16MultiArray& cmd_msg) {
    + drive_steer_manual   - manually set steering servo angles
    + drive_speed_manual   - manually set motor speeds             */
 ros::Subscriber<std_msgs::Int16MultiArray> sub_arm_manual("arm_cmd_manual", manual_arm_cmd_callback);
-ros::Subscriber<std_msgs::Int16MultiArray> sub_drive_steer_manual("steer_cmd_manual", manual_drive_servo_callback);
+//ros::Subscriber<std_msgs::Int16MultiArray> sub_drive_steer_manual("steer_cmd_manual", manual_drive_servo_callback);
 ros::Subscriber<std_msgs::Int16MultiArray> sub_drive_speed_manual("drive_cmd_manual", manual_drive_callback);
-
 
 void setup(){
   nh.initNode();    // Initialize ROS node handle
   nh.subscribe(sub_arm_manual);         // Subcribe to manual arm control topic
-  nh.subscribe(sub_drive_steer_manual); // Subcribe to manual steering control topic
+  //nh.subscribe(sub_drive_steer_manual); // Subcribe to manual steering control topic
   nh.subscribe(sub_drive_speed_manual); // Subcribe to manual speed control topic
 
 

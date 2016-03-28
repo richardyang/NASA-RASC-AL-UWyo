@@ -35,10 +35,10 @@ RM = /usr/bin/cmake -E remove -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/roboops/Documents/RoboOps-Senior-Design/Source/RoboOps_ControllerCode/manual_keyboard_control
+CMAKE_SOURCE_DIR = /home/jr/github/RoboOps-Senior-Design/Source/RoboOps_ControllerCode/manual_keyboard_control
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/roboops/Documents/RoboOps-Senior-Design/Source/RoboOps_ControllerCode/manual_keyboard_control/build
+CMAKE_BINARY_DIR = /home/jr/github/RoboOps-Senior-Design/Source/RoboOps_ControllerCode/manual_keyboard_control/build
 
 # Utility rule file for rosbuild_precompile.
 
@@ -60,6 +60,6 @@ CMakeFiles/rosbuild_precompile.dir/clean:
 .PHONY : CMakeFiles/rosbuild_precompile.dir/clean
 
 CMakeFiles/rosbuild_precompile.dir/depend:
-	cd /home/roboops/Documents/RoboOps-Senior-Design/Source/RoboOps_ControllerCode/manual_keyboard_control/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/roboops/Documents/RoboOps-Senior-Design/Source/RoboOps_ControllerCode/manual_keyboard_control /home/roboops/Documents/RoboOps-Senior-Design/Source/RoboOps_ControllerCode/manual_keyboard_control /home/roboops/Documents/RoboOps-Senior-Design/Source/RoboOps_ControllerCode/manual_keyboard_control/build /home/roboops/Documents/RoboOps-Senior-Design/Source/RoboOps_ControllerCode/manual_keyboard_control/build /home/roboops/Documents/RoboOps-Senior-Design/Source/RoboOps_ControllerCode/manual_keyboard_control/build/CMakeFiles/rosbuild_precompile.dir/DependInfo.cmake --color=$(COLOR)
+	cd /home/jr/github/RoboOps-Senior-Design/Source/RoboOps_ControllerCode/manual_keyboard_control/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/jr/github/RoboOps-Senior-Design/Source/RoboOps_ControllerCode/manual_keyboard_control /home/jr/github/RoboOps-Senior-Design/Source/RoboOps_ControllerCode/manual_keyboard_control /home/jr/github/RoboOps-Senior-Design/Source/RoboOps_ControllerCode/manual_keyboard_control/build /home/jr/github/RoboOps-Senior-Design/Source/RoboOps_ControllerCode/manual_keyboard_control/build /home/jr/github/RoboOps-Senior-Design/Source/RoboOps_ControllerCode/manual_keyboard_control/build/CMakeFiles/rosbuild_precompile.dir/DependInfo.cmake --color=$(COLOR)
 .PHONY : CMakeFiles/rosbuild_precompile.dir/depend
 
