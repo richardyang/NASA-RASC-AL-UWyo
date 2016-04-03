@@ -73,14 +73,17 @@ bool CURRENT_VACUUM_STATE = false;
 // Arm servo array
 int16_t arm_servo[4];
 std_msgs::Int16MultiArray arm_servo_message;
+bool arm_update_needed = false;
 
 // Steer servo array
 int16_t steer_servo[3];
 std_msgs::Int16MultiArray steer_servo_message;
+bool steer_update_needed = false;
 
 // Drive motor array
 int16_t drive_motors[8];
 std_msgs::Int16MultiArray drive_motor_message;
+bool drive_update_needed = false;
 
 
 // ************************************************* KEYBOARD HANDLERS ************************************************* //
@@ -108,6 +111,7 @@ void publish_arm_servo_update() {
     arm_servo_message[1] = arm_servo[1];
     arm_servo_message[2] = arm_servo[2];
     arm_servo_message[3] = arm_servo[3];
+    arm_servo_message[4] = arm_servo[4];
     arm_cmd_manual->publish(arm_servo_message);
 }
 
@@ -282,52 +286,51 @@ int main(int argc, char **argv) {
                 // Publish change in angle
                 arm_servo[i] += angle_delta;
             }
-            publish_arm_servo_update();
+            arm_update_needed = true;
         }
 
         // Arm base (m and n)
         if (keys[keyboard::Key::KEY_n]) {
             arm_servo[ARM_BASE] += 1;
-            publish_arm_servo_update();
+            arm_update_needed = true;
         } else if (keys[keyboard::Key::KEY_m]) {
             arm_servo[ARM_BASE] -= 1;
-            publish_arm_servo_update();
+            arm_update_needed = true;
         }
 
         // Arm shoulder (j and u)
         if (keys[keyboard::Key::KEY_j]) {
             arm_servo[ARM_SHOULDER] += 1;
-            publish_arm_servo_update();
+            arm_update_needed = true;
         } else if (keys[keyboard::Key::KEY_u]) {
             arm_servo[ARM_SHOULDER] -= 1;
-            publish_arm_servo_update();
+            arm_update_needed = true;
         }
 
         // Arm elbow (i and k)
         if (keys[keyboard::Key::KEY_i]) {
             arm_servo[ARM_ELBOW] += 1;
-            publish_arm_servo_update();
+            arm_update_needed = true;
         } else if (keys[keyboard::Key::KEY_k]) {
             arm_servo[ARM_ELBOW] -= 1;
-            publish_arm_servo_update();
+            arm_update_needed = true;
         }
 
         // Arm wrist (o and l)
         if (keys[keyboard::Key::KEY_o]) {
             arm_servo[ARM_WRIST] += 1;
-            publish_arm_servo_update();
+            arm_update_needed = true;
         } else if (keys[keyboard::Key::KEY_l]) {
             arm_servo[ARM_WRIST] -= 1;
-            publish_arm_servo_update();
+            arm_update_needed = true;
         }
         
         // Arm gripper (b)
         if (keys[keyboard::Key::KEY_b]) {
             CURRENT_VACUUM_STATE = !CURRENT_VACUUM_STATE;
             keys[keyboard::Key::KEY_b] = false;
-            arm_servo_message.data[0] = 4;  
-            CURRENT_VACUUM_STATE ? arm_servo_message.data[1] = 1 : arm_servo_message.data[1] = 0;
-            arm_cmd_manual->publish(arm_servo_message);
+            CURRENT_VACUUM_STATE ? arm_servo_message.data[ARM_GRIPPER] = 1 : arm_servo_message.data[ARM_GRIPPER] = 0;
+            arm_update_needed = true;
         }
 
         // Steering (a and d and f)
@@ -336,18 +339,18 @@ int main(int argc, char **argv) {
             steer_servo[STEER_BACK] += 3;
             steer_servo[STEER_FRONT_RIGHT] += 3;
             steer_servo[STEER_FRONT_LEFT] += 3;
-            publish_steer_servo_update();
+            steer_update_needed = true;
         } else if (keys[keyboard::Key::KEY_d]) {
             steer_servo[STEER_BACK] -= 3;
             steer_servo[STEER_FRONT_RIGHT] -= 3;
             steer_servo[STEER_FRONT_LEFT] -= 3;
-            publish_steer_servo_update();
+            steer_update_needed = true;
         }
 	    if (keys[keyboard::Key::KEY_f]) {
             steer_servo[STEER_BACK] = 0;
             steer_servo[STEER_FRONT_RIGHT] = 0;
             steer_servo[STEER_FRONT_LEFT] = 0;
-            publish_steer_servo_update();
+            steer_update_needed = true;
         }
 
         // Drive motors (w and s and x)
@@ -357,24 +360,40 @@ int main(int argc, char **argv) {
             (drive_motors[DRIVE_SIDE_LEFT] < 2000) ? drive_motors[DRIVE_SIDE_LEFT] += 100 : drive_motors[DRIVE_SIDE_LEFT] = 2000;
             (drive_motors[STEER_FRONT_RIGHT] < 2000) ? drive_motors[DRIVE_FRONT_RIGHT] += 100 : drive_motors[DRIVE_FRONT_RIGHT] = 2000;
             (drive_motors[DRIVE_FRONT_LEFT] < 2000) ? drive_motors[DRIVE_FRONT_LEFT] += 100 : drive_motors[DRIVE_FRONT_LEFT] = 2000;
-            publish_drive_motor_update();
+            drive_update_needed = true;
         } else if (keys[keyboard::Key::KEY_s]) {
             (drive_motors[DRIVE_REAR] > -2000) ? drive_motors[DRIVE_REAR] -= 100 : drive_motors[DRIVE_REAR] = -2000;
             (drive_motors[DRIVE_SIDE_RIGHT] > -2000) ? drive_motors[DRIVE_SIDE_RIGHT] -= 100 : drive_motors[DRIVE_SIDE_RIGHT] = -2000;
             (drive_motors[DRIVE_SIDE_LEFT] > -2000) ? drive_motors[DRIVE_SIDE_LEFT] -= 100 : drive_motors[DRIVE_SIDE_LEFT] = -2000;
             (drive_motors[STEER_FRONT_RIGHT] > -2000) ? drive_motors[DRIVE_FRONT_RIGHT] -= 100 : drive_motors[DRIVE_FRONT_RIGHT] = -2000;
             (drive_motors[DRIVE_FRONT_LEFT] > -2000) ? drive_motors[DRIVE_FRONT_LEFT] -= 100 : drive_motors[DRIVE_FRONT_LEFT] = -2000;
-            publish_drive_motor_update();
+            drive_update_needed = true;
         }
-				if (keys[keyboard::Key::KEY_x]) {
+		if (keys[keyboard::Key::KEY_x]) {
             drive_motors[DRIVE_REAR] = 0;
             drive_motors[DRIVE_SIDE_RIGHT] = 0;
             drive_motors[DRIVE_SIDE_LEFT] = 0;
             drive_motors[DRIVE_FRONT_RIGHT] = 0;
             drive_motors[DRIVE_FRONT_LEFT] = 0;
+            drive_update_needed = true;
+        }
+
+
+        // Check if comamnd updates are needed
+        if (arm_update_needed) {
+            arm_update_needed = false;
+            publish_arm_servo_update();
+        }
+        if (steer_update_needed) {
+            steer_update_needed = false;
+            publish_steer_servo_update();
+        }
+        if (drive_update_needed) {
+            drive_update_needed = false;
             publish_drive_motor_update();
         }
 
+        // 
         ros::spinOnce();
         loop_rate.sleep();
     }

@@ -83,7 +83,7 @@ void keyUp(const keyboard::Key& key) {
 /***** publish_arm_servo_update() ***
     Publishes a new angle for the specified servo.
     @INPUT int servo_index - index of servo to be published     */
-void publish_arm_servo_update(int servo_index) {
+void publish_arm_servo_update() {
     arm_servo_message.data[0] = servo_index;
     arm_servo_message.data[1] = arm_servos[servo_index];
     arm_cmd_manual->publish(arm_servo_message);
