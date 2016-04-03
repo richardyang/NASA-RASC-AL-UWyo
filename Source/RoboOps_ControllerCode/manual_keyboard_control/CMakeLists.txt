@@ -30,3 +30,4 @@ set(LIBRARY_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/lib)
 #target_link_libraries(example ${PROJECT_NAME})
 
 rosbuild_add_executable(manual_keyboard_control src/manual_keyboard_control.cpp)
+rosbuild_add_executable(arduino_command_translator src/arduino_command_translator.cpp)
