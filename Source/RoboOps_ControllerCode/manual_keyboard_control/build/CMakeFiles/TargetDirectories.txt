@@ -3,6 +3,7 @@
 /home/jr/github/RoboOps-Senior-Design/Source/RoboOps_ControllerCode/manual_keyboard_control/build/CMakeFiles/ROSBUILD_gensrv_cpp.dir
 /home/jr/github/RoboOps-Senior-Design/Source/RoboOps_ControllerCode/manual_keyboard_control/build/CMakeFiles/ROSBUILD_gensrv_lisp.dir
 /home/jr/github/RoboOps-Senior-Design/Source/RoboOps_ControllerCode/manual_keyboard_control/build/CMakeFiles/_catkin_empty_exported_target.dir
+/home/jr/github/RoboOps-Senior-Design/Source/RoboOps_ControllerCode/manual_keyboard_control/build/CMakeFiles/arduino_command_translator.dir
 /home/jr/github/RoboOps-Senior-Design/Source/RoboOps_ControllerCode/manual_keyboard_control/build/CMakeFiles/clean_test_results.dir
 /home/jr/github/RoboOps-Senior-Design/Source/RoboOps_ControllerCode/manual_keyboard_control/build/CMakeFiles/clean_test_results_manual_keyboard_control.dir
 /home/jr/github/RoboOps-Senior-Design/Source/RoboOps_ControllerCode/manual_keyboard_control/build/CMakeFiles/download_extra_data.dir

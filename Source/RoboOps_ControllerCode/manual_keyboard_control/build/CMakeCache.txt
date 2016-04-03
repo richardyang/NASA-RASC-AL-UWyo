@@ -250,7 +250,7 @@ _CATKIN_GTEST_INCLUDE:FILEPATH=/usr/include/gtest/gtest.h
 _CATKIN_GTEST_SRC:FILEPATH=/usr/src/gtest/src/gtest.cc
 
 //Path to a file.
-_file_name:FILEPATH=/home/jr/github/RoboOps-Senior-Design/Source/RoboOps_ControllerCode/manual_keyboard_control/src/manual_keyboard_control.cpp
+_file_name:FILEPATH=/home/jr/github/RoboOps-Senior-Design/Source/RoboOps_ControllerCode/manual_keyboard_control/src/arduino_command_translator.cpp
 
 //The directory containing a CMake configuration file for catkin.
 catkin_DIR:PATH=/opt/ros/indigo/share/catkin/cmake
@@ -457,7 +457,7 @@ PYTHON_EXECUTABLE-ADVANCED:INTERNAL=1
 // it will install things.
 PYTHON_INSTALL_DIR:INTERNAL=lib/python2.7/dist-packages
 _rosbuild_EXPORTS:INTERNAL=
-_rosbuild_cached_flag_time:INTERNAL=1459558960.09
+_rosbuild_cached_flag_time:INTERNAL=1459655440.61
 _roslang_LANGS:INTERNAL=roslisp
 _rospack_deps_manifests_invoke_result:INTERNAL=/opt/ros/indigo/share/cpp_common/package.xml;/opt/ros/indigo/share/rostime/package.xml;/opt/ros/indigo/share/roscpp_traits/package.xml;/opt/ros/indigo/share/roscpp_serialization/package.xml;/opt/ros/indigo/share/genmsg/package.xml;/opt/ros/indigo/share/genpy/package.xml;/opt/ros/indigo/share/message_runtime/package.xml;/opt/ros/indigo/share/std_msgs/package.xml;/opt/ros/indigo/share/catkin/package.xml;/opt/ros/indigo/share/gencpp/package.xml;/opt/ros/indigo/share/genlisp/package.xml;/opt/ros/indigo/share/message_generation/package.xml;/opt/ros/indigo/share/rosbuild/package.xml;/opt/ros/indigo/share/rosconsole/package.xml;/opt/ros/indigo/share/rosgraph_msgs/package.xml;/opt/ros/indigo/share/xmlrpcpp/package.xml;/opt/ros/indigo/share/roscpp/package.xml;/opt/ros/indigo/share/rosgraph/package.xml;/opt/ros/indigo/share/rospack/package.xml;/opt/ros/indigo/share/roslib/package.xml;/opt/ros/indigo/share/rospy/package.xml;/opt/ros/indigo/share/keyboard/package.xml
 _rospack_msgsrv_gen_invoke_result:INTERNAL=

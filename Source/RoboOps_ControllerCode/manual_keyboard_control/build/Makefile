@@ -195,6 +195,19 @@ _catkin_empty_exported_target/fast:
 .PHONY : _catkin_empty_exported_target/fast
 
 #=============================================================================
+# Target rules for targets named arduino_command_translator
+
+# Build rule for target.
+arduino_command_translator: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 arduino_command_translator
+.PHONY : arduino_command_translator
+
+# fast build rule for target.
+arduino_command_translator/fast:
+	$(MAKE) -f CMakeFiles/arduino_command_translator.dir/build.make CMakeFiles/arduino_command_translator.dir/build
+.PHONY : arduino_command_translator/fast
+
+#=============================================================================
 # Target rules for targets named clean_test_results
 
 # Build rule for target.
@@ -441,6 +454,30 @@ gtest_main/fast:
 	$(MAKE) -f gtest/CMakeFiles/gtest_main.dir/build.make gtest/CMakeFiles/gtest_main.dir/build
 .PHONY : gtest_main/fast
 
+src/arduino_command_translator.o: src/arduino_command_translator.cpp.o
+.PHONY : src/arduino_command_translator.o
+
+# target to build an object file
+src/arduino_command_translator.cpp.o:
+	$(MAKE) -f CMakeFiles/arduino_command_translator.dir/build.make CMakeFiles/arduino_command_translator.dir/src/arduino_command_translator.cpp.o
+.PHONY : src/arduino_command_translator.cpp.o
+
+src/arduino_command_translator.i: src/arduino_command_translator.cpp.i
+.PHONY : src/arduino_command_translator.i
+
+# target to preprocess a source file
+src/arduino_command_translator.cpp.i:
+	$(MAKE) -f CMakeFiles/arduino_command_translator.dir/build.make CMakeFiles/arduino_command_translator.dir/src/arduino_command_translator.cpp.i
+.PHONY : src/arduino_command_translator.cpp.i
+
+src/arduino_command_translator.s: src/arduino_command_translator.cpp.s
+.PHONY : src/arduino_command_translator.s
+
+# target to generate assembly for a file
+src/arduino_command_translator.cpp.s:
+	$(MAKE) -f CMakeFiles/arduino_command_translator.dir/build.make CMakeFiles/arduino_command_translator.dir/src/arduino_command_translator.cpp.s
+.PHONY : src/arduino_command_translator.cpp.s
+
 src/manual_keyboard_control.o: src/manual_keyboard_control.cpp.o
 .PHONY : src/manual_keyboard_control.o
 
@@ -476,6 +513,7 @@ help:
 	@echo "... ROSBUILD_gensrv_cpp"
 	@echo "... ROSBUILD_gensrv_lisp"
 	@echo "... _catkin_empty_exported_target"
+	@echo "... arduino_command_translator"
 	@echo "... clean_test_results"
 	@echo "... clean_test_results_manual_keyboard_control"
 	@echo "... download_extra_data"
@@ -500,6 +538,9 @@ help:
 	@echo "... tests"
 	@echo "... gtest"
 	@echo "... gtest_main"
+	@echo "... src/arduino_command_translator.o"
+	@echo "... src/arduino_command_translator.i"
+	@echo "... src/arduino_command_translator.s"
 	@echo "... src/manual_keyboard_control.o"
 	@echo "... src/manual_keyboard_control.i"
 	@echo "... src/manual_keyboard_control.s"

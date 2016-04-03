@@ -1,8 +1,11 @@
-
-
-
-
-
+#include "ros/ros.h"
+#include "std_msgs/String.h"
+#include <std_msgs/Int16.h>
+#include <std_msgs/Int16MultiArray.h>
+#include <keyboard/Key.h>
+#include <inttypes.h>
+#include <sstream>
+#include <stdio.h>
 
 
 /*----------    T E S T I N G   C O M M A N D S    ----------
@@ -119,10 +122,10 @@ To test this code without running the "Mission Control" code:
 //-----------------------------------------------------------------------------------
 //----------   R O S   S U S C R I B E R S   A N D   P U B L I S H E R S   ----------
 //-----------------------------------------------------------------------------------
-// ROS suscribers
-ros::Suscriber * sub_arm_cmd_manual;
-ros::Suscriber * sub_steer_cmd_manual;
-ros::Suscriber * sub_drive_cmd_manual;
+// ROS Subscribers
+ros::Subscriber * sub_arm_cmd_manual;
+ros::Subscriber * sub_steer_cmd_manual;
+ros::Subscriber * sub_drive_cmd_manual;
 
 // ROS publisher
 ros::Publisher * pub_arduino_cmd;
@@ -157,40 +160,40 @@ uint16_t angle_to_pulse(int int_angle, int servo_neutral, int servo_full_turn, i
   // Check if within range
   if (pulse < servo_min) { 
     pulse = (uint16_t) servo_min; 
-  } else if (pulse > ARM_SERVO_MAX) {
+  } else if (pulse > servo_max) {
     pulse = (uint16_t) servo_max;
   }
   return pulse;
 }
 uint16_t arm_angle_to_pulse(int int_angle) {
-  return angle_to_pulse(int_angle, ARM_SERVO_NEUTRAL, 
-    ARM_SERVO_FULL_TURN, ARM_SERVO_MIN, ARM_SERVO_MAX);
+  return angle_to_pulse(int_angle, ARM_PWM_NEUTRAL, 
+    ARM_PWM_360_DEGREES, ARM_PWM_MIN, ARM_PWM_MAX);
 }
 uint16_t steer_angle_to_pulse(int int_angle) {
-  return angle_to_pulse(int_angle, STEER_NEUTRAL, 
-    STEER_FULL_TURN, STEER_MIN, STEER_MAX);
+  return angle_to_pulse(int_angle, SPEED_PWM_NEUTRAL, 
+    STEER_PWM_360_DEGREES, STEER_PWM_MIN, STEER_PWM_MAX);
 }
 
 /***** drive_speed_to_pulse() ###
   Converts a drive speed to a PWM pulse,
     checking if this pulse is within range
-    and is not too close to "STATIONARY_PWM"
+    and is not too close to "SPEED_PWM_NEUTRAL"
 
   !!! THIS FUNCTION SHOULD NEVER RETURN ANY VALUE 
   !!! WITHIN THE MIN FORWARD/BACKWARD PWMs
-  !!! OTHER THAN "neutral" (ie STATIONARY_PWM )
+  !!! OTHER THAN "neutral" (ie SPEED_PWM_NEUTRAL )
 */
 uint16_t drive_speed_to_pulse(int int_speed) {
   // Typecast angle to double to prevent overflow
-  double speed = int_speed * 1.0 + STATIONARY_PWM ;
+  double speed = int_speed * 1.0 + SPEED_PWM_NEUTRAL ;
   uint16_t pulse = (uint16_t) speed;
-  if (pulse > MAX_PWM_VALUE) { 
-    pulse = MAX_PWM_VALUE;
-  } else if (MIN_PWM_VALUE < 0) {
-    pulse = MIN_PWM_VALUE;
+  if (pulse > ABSOLUTE_MAX_PWM) { 
+    pulse = ABSOLUTE_MAX_PWM;
+  } else if (ABSOLUTE_MIN_PWM < 0) {
+    pulse = ABSOLUTE_MIN_PWM;
   } else if (MIN_FORWARD_SPEED_PWM > pulse && pulse > MIN_REVERSE_SPEED_PWM) {
-    // Too close to "STATIONARY_PWM"... set to "STATIONARY_PWM"
-    pulse = STATIONARY_PWM;
+    // Too close to "SPEED_PWM_NEUTRAL"... set to "SPEED_PWM_NEUTRAL"
+    pulse = SPEED_PWM_NEUTRAL;
   }
   return pulse;
 }
@@ -205,22 +208,22 @@ void arm_cmd_manual_callback(const std_msgs::Int16MultiArray& cmd_msg) {
 	// Set arm base
 	newAngle = (int16_t) cmd_msg.data[IN_MSG_INDEX_ARM_BASE];
 	newPulse = arm_angle_to_pulse(newAngle);
-	command_message_array[OUT_MSG_INDEX_ARM_BASE] = newPulse;
+	command_message_array.data[OUT_MSG_INDEX_ARM_BASE] = newPulse;
 	// Set arm shoulder
 	newAngle = (int16_t) cmd_msg.data[IN_MSG_INDEX_ARM_SHOULDER];
 	newPulse = arm_angle_to_pulse(newAngle);
-	command_message_array[OUT_MSG_INDEX_ARM_SHOULDER] = newPulse;
+	command_message_array.data[OUT_MSG_INDEX_ARM_SHOULDER] = newPulse;
 	// Set arm elbow
 	newAngle = (int16_t) cmd_msg.data[IN_MSG_INDEX_ARM_ELBOW];
 	newPulse = arm_angle_to_pulse(newAngle);
-	command_message_array[OUT_MSG_INDEX_ARM_ELBOW] = newPulse;
+	command_message_array.data[OUT_MSG_INDEX_ARM_ELBOW] = newPulse;
 	// Set arm wrist
 	newAngle = (int16_t) cmd_msg.data[IN_MSG_INDEX_ARM_WRIST];
 	newPulse = arm_angle_to_pulse(newAngle);
-	command_message_array[OUT_MSG_INDEX_ARM_WRIST] = newPulse;
+	command_message_array.data[OUT_MSG_INDEX_ARM_WRIST] = newPulse;
 
 	// Gripper
-	command_message_array[OUT_MSG_INDEX_GRIPPER] = cmd_msg[IN_MSG_INDEX_GRIPPER]
+	command_message_array.data[OUT_MSG_INDEX_GRIPPER] = cmd_msg.data[IN_MSG_INDEX_GRIPPER];
 
 	// Signal updated comamnds
 	UPDATE_NEEDED = true;
@@ -233,15 +236,15 @@ void steer_cmd_manual_callback(const std_msgs::Int16MultiArray& cmd_msg) {
 	// Set steer rear
 	newAngle = (int16_t) cmd_msg.data[IN_MSG_INDEX_STEER_R];
 	newPulse = steer_angle_to_pulse(newAngle);
-	command_message_array[OUT_MSG_INDEX_STEER_R] = newPulse;
+	command_message_array.data[OUT_MSG_INDEX_STEER_R] = newPulse;
 	// Set steer front right
 	newAngle = (int16_t) cmd_msg.data[IN_MSG_INDEX_STEER_F_R];
 	newPulse = steer_angle_to_pulse(newAngle);
-	command_message_array[OUT_MSG_INDEX_STEER_F_R] = newPulse;
+	command_message_array.data[OUT_MSG_INDEX_STEER_F_R] = newPulse;
 	// Set steer front left
-	newAngle = (int16_t) cmd_msg.data[MSG_INDEX_STEER_F_L];
+	newAngle = (int16_t) cmd_msg.data[IN_MSG_INDEX_STEER_F_L];
 	newPulse = steer_angle_to_pulse(newAngle);
-	command_message_array[OUT_MSG_INDEX_STEER_F_L] = newPulse;
+	command_message_array.data[OUT_MSG_INDEX_STEER_F_L] = newPulse;
 
 	// Signal updated comamnds
 	UPDATE_NEEDED = true;
@@ -254,23 +257,23 @@ void drive_cmd_manual_callback(const std_msgs::Int16MultiArray& cmd_msg) {
 	// Set steer front left
 	newSpeed = (int16_t) cmd_msg.data[IN_MSG_INDEX_DRIVE_R];
 	newPulse = drive_speed_to_pulse(newSpeed);
-	command_message_array[OUT_MSG_INDEX_DRIVE_R] = newPulse;
+	command_message_array.data[OUT_MSG_INDEX_DRIVE_R] = newPulse;
 	// Set steer front left
 	newSpeed = (int16_t) cmd_msg.data[IN_MSG_INDEX_DRIVE_S_R];
 	newPulse = drive_speed_to_pulse(newSpeed);
-	command_message_array[OUT_MSG_INDEX_DRIVE_S_R] = newPulse;
+	command_message_array.data[OUT_MSG_INDEX_DRIVE_S_R] = newPulse;
 	// Set steer front left
 	newSpeed = (int16_t) cmd_msg.data[IN_MSG_INDEX_DRIVE_S_L];
 	newPulse = drive_speed_to_pulse(newSpeed);
-	command_message_array[OUT_MSG_INDEX_DRIVE_S_L] = newPulse;
+	command_message_array.data[OUT_MSG_INDEX_DRIVE_S_L] = newPulse;
 	// Set steer front left
 	newSpeed = (int16_t) cmd_msg.data[IN_MSG_INDEX_DRIVE_F_R];
 	newPulse = drive_speed_to_pulse(newSpeed);
-	command_message_array[OUT_MSG_INDEX_DRIVE_F_R] = newPulse;
+	command_message_array.data[OUT_MSG_INDEX_DRIVE_F_R] = newPulse;
 	// Set steer front left
 	newSpeed = (int16_t) cmd_msg.data[IN_MSG_INDEX_DRIVE_F_L];
 	newPulse = drive_speed_to_pulse(newSpeed);
-	command_message_array[OUT_MSG_INDEX_DRIVE_F_L] = newPulse;
+	command_message_array.data[OUT_MSG_INDEX_DRIVE_F_L] = newPulse;
 
 	// Signal updated comamnds
 	UPDATE_NEEDED = true;
@@ -284,19 +287,19 @@ void initialize_command_message_array() {
 		command_message_array.data.push_back(0);
 	}
 	// Set default values
-	command_message_array[OUT_MSG_INDEX_ARM_BASE]     = ARM_PWM_NEUTRAL;	// Initialize arm servos
-	command_message_array[OUT_MSG_INDEX_ARM_SHOULDER] = ARM_PWM_NEUTRAL;
-	command_message_array[OUT_MSG_INDEX_ARM_ELBOW]    = ARM_PWM_NEUTRAL;
-	command_message_array[OUT_MSG_INDEX_ARM_WRIST]    = ARM_PWM_NEUTRAL;
-	command_message_array[OUT_MSG_INDEX_GRIPPER]      = ARM_GRIPPER_OFF;	// Initialize gripper
-	command_message_array[OUT_MSG_INDEX_STEER_R]      = STEER_PWM_NEUTRAL;	// Initialize steering servos
-	command_message_array[OUT_MSG_INDEX_STEER_F_R]    = STEER_PWM_NEUTRAL;
-	command_message_array[OUT_MSG_INDEX_STEER_F_L]    = STEER_PWM_NEUTRAL;
-	command_message_array[OUT_MSG_INDEX_DRIVE_R]      = SPEED_PWM_NEUTRAL;	// Initialize drive motors
-	command_message_array[OUT_MSG_INDEX_DRIVE_S_R]    = SPEED_PWM_NEUTRAL;
-	command_message_array[OUT_MSG_INDEX_DRIVE_S_L]    = SPEED_PWM_NEUTRAL;
-	command_message_array[OUT_MSG_INDEX_DRIVE_F_R]    = SPEED_PWM_NEUTRAL;
-	command_message_array[OUT_MSG_INDEX_DRIVE_F_L]    = SPEED_PWM_NEUTRAL;
+	command_message_array.data[OUT_MSG_INDEX_ARM_BASE]     = ARM_PWM_NEUTRAL;	// Initialize arm servos
+	command_message_array.data[OUT_MSG_INDEX_ARM_SHOULDER] = ARM_PWM_NEUTRAL;
+	command_message_array.data[OUT_MSG_INDEX_ARM_ELBOW]    = ARM_PWM_NEUTRAL;
+	command_message_array.data[OUT_MSG_INDEX_ARM_WRIST]    = ARM_PWM_NEUTRAL;
+	command_message_array.data[OUT_MSG_INDEX_GRIPPER]      = ARM_GRIPPER_OFF;	// Initialize gripper
+	command_message_array.data[OUT_MSG_INDEX_STEER_R]      = STEER_PWM_NEUTRAL;	// Initialize steering servos
+	command_message_array.data[OUT_MSG_INDEX_STEER_F_R]    = STEER_PWM_NEUTRAL;
+	command_message_array.data[OUT_MSG_INDEX_STEER_F_L]    = STEER_PWM_NEUTRAL;
+	command_message_array.data[OUT_MSG_INDEX_DRIVE_R]      = SPEED_PWM_NEUTRAL;	// Initialize drive motors
+	command_message_array.data[OUT_MSG_INDEX_DRIVE_S_R]    = SPEED_PWM_NEUTRAL;
+	command_message_array.data[OUT_MSG_INDEX_DRIVE_S_L]    = SPEED_PWM_NEUTRAL;
+	command_message_array.data[OUT_MSG_INDEX_DRIVE_F_R]    = SPEED_PWM_NEUTRAL;
+	command_message_array.data[OUT_MSG_INDEX_DRIVE_F_L]    = SPEED_PWM_NEUTRAL;
 }
 
 int main(int argc, char **argv) {
@@ -307,9 +310,9 @@ int main(int argc, char **argv) {
 
 
     // Create and initialize rostopic subscribers
-    sub_arm_cmd_manual = new ros::Suscriber();
-    sub_steer_cmd_manual = new ros::Suscriber();
-    sub_drive_cmd_manual = new ros::Suscriber();
+    sub_arm_cmd_manual = new ros::Subscriber();
+    sub_steer_cmd_manual = new ros::Subscriber();
+    sub_drive_cmd_manual = new ros::Subscriber();
     *sub_arm_cmd_manual = n.subscribe("arm_cmd_manual", 1000, arm_cmd_manual_callback);
     *sub_steer_cmd_manual = n.subscribe("steer_cmd_manual", 1000, steer_cmd_manual_callback);
     *sub_drive_cmd_manual = n.subscribe("drive_cmd_manual", 1000, drive_cmd_manual_callback);
