@@ -71,7 +71,7 @@ std::map<uint16_t, bool> keys;
 bool CURRENT_VACUUM_STATE = false;
 
 // Arm servo array
-int16_t arm_servo[4];
+int16_t arm_servo[5];
 std_msgs::Int16MultiArray arm_servo_message;
 bool arm_update_needed = false;
 
@@ -81,7 +81,7 @@ std_msgs::Int16MultiArray steer_servo_message;
 bool steer_update_needed = false;
 
 // Drive motor array
-int16_t drive_motors[8];
+int16_t drive_motors[5];
 std_msgs::Int16MultiArray drive_motor_message;
 bool drive_update_needed = false;
 
@@ -143,9 +143,11 @@ void initialize_servos() {
     arm_servo[1] = 0;
     arm_servo[2] = 0;
     arm_servo[3] = 0;
+    arm_servo[4] = 0;
 
 	// Initialize arm servo update message array
     arm_servo_message.data.clear();
+    arm_servo_message.data.push_back(0);
     arm_servo_message.data.push_back(0);
     arm_servo_message.data.push_back(0);
     arm_servo_message.data.push_back(0);
@@ -157,10 +159,10 @@ void initialize_servos() {
     steer_servo[2] = 0;
 
     // Initialize steer servo update message array
-    drive_motor_message.data.clear();
-    drive_motor_message.data.push_back(0);
-    drive_motor_message.data.push_back(0);
-    drive_motor_message.data.push_back(0);
+    steer_servo_message.data.clear();
+    steer_servo_message.data.push_back(0);
+    steer_servo_message.data.push_back(0);
+    steer_servo_message.data.push_back(0);
 
     // Initialize drive motor array
     drive_motors[0] = 0;
@@ -192,9 +194,9 @@ void initialize_key_states() {
     keys[keyboard::Key::KEY_p] = false; // Return home 
     keys[keyboard::Key::KEY_b] = false; // Toggle vacuum
 
-    keys[keyboard::Key::KEY_q] = false; // Steer CCW
-    keys[keyboard::Key::KEY_e] = false; // Steer CW
-    keys[keyboard::Key::KEY_r] = false; // Steer back to straight
+    keys[keyboard::Key::KEY_a] = false; // Steer CCW
+    keys[keyboard::Key::KEY_d] = false; // Steer CW
+    keys[keyboard::Key::KEY_f] = false; // Steer back to straight
 
     keys[keyboard::Key::KEY_w] = false; // Drive forward
     keys[keyboard::Key::KEY_s] = false; // Drive backward
@@ -358,14 +360,14 @@ int main(int argc, char **argv) {
             (drive_motors[DRIVE_REAR] < 2000) ? drive_motors[DRIVE_REAR] += 100 : drive_motors[DRIVE_REAR] = 2000;
             (drive_motors[DRIVE_SIDE_RIGHT] < 2000) ? drive_motors[DRIVE_SIDE_RIGHT] += 100 : drive_motors[DRIVE_SIDE_RIGHT] = 2000;
             (drive_motors[DRIVE_SIDE_LEFT] < 2000) ? drive_motors[DRIVE_SIDE_LEFT] += 100 : drive_motors[DRIVE_SIDE_LEFT] = 2000;
-            (drive_motors[STEER_FRONT_RIGHT] < 2000) ? drive_motors[DRIVE_FRONT_RIGHT] += 100 : drive_motors[DRIVE_FRONT_RIGHT] = 2000;
+            (drive_motors[DRIVE_FRONT_RIGHT] < 2000) ? drive_motors[DRIVE_FRONT_RIGHT] += 100 : drive_motors[DRIVE_FRONT_RIGHT] = 2000;
             (drive_motors[DRIVE_FRONT_LEFT] < 2000) ? drive_motors[DRIVE_FRONT_LEFT] += 100 : drive_motors[DRIVE_FRONT_LEFT] = 2000;
             drive_update_needed = true;
         } else if (keys[keyboard::Key::KEY_s]) {
             (drive_motors[DRIVE_REAR] > -2000) ? drive_motors[DRIVE_REAR] -= 100 : drive_motors[DRIVE_REAR] = -2000;
             (drive_motors[DRIVE_SIDE_RIGHT] > -2000) ? drive_motors[DRIVE_SIDE_RIGHT] -= 100 : drive_motors[DRIVE_SIDE_RIGHT] = -2000;
             (drive_motors[DRIVE_SIDE_LEFT] > -2000) ? drive_motors[DRIVE_SIDE_LEFT] -= 100 : drive_motors[DRIVE_SIDE_LEFT] = -2000;
-            (drive_motors[STEER_FRONT_RIGHT] > -2000) ? drive_motors[DRIVE_FRONT_RIGHT] -= 100 : drive_motors[DRIVE_FRONT_RIGHT] = -2000;
+            (drive_motors[DRIVE_FRONT_LEFT] > -2000) ? drive_motors[DRIVE_FRONT_RIGHT] -= 100 : drive_motors[DRIVE_FRONT_RIGHT] = -2000;
             (drive_motors[DRIVE_FRONT_LEFT] > -2000) ? drive_motors[DRIVE_FRONT_LEFT] -= 100 : drive_motors[DRIVE_FRONT_LEFT] = -2000;
             drive_update_needed = true;
         }
@@ -377,7 +379,6 @@ int main(int argc, char **argv) {
             drive_motors[DRIVE_FRONT_LEFT] = 0;
             drive_update_needed = true;
         }
-
 
         // Check if comamnd updates are needed
         if (arm_update_needed) {

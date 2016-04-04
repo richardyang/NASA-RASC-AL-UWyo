@@ -65,4 +65,5 @@ CMakeFiles/arduino_command_translator.dir/src/arduino_command_translator.cpp.o: 
 CMakeFiles/arduino_command_translator.dir/src/arduino_command_translator.cpp.o: /opt/ros/indigo/include/std_msgs/MultiArrayDimension.h
 CMakeFiles/arduino_command_translator.dir/src/arduino_command_translator.cpp.o: /opt/ros/indigo/include/std_msgs/MultiArrayLayout.h
 CMakeFiles/arduino_command_translator.dir/src/arduino_command_translator.cpp.o: /opt/ros/indigo/include/std_msgs/String.h
+CMakeFiles/arduino_command_translator.dir/src/arduino_command_translator.cpp.o: /opt/ros/indigo/include/std_msgs/UInt16MultiArray.h
 

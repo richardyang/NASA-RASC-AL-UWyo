@@ -1,17 +1,11 @@
-#if (ARDUINO >= 100)
- #include <Arduino.h>
-#else
- #include <WProgram.h>
-#endif
-
 #include <avr/pgmspace.h>             // Enable use of PROGMEM
 #include <Wire.h>                     // For I2C PWM board
 #include <Adafruit_PWMServoDriver.h>
 #include <pt.h>                       // Protothread library
 #include <ros.h>                      // ROS libraries
-#include "std_msgs/MultiArrayLayout.h"
-#include "std_msgs/MultiArrayDimension.h"
-#include "std_msgs/Int16MultiArray.h"
+#include <std_msgs/MultiArrayLayout.h>
+#include <std_msgs/MultiArrayDimension.h>
+#include <std_msgs/UInt16MultiArray.h>
 
 /*----------  R A M   U S A G E  ----------
   10% - Wire.h
@@ -160,7 +154,7 @@ const PROGMEM int MOTOR_PTHREAD_DELAY = 20; // Motor speed update delay (in ms)
 uint16_t target_motor_pwm[5];               // Target pulse for DC motors
 uint16_t current_motor_pwm[5];              // Target pulse for DC motors
 
-const PROGMEM int motor_increment = 50;
+const PROGMEM uint16_t motor_increment = 50;
 
 //----------    O T H E R   V A R I A B L E S    ----------
 // ROS node handle (makes everything work)
@@ -224,6 +218,7 @@ static int pthread_update_DC_motors(struct pt * pt) {
   while(true) {
     PT_WAIT_UNTIL(pt, (long)millis() - (long)timestamp > MOTOR_PTHREAD_DELAY);
     timestamp = millis();
+    
     pthread_motor_helper(DRIVE_ARRAY_INDEX_R,
                          DRIVE_PWM_PIN_R, 
                          DRIVE_ACTIVATE_PIN_R);
@@ -247,7 +242,7 @@ static int pthread_update_DC_motors(struct pt * pt) {
   This method acts as a callback for the rostopic listener.
   The values in the array SHOULD BE CORRECT PWM PULSE VALUES
 */
-void arduino_cmd_callback(const std_msgs::Int16MultiArray& cmd_msg) {
+void arduino_cmd_callback(const std_msgs::UInt16MultiArray& cmd_msg) {
   // Local value used to read data from the array
   uint16_t valueReadFromArray;
 
@@ -283,46 +278,46 @@ void arduino_cmd_callback(const std_msgs::Int16MultiArray& cmd_msg) {
 
   //----------  S T E E R   S E R V O S  ----------
   // Update rear steer servo
-  valueReadFromArray = -((uint16_t) cmd_msg.data[MSG_INDEX_STEER_R]);
+  valueReadFromArray = ((uint16_t) cmd_msg.data[MSG_INDEX_STEER_R]);
   if (STEER_PWM_MIN <= valueReadFromArray && valueReadFromArray <= STEER_PWM_MAX) {
     pwm.setPWM(STEER_PWM_PIN_R, 0, valueReadFromArray);
   }
   // Update front right steer servo
-  valueReadFromArray =  ((uint16_t) cmd_msg.data[MSG_INDEX_STEER_F_R]);
+  valueReadFromArray = ((uint16_t) cmd_msg.data[MSG_INDEX_STEER_F_R]);
   if (STEER_PWM_MIN <= valueReadFromArray && valueReadFromArray <= STEER_PWM_MAX) {
     pwm.setPWM(STEER_PWM_PIN_F_R, 0, valueReadFromArray);
   }
   // Update front left steer servo
-  valueReadFromArray =  ((uint16_t) cmd_msg.data[MSG_INDEX_STEER_F_L]);
+  valueReadFromArray = ((uint16_t) cmd_msg.data[MSG_INDEX_STEER_F_L]);
   if (STEER_PWM_MIN <= valueReadFromArray && valueReadFromArray <= STEER_PWM_MAX) {
     pwm.setPWM(STEER_PWM_PIN_F_L, 0, valueReadFromArray);
   }
 
   //----------  D R I V E   M O T O R S  ----------
   // Update rear drive motor
-  valueReadFromArray = -((uint16_t) cmd_msg.data[MSG_INDEX_DRIVE_R]);
+  valueReadFromArray = ((uint16_t) cmd_msg.data[MSG_INDEX_DRIVE_R]);
   if (ABSOLUTE_MIN_PWM <= valueReadFromArray && valueReadFromArray <= ABSOLUTE_MAX_PWM) {
-    target_motor_pwm[DRIVE_ARRAY_INDEX_R]   = motor_increment * (valueReadFromArray/motor_increment);
+    target_motor_pwm[DRIVE_ARRAY_INDEX_R]   = valueReadFromArray;
   }
   // Update side right drive motors
-  valueReadFromArray =  ((uint16_t) cmd_msg.data[MSG_INDEX_DRIVE_S_R]);
+  valueReadFromArray = ((uint16_t) cmd_msg.data[MSG_INDEX_DRIVE_S_R]);
   if (ABSOLUTE_MIN_PWM <= valueReadFromArray && valueReadFromArray <= ABSOLUTE_MAX_PWM) {
-    target_motor_pwm[DRIVE_ARRAY_INDEX_S_R] = motor_increment * (valueReadFromArray/motor_increment);
+    target_motor_pwm[DRIVE_ARRAY_INDEX_S_R] = valueReadFromArray;
   }
   // Update side left drive motors
-  valueReadFromArray = -((uint16_t) cmd_msg.data[MSG_INDEX_DRIVE_S_L]);
+  valueReadFromArray = ((uint16_t) cmd_msg.data[MSG_INDEX_DRIVE_S_L]);
   if (ABSOLUTE_MIN_PWM <= valueReadFromArray && valueReadFromArray <= ABSOLUTE_MAX_PWM) {
-    target_motor_pwm[DRIVE_ARRAY_INDEX_S_L] = motor_increment * (valueReadFromArray/motor_increment);
+    target_motor_pwm[DRIVE_ARRAY_INDEX_S_L] = valueReadFromArray;
   }
   // Update front right drive motor
-    valueReadFromArray =  ((uint16_t) cmd_msg.data[MSG_INDEX_DRIVE_F_R]);
+  valueReadFromArray = ((uint16_t) cmd_msg.data[MSG_INDEX_DRIVE_F_R]);
   if (ABSOLUTE_MIN_PWM <= valueReadFromArray && valueReadFromArray <= ABSOLUTE_MAX_PWM) {
-    target_motor_pwm[DRIVE_ARRAY_INDEX_F_R] = motor_increment * (valueReadFromArray/motor_increment);
+    target_motor_pwm[DRIVE_ARRAY_INDEX_F_R] = valueReadFromArray;
   }
   // Update front right drive motor
-  valueReadFromArray = -((uint16_t) cmd_msg.data[MSG_INDEX_DRIVE_F_L]);
+  valueReadFromArray = ((uint16_t) cmd_msg.data[MSG_INDEX_DRIVE_F_L]);
   if (ABSOLUTE_MIN_PWM <= valueReadFromArray && valueReadFromArray <= ABSOLUTE_MAX_PWM) {
-    target_motor_pwm[DRIVE_ARRAY_INDEX_F_L] = motor_increment * (valueReadFromArray/motor_increment);
+    target_motor_pwm[DRIVE_ARRAY_INDEX_F_L] = valueReadFromArray;
   }
 
   //----------  MAST STEPPER  ----------
@@ -332,7 +327,7 @@ void arduino_cmd_callback(const std_msgs::Int16MultiArray& cmd_msg) {
 
 /***** Subscribe to the following rostopics:
    + arduino_cmd       - Reads an array used to update servos and Motors*/
-ros::Subscriber<std_msgs::Int16MultiArray> sub_arduino_cmd("arduino_cmd", arduino_cmd_callback);
+ros::Subscriber<std_msgs::UInt16MultiArray> sub_arduino_cmd("arduino_cmd", arduino_cmd_callback);
 
 void setup(){
   nh.initNode();    // Initialize ROS node handle

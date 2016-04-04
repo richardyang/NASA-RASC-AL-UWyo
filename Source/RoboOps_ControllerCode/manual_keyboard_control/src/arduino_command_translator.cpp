@@ -2,6 +2,7 @@
 #include "std_msgs/String.h"
 #include <std_msgs/Int16.h>
 #include <std_msgs/Int16MultiArray.h>
+#include <std_msgs/UInt16MultiArray.h>
 #include <keyboard/Key.h>
 #include <inttypes.h>
 #include <sstream>
@@ -135,7 +136,7 @@ ros::Publisher * pub_arduino_cmd;
 //-----------   M O T O R   A N D   S E R V O   V A R I A B L E S   -----------------
 //-----------------------------------------------------------------------------------
 // Command publisher array
-std_msgs::Int16MultiArray command_message_array;
+std_msgs::UInt16MultiArray command_message_array;
 bool UPDATE_NEEDED = false;
 
 
@@ -170,7 +171,7 @@ uint16_t arm_angle_to_pulse(int int_angle) {
     ARM_PWM_360_DEGREES, ARM_PWM_MIN, ARM_PWM_MAX);
 }
 uint16_t steer_angle_to_pulse(int int_angle) {
-  return angle_to_pulse(int_angle, SPEED_PWM_NEUTRAL, 
+  return angle_to_pulse(int_angle, STEER_PWM_NEUTRAL, 
     STEER_PWM_360_DEGREES, STEER_PWM_MIN, STEER_PWM_MAX);
 }
 
@@ -234,9 +235,10 @@ void steer_cmd_manual_callback(const std_msgs::Int16MultiArray& cmd_msg) {
 	uint16_t newPulse;		// Pulse to send to arduino
 
 	// Set steer rear
-	newAngle = (int16_t) cmd_msg.data[IN_MSG_INDEX_STEER_R];
+	newAngle = -((int16_t) cmd_msg.data[IN_MSG_INDEX_STEER_R]);
 	newPulse = steer_angle_to_pulse(newAngle);
 	command_message_array.data[OUT_MSG_INDEX_STEER_R] = newPulse;
+
 	// Set steer front right
 	newAngle = (int16_t) cmd_msg.data[IN_MSG_INDEX_STEER_F_R];
 	newPulse = steer_angle_to_pulse(newAngle);
@@ -255,7 +257,7 @@ void drive_cmd_manual_callback(const std_msgs::Int16MultiArray& cmd_msg) {
 	uint16_t newPulse;	// Pulse to send to arduino
 
 	// Set steer front left
-	newSpeed = (int16_t) cmd_msg.data[IN_MSG_INDEX_DRIVE_R];
+	newSpeed = -((int16_t) cmd_msg.data[IN_MSG_INDEX_DRIVE_R]);
 	newPulse = drive_speed_to_pulse(newSpeed);
 	command_message_array.data[OUT_MSG_INDEX_DRIVE_R] = newPulse;
 	// Set steer front left
@@ -263,7 +265,7 @@ void drive_cmd_manual_callback(const std_msgs::Int16MultiArray& cmd_msg) {
 	newPulse = drive_speed_to_pulse(newSpeed);
 	command_message_array.data[OUT_MSG_INDEX_DRIVE_S_R] = newPulse;
 	// Set steer front left
-	newSpeed = (int16_t) cmd_msg.data[IN_MSG_INDEX_DRIVE_S_L];
+	newSpeed = -((int16_t) cmd_msg.data[IN_MSG_INDEX_DRIVE_S_L]);
 	newPulse = drive_speed_to_pulse(newSpeed);
 	command_message_array.data[OUT_MSG_INDEX_DRIVE_S_L] = newPulse;
 	// Set steer front left
@@ -271,7 +273,7 @@ void drive_cmd_manual_callback(const std_msgs::Int16MultiArray& cmd_msg) {
 	newPulse = drive_speed_to_pulse(newSpeed);
 	command_message_array.data[OUT_MSG_INDEX_DRIVE_F_R] = newPulse;
 	// Set steer front left
-	newSpeed = (int16_t) cmd_msg.data[IN_MSG_INDEX_DRIVE_F_L];
+	newSpeed = -((int16_t) cmd_msg.data[IN_MSG_INDEX_DRIVE_F_L]);
 	newPulse = drive_speed_to_pulse(newSpeed);
 	command_message_array.data[OUT_MSG_INDEX_DRIVE_F_L] = newPulse;
 
@@ -319,7 +321,7 @@ int main(int argc, char **argv) {
 
     // Create and initialize  publisher
     pub_arduino_cmd = new ros::Publisher();
-    *pub_arduino_cmd = n.advertise<std_msgs::Int16MultiArray>("arduino_cmd", 1000);
+    *pub_arduino_cmd = n.advertise<std_msgs::UInt16MultiArray>("arduino_cmd", 1000);
 
     // Initialize command publisher array
     initialize_command_message_array();
@@ -330,6 +332,7 @@ int main(int argc, char **argv) {
 
     	// Check fo update to servos/motors
 		if (UPDATE_NEEDED) {
+			UPDATE_NEEDED = false;
 			pub_arduino_cmd->publish(command_message_array);
 		}
 
