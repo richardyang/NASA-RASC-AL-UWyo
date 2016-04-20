@@ -25,9 +25,9 @@ III. Run the manual control packages
 IV. Run another terminal, ssh into motherboard, and run python serial script:
   $ rosrun rosserial_python serial_node _port:=/dev/<PORT>      [usually ttyS0 or ttyS1]
 
-IV. In a new terminal set ROS variables on local computer:
+V. In a new terminal set ROS variables on local computer:
   $ export ROS_MASTER_URI="http://<IP_ADDRESS_OF_MOTHERBOARD>"
   $ export ROS_IP=<IP_ADDRESS_OF_MOTHERBOARD>
 
-V. Run the keyboard ROS node on local computer:
+VI. Run the keyboard ROS node on local computer:
   $ rosrun keyboard keyboard
