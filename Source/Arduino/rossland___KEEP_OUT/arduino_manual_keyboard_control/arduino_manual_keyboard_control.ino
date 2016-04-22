@@ -108,13 +108,13 @@ const PROGMEM int DRIVE_PWM_PIN_F_R = 14;
 const PROGMEM int DRIVE_PWM_PIN_F_L = 15;
 
 //----------    A T M E G A   G R I P P E R   P I N     ----------
-const PROGMEM int GRIPPER_VACUUM_PIN = 13;
+const PROGMEM int GRIPPER_VACUUM_PIN = 8;
 
 //----------    A T M E G A   M O T O R   A C T I V A T E   P I N S     ----------
-const PROGMEM int DRIVE_ACTIVATE_PIN_R   = 2;
-const PROGMEM int DRIVE_ACTIVATE_PIN_S_R = 4;
-const PROGMEM int DRIVE_ACTIVATE_PIN_S_L = 7;
-const PROGMEM int DRIVE_ACTIVATE_PIN_F_R = 8;
+const PROGMEM int DRIVE_ACTIVATE_PIN_R   = 9;
+const PROGMEM int DRIVE_ACTIVATE_PIN_S_R = 10;
+const PROGMEM int DRIVE_ACTIVATE_PIN_S_L = 3;
+const PROGMEM int DRIVE_ACTIVATE_PIN_F_R = 11;
 const PROGMEM int DRIVE_ACTIVATE_PIN_F_L = 12;
 
 

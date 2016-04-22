@@ -1,7 +1,7 @@
 FILE(REMOVE_RECURSE
   "CMakeFiles/gtest_main.dir/src/gtest_main.cc.o"
-  "/home/jr/github/RoboOps-Senior-Design/Source/RoboOps_ControllerCode/manual_keyboard_control/lib/libgtest_main.pdb"
-  "/home/jr/github/RoboOps-Senior-Design/Source/RoboOps_ControllerCode/manual_keyboard_control/lib/libgtest_main.so"
+  "/home/roboops/RoboOps-Senior-Design/Source/RoboOps_ControllerCode/manual_keyboard_control/lib/libgtest_main.pdb"
+  "/home/roboops/RoboOps-Senior-Design/Source/RoboOps_ControllerCode/manual_keyboard_control/lib/libgtest_main.so"
 )
 
 # Per-language clean rules from dependency scanning.

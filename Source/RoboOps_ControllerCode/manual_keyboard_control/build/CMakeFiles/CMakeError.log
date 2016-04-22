@@ -283,3 +283,915 @@ make[1]: Leaving directory `/home/jr/github/RoboOps-Senior-Design/Source/RoboOps
 make[1]: *** [cmTryCompileExec2513560619/fast] Error 2
 
 
+Determining if the pthread_create exist failed with the following output:
+Change Dir: /home/roboops/RoboOps-Senior-Design/Source/RoboOps_ControllerCode/manual_keyboard_control/build/CMakeFiles/CMakeTmp
+
+Run Build Command:/usr/bin/make "cmTryCompileExec4230453507/fast"
+make[1]: Entering directory `/home/roboops/RoboOps-Senior-Design/Source/RoboOps_ControllerCode/manual_keyboard_control/build/CMakeFiles/CMakeTmp'
+/usr/bin/make -f CMakeFiles/cmTryCompileExec4230453507.dir/build.make CMakeFiles/cmTryCompileExec4230453507.dir/build
+make[2]: Entering directory `/home/roboops/RoboOps-Senior-Design/Source/RoboOps_ControllerCode/manual_keyboard_control/build/CMakeFiles/CMakeTmp'
+/usr/bin/cmake -E cmake_progress_report /home/roboops/RoboOps-Senior-Design/Source/RoboOps_ControllerCode/manual_keyboard_control/build/CMakeFiles/CMakeTmp/CMakeFiles 1
+Building C object CMakeFiles/cmTryCompileExec4230453507.dir/CheckSymbolExists.c.o
+/usr/bin/cc    -o CMakeFiles/cmTryCompileExec4230453507.dir/CheckSymbolExists.c.o   -c /home/roboops/RoboOps-Senior-Design/Source/RoboOps_ControllerCode/manual_keyboard_control/build/CMakeFiles/CMakeTmp/CheckSymbolExists.c
+Linking C executable cmTryCompileExec4230453507
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTryCompileExec4230453507.dir/link.txt --verbose=1
+/usr/bin/cc       CMakeFiles/cmTryCompileExec4230453507.dir/CheckSymbolExists.c.o  -o cmTryCompileExec4230453507 -rdynamic 
+CMakeFiles/cmTryCompileExec4230453507.dir/CheckSymbolExists.c.o: In function `main':
+CheckSymbolExists.c:(.text+0x16): undefined reference to `pthread_create'
+collect2: error: ld returned 1 exit status
+make[2]: *** [cmTryCompileExec4230453507] Error 1
+make[2]: Leaving directory `/home/roboops/RoboOps-Senior-Design/Source/RoboOps_ControllerCode/manual_keyboard_control/build/CMakeFiles/CMakeTmp'
+make[1]: *** [cmTryCompileExec4230453507/fast] Error 2
+make[1]: Leaving directory `/home/roboops/RoboOps-Senior-Design/Source/RoboOps_ControllerCode/manual_keyboard_control/build/CMakeFiles/CMakeTmp'
+
+File /home/roboops/RoboOps-Senior-Design/Source/RoboOps_ControllerCode/manual_keyboard_control/build/CMakeFiles/CMakeTmp/CheckSymbolExists.c:
+/* */
+#include <pthread.h>
+
+int main(int argc, char** argv)
+{
+  (void)argv;
+#ifndef pthread_create
+  return ((int*)(&pthread_create))[argc];
+#else
+  (void)argc;
+  return 0;
+#endif
+}
+
+Determining if the function pthread_create exists in the pthreads failed with the following output:
+Change Dir: /home/roboops/RoboOps-Senior-Design/Source/RoboOps_ControllerCode/manual_keyboard_control/build/CMakeFiles/CMakeTmp
+
+Run Build Command:/usr/bin/make "cmTryCompileExec1004118327/fast"
+make[1]: Entering directory `/home/roboops/RoboOps-Senior-Design/Source/RoboOps_ControllerCode/manual_keyboard_control/build/CMakeFiles/CMakeTmp'
+/usr/bin/make -f CMakeFiles/cmTryCompileExec1004118327.dir/build.make CMakeFiles/cmTryCompileExec1004118327.dir/build
+make[2]: Entering directory `/home/roboops/RoboOps-Senior-Design/Source/RoboOps_ControllerCode/manual_keyboard_control/build/CMakeFiles/CMakeTmp'
+/usr/bin/cmake -E cmake_progress_report /home/roboops/RoboOps-Senior-Design/Source/RoboOps_ControllerCode/manual_keyboard_control/build/CMakeFiles/CMakeTmp/CMakeFiles 1
+Building C object CMakeFiles/cmTryCompileExec1004118327.dir/CheckFunctionExists.c.o
+/usr/bin/cc   -DCHECK_FUNCTION_EXISTS=pthread_create   -o CMakeFiles/cmTryCompileExec1004118327.dir/CheckFunctionExists.c.o   -c /usr/share/cmake-2.8/Modules/CheckFunctionExists.c
+Linking C executable cmTryCompileExec1004118327
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTryCompileExec1004118327.dir/link.txt --verbose=1
+/usr/bin/cc   -DCHECK_FUNCTION_EXISTS=pthread_create    CMakeFiles/cmTryCompileExec1004118327.dir/CheckFunctionExists.c.o  -o cmTryCompileExec1004118327 -rdynamic -lpthreads 
+/usr/bin/ld: cannot find -lpthreads
+collect2: error: ld returned 1 exit status
+make[2]: *** [cmTryCompileExec1004118327] Error 1
+make[2]: Leaving directory `/home/roboops/RoboOps-Senior-Design/Source/RoboOps_ControllerCode/manual_keyboard_control/build/CMakeFiles/CMakeTmp'
+make[1]: *** [cmTryCompileExec1004118327/fast] Error 2
+make[1]: Leaving directory `/home/roboops/RoboOps-Senior-Design/Source/RoboOps_ControllerCode/manual_keyboard_control/build/CMakeFiles/CMakeTmp'
+
+
+Determining if the pthread_create exist failed with the following output:
+Change Dir: /home/roboops/RoboOps-Senior-Design/Source/RoboOps_ControllerCode/manual_keyboard_control/build/CMakeFiles/CMakeTmp
+
+Run Build Command:/usr/bin/make "cmTryCompileExec1892291520/fast"
+make[1]: Entering directory `/home/roboops/RoboOps-Senior-Design/Source/RoboOps_ControllerCode/manual_keyboard_control/build/CMakeFiles/CMakeTmp'
+/usr/bin/make -f CMakeFiles/cmTryCompileExec1892291520.dir/build.make CMakeFiles/cmTryCompileExec1892291520.dir/build
+make[2]: Entering directory `/home/roboops/RoboOps-Senior-Design/Source/RoboOps_ControllerCode/manual_keyboard_control/build/CMakeFiles/CMakeTmp'
+/usr/bin/cmake -E cmake_progress_report /home/roboops/RoboOps-Senior-Design/Source/RoboOps_ControllerCode/manual_keyboard_control/build/CMakeFiles/CMakeTmp/CMakeFiles 1
+Building C object CMakeFiles/cmTryCompileExec1892291520.dir/CheckSymbolExists.c.o
+/usr/bin/cc    -o CMakeFiles/cmTryCompileExec1892291520.dir/CheckSymbolExists.c.o   -c /home/roboops/RoboOps-Senior-Design/Source/RoboOps_ControllerCode/manual_keyboard_control/build/CMakeFiles/CMakeTmp/CheckSymbolExists.c
+Linking C executable cmTryCompileExec1892291520
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTryCompileExec1892291520.dir/link.txt --verbose=1
+/usr/bin/cc       CMakeFiles/cmTryCompileExec1892291520.dir/CheckSymbolExists.c.o  -o cmTryCompileExec1892291520 -rdynamic 
+CMakeFiles/cmTryCompileExec1892291520.dir/CheckSymbolExists.c.o: In function `main':
+CheckSymbolExists.c:(.text+0x16): undefined reference to `pthread_create'
+collect2: error: ld returned 1 exit status
+make[2]: *** [cmTryCompileExec1892291520] Error 1
+make[2]: Leaving directory `/home/roboops/RoboOps-Senior-Design/Source/RoboOps_ControllerCode/manual_keyboard_control/build/CMakeFiles/CMakeTmp'
+make[1]: *** [cmTryCompileExec1892291520/fast] Error 2
+make[1]: Leaving directory `/home/roboops/RoboOps-Senior-Design/Source/RoboOps_ControllerCode/manual_keyboard_control/build/CMakeFiles/CMakeTmp'
+
+File /home/roboops/RoboOps-Senior-Design/Source/RoboOps_ControllerCode/manual_keyboard_control/build/CMakeFiles/CMakeTmp/CheckSymbolExists.c:
+/* */
+#include <pthread.h>
+
+int main(int argc, char** argv)
+{
+  (void)argv;
+#ifndef pthread_create
+  return ((int*)(&pthread_create))[argc];
+#else
+  (void)argc;
+  return 0;
+#endif
+}
+
+Determining if the function pthread_create exists in the pthreads failed with the following output:
+Change Dir: /home/roboops/RoboOps-Senior-Design/Source/RoboOps_ControllerCode/manual_keyboard_control/build/CMakeFiles/CMakeTmp
+
+Run Build Command:/usr/bin/make "cmTryCompileExec28361020/fast"
+make[1]: Entering directory `/home/roboops/RoboOps-Senior-Design/Source/RoboOps_ControllerCode/manual_keyboard_control/build/CMakeFiles/CMakeTmp'
+/usr/bin/make -f CMakeFiles/cmTryCompileExec28361020.dir/build.make CMakeFiles/cmTryCompileExec28361020.dir/build
+make[2]: Entering directory `/home/roboops/RoboOps-Senior-Design/Source/RoboOps_ControllerCode/manual_keyboard_control/build/CMakeFiles/CMakeTmp'
+/usr/bin/cmake -E cmake_progress_report /home/roboops/RoboOps-Senior-Design/Source/RoboOps_ControllerCode/manual_keyboard_control/build/CMakeFiles/CMakeTmp/CMakeFiles 1
+Building C object CMakeFiles/cmTryCompileExec28361020.dir/CheckFunctionExists.c.o
+/usr/bin/cc   -DCHECK_FUNCTION_EXISTS=pthread_create   -o CMakeFiles/cmTryCompileExec28361020.dir/CheckFunctionExists.c.o   -c /usr/share/cmake-2.8/Modules/CheckFunctionExists.c
+Linking C executable cmTryCompileExec28361020
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTryCompileExec28361020.dir/link.txt --verbose=1
+/usr/bin/cc   -DCHECK_FUNCTION_EXISTS=pthread_create    CMakeFiles/cmTryCompileExec28361020.dir/CheckFunctionExists.c.o  -o cmTryCompileExec28361020 -rdynamic -lpthreads 
+/usr/bin/ld: cannot find -lpthreads
+collect2: error: ld returned 1 exit status
+make[2]: *** [cmTryCompileExec28361020] Error 1
+make[2]: Leaving directory `/home/roboops/RoboOps-Senior-Design/Source/RoboOps_ControllerCode/manual_keyboard_control/build/CMakeFiles/CMakeTmp'
+make[1]: *** [cmTryCompileExec28361020/fast] Error 2
+make[1]: Leaving directory `/home/roboops/RoboOps-Senior-Design/Source/RoboOps_ControllerCode/manual_keyboard_control/build/CMakeFiles/CMakeTmp'
+
+
+Determining if the pthread_create exist failed with the following output:
+Change Dir: /home/roboops/RoboOps-Senior-Design/Source/RoboOps_ControllerCode/manual_keyboard_control/build/CMakeFiles/CMakeTmp
+
+Run Build Command:/usr/bin/make "cmTryCompileExec1882680337/fast"
+make[1]: Entering directory `/home/roboops/RoboOps-Senior-Design/Source/RoboOps_ControllerCode/manual_keyboard_control/build/CMakeFiles/CMakeTmp'
+/usr/bin/make -f CMakeFiles/cmTryCompileExec1882680337.dir/build.make CMakeFiles/cmTryCompileExec1882680337.dir/build
+make[2]: Entering directory `/home/roboops/RoboOps-Senior-Design/Source/RoboOps_ControllerCode/manual_keyboard_control/build/CMakeFiles/CMakeTmp'
+/usr/bin/cmake -E cmake_progress_report /home/roboops/RoboOps-Senior-Design/Source/RoboOps_ControllerCode/manual_keyboard_control/build/CMakeFiles/CMakeTmp/CMakeFiles 1
+Building C object CMakeFiles/cmTryCompileExec1882680337.dir/CheckSymbolExists.c.o
+/usr/bin/cc    -o CMakeFiles/cmTryCompileExec1882680337.dir/CheckSymbolExists.c.o   -c /home/roboops/RoboOps-Senior-Design/Source/RoboOps_ControllerCode/manual_keyboard_control/build/CMakeFiles/CMakeTmp/CheckSymbolExists.c
+Linking C executable cmTryCompileExec1882680337
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTryCompileExec1882680337.dir/link.txt --verbose=1
+/usr/bin/cc       CMakeFiles/cmTryCompileExec1882680337.dir/CheckSymbolExists.c.o  -o cmTryCompileExec1882680337 -rdynamic 
+CMakeFiles/cmTryCompileExec1882680337.dir/CheckSymbolExists.c.o: In function `main':
+CheckSymbolExists.c:(.text+0x16): undefined reference to `pthread_create'
+collect2: error: ld returned 1 exit status
+make[2]: *** [cmTryCompileExec1882680337] Error 1
+make[2]: Leaving directory `/home/roboops/RoboOps-Senior-Design/Source/RoboOps_ControllerCode/manual_keyboard_control/build/CMakeFiles/CMakeTmp'
+make[1]: *** [cmTryCompileExec1882680337/fast] Error 2
+make[1]: Leaving directory `/home/roboops/RoboOps-Senior-Design/Source/RoboOps_ControllerCode/manual_keyboard_control/build/CMakeFiles/CMakeTmp'
+
+File /home/roboops/RoboOps-Senior-Design/Source/RoboOps_ControllerCode/manual_keyboard_control/build/CMakeFiles/CMakeTmp/CheckSymbolExists.c:
+/* */
+#include <pthread.h>
+
+int main(int argc, char** argv)
+{
+  (void)argv;
+#ifndef pthread_create
+  return ((int*)(&pthread_create))[argc];
+#else
+  (void)argc;
+  return 0;
+#endif
+}
+
+Determining if the function pthread_create exists in the pthreads failed with the following output:
+Change Dir: /home/roboops/RoboOps-Senior-Design/Source/RoboOps_ControllerCode/manual_keyboard_control/build/CMakeFiles/CMakeTmp
+
+Run Build Command:/usr/bin/make "cmTryCompileExec339902274/fast"
+make[1]: Entering directory `/home/roboops/RoboOps-Senior-Design/Source/RoboOps_ControllerCode/manual_keyboard_control/build/CMakeFiles/CMakeTmp'
+/usr/bin/make -f CMakeFiles/cmTryCompileExec339902274.dir/build.make CMakeFiles/cmTryCompileExec339902274.dir/build
+make[2]: Entering directory `/home/roboops/RoboOps-Senior-Design/Source/RoboOps_ControllerCode/manual_keyboard_control/build/CMakeFiles/CMakeTmp'
+/usr/bin/cmake -E cmake_progress_report /home/roboops/RoboOps-Senior-Design/Source/RoboOps_ControllerCode/manual_keyboard_control/build/CMakeFiles/CMakeTmp/CMakeFiles 1
+Building C object CMakeFiles/cmTryCompileExec339902274.dir/CheckFunctionExists.c.o
+/usr/bin/cc   -DCHECK_FUNCTION_EXISTS=pthread_create   -o CMakeFiles/cmTryCompileExec339902274.dir/CheckFunctionExists.c.o   -c /usr/share/cmake-2.8/Modules/CheckFunctionExists.c
+Linking C executable cmTryCompileExec339902274
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTryCompileExec339902274.dir/link.txt --verbose=1
+/usr/bin/cc   -DCHECK_FUNCTION_EXISTS=pthread_create    CMakeFiles/cmTryCompileExec339902274.dir/CheckFunctionExists.c.o  -o cmTryCompileExec339902274 -rdynamic -lpthreads 
+/usr/bin/ld: cannot find -lpthreads
+collect2: error: ld returned 1 exit status
+make[2]: *** [cmTryCompileExec339902274] Error 1
+make[2]: Leaving directory `/home/roboops/RoboOps-Senior-Design/Source/RoboOps_ControllerCode/manual_keyboard_control/build/CMakeFiles/CMakeTmp'
+make[1]: *** [cmTryCompileExec339902274/fast] Error 2
+make[1]: Leaving directory `/home/roboops/RoboOps-Senior-Design/Source/RoboOps_ControllerCode/manual_keyboard_control/build/CMakeFiles/CMakeTmp'
+
+
+Determining if the pthread_create exist failed with the following output:
+Change Dir: /home/roboops/RoboOps-Senior-Design/Source/RoboOps_ControllerCode/manual_keyboard_control/build/CMakeFiles/CMakeTmp
+
+Run Build Command:/usr/bin/make "cmTryCompileExec4068216100/fast"
+make[1]: Entering directory `/home/roboops/RoboOps-Senior-Design/Source/RoboOps_ControllerCode/manual_keyboard_control/build/CMakeFiles/CMakeTmp'
+/usr/bin/make -f CMakeFiles/cmTryCompileExec4068216100.dir/build.make CMakeFiles/cmTryCompileExec4068216100.dir/build
+make[2]: Entering directory `/home/roboops/RoboOps-Senior-Design/Source/RoboOps_ControllerCode/manual_keyboard_control/build/CMakeFiles/CMakeTmp'
+/usr/bin/cmake -E cmake_progress_report /home/roboops/RoboOps-Senior-Design/Source/RoboOps_ControllerCode/manual_keyboard_control/build/CMakeFiles/CMakeTmp/CMakeFiles 1
+Building C object CMakeFiles/cmTryCompileExec4068216100.dir/CheckSymbolExists.c.o
+/usr/bin/cc    -o CMakeFiles/cmTryCompileExec4068216100.dir/CheckSymbolExists.c.o   -c /home/roboops/RoboOps-Senior-Design/Source/RoboOps_ControllerCode/manual_keyboard_control/build/CMakeFiles/CMakeTmp/CheckSymbolExists.c
+Linking C executable cmTryCompileExec4068216100
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTryCompileExec4068216100.dir/link.txt --verbose=1
+/usr/bin/cc       CMakeFiles/cmTryCompileExec4068216100.dir/CheckSymbolExists.c.o  -o cmTryCompileExec4068216100 -rdynamic 
+CMakeFiles/cmTryCompileExec4068216100.dir/CheckSymbolExists.c.o: In function `main':
+CheckSymbolExists.c:(.text+0x16): undefined reference to `pthread_create'
+collect2: error: ld returned 1 exit status
+make[2]: *** [cmTryCompileExec4068216100] Error 1
+make[2]: Leaving directory `/home/roboops/RoboOps-Senior-Design/Source/RoboOps_ControllerCode/manual_keyboard_control/build/CMakeFiles/CMakeTmp'
+make[1]: *** [cmTryCompileExec4068216100/fast] Error 2
+make[1]: Leaving directory `/home/roboops/RoboOps-Senior-Design/Source/RoboOps_ControllerCode/manual_keyboard_control/build/CMakeFiles/CMakeTmp'
+
+File /home/roboops/RoboOps-Senior-Design/Source/RoboOps_ControllerCode/manual_keyboard_control/build/CMakeFiles/CMakeTmp/CheckSymbolExists.c:
+/* */
+#include <pthread.h>
+
+int main(int argc, char** argv)
+{
+  (void)argv;
+#ifndef pthread_create
+  return ((int*)(&pthread_create))[argc];
+#else
+  (void)argc;
+  return 0;
+#endif
+}
+
+Determining if the function pthread_create exists in the pthreads failed with the following output:
+Change Dir: /home/roboops/RoboOps-Senior-Design/Source/RoboOps_ControllerCode/manual_keyboard_control/build/CMakeFiles/CMakeTmp
+
+Run Build Command:/usr/bin/make "cmTryCompileExec2670701361/fast"
+make[1]: Entering directory `/home/roboops/RoboOps-Senior-Design/Source/RoboOps_ControllerCode/manual_keyboard_control/build/CMakeFiles/CMakeTmp'
+/usr/bin/make -f CMakeFiles/cmTryCompileExec2670701361.dir/build.make CMakeFiles/cmTryCompileExec2670701361.dir/build
+make[2]: Entering directory `/home/roboops/RoboOps-Senior-Design/Source/RoboOps_ControllerCode/manual_keyboard_control/build/CMakeFiles/CMakeTmp'
+/usr/bin/cmake -E cmake_progress_report /home/roboops/RoboOps-Senior-Design/Source/RoboOps_ControllerCode/manual_keyboard_control/build/CMakeFiles/CMakeTmp/CMakeFiles 1
+Building C object CMakeFiles/cmTryCompileExec2670701361.dir/CheckFunctionExists.c.o
+/usr/bin/cc   -DCHECK_FUNCTION_EXISTS=pthread_create   -o CMakeFiles/cmTryCompileExec2670701361.dir/CheckFunctionExists.c.o   -c /usr/share/cmake-2.8/Modules/CheckFunctionExists.c
+Linking C executable cmTryCompileExec2670701361
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTryCompileExec2670701361.dir/link.txt --verbose=1
+/usr/bin/cc   -DCHECK_FUNCTION_EXISTS=pthread_create    CMakeFiles/cmTryCompileExec2670701361.dir/CheckFunctionExists.c.o  -o cmTryCompileExec2670701361 -rdynamic -lpthreads 
+/usr/bin/ld: cannot find -lpthreads
+collect2: error: ld returned 1 exit status
+make[2]: *** [cmTryCompileExec2670701361] Error 1
+make[2]: Leaving directory `/home/roboops/RoboOps-Senior-Design/Source/RoboOps_ControllerCode/manual_keyboard_control/build/CMakeFiles/CMakeTmp'
+make[1]: *** [cmTryCompileExec2670701361/fast] Error 2
+make[1]: Leaving directory `/home/roboops/RoboOps-Senior-Design/Source/RoboOps_ControllerCode/manual_keyboard_control/build/CMakeFiles/CMakeTmp'
+
+
+Determining if the pthread_create exist failed with the following output:
+Change Dir: /home/roboops/RoboOps-Senior-Design/Source/RoboOps_ControllerCode/manual_keyboard_control/build/CMakeFiles/CMakeTmp
+
+Run Build Command:/usr/bin/make "cmTryCompileExec341871608/fast"
+make[1]: Entering directory `/home/roboops/RoboOps-Senior-Design/Source/RoboOps_ControllerCode/manual_keyboard_control/build/CMakeFiles/CMakeTmp'
+/usr/bin/make -f CMakeFiles/cmTryCompileExec341871608.dir/build.make CMakeFiles/cmTryCompileExec341871608.dir/build
+make[2]: Entering directory `/home/roboops/RoboOps-Senior-Design/Source/RoboOps_ControllerCode/manual_keyboard_control/build/CMakeFiles/CMakeTmp'
+/usr/bin/cmake -E cmake_progress_report /home/roboops/RoboOps-Senior-Design/Source/RoboOps_ControllerCode/manual_keyboard_control/build/CMakeFiles/CMakeTmp/CMakeFiles 1
+Building C object CMakeFiles/cmTryCompileExec341871608.dir/CheckSymbolExists.c.o
+/usr/bin/cc    -o CMakeFiles/cmTryCompileExec341871608.dir/CheckSymbolExists.c.o   -c /home/roboops/RoboOps-Senior-Design/Source/RoboOps_ControllerCode/manual_keyboard_control/build/CMakeFiles/CMakeTmp/CheckSymbolExists.c
+Linking C executable cmTryCompileExec341871608
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTryCompileExec341871608.dir/link.txt --verbose=1
+/usr/bin/cc       CMakeFiles/cmTryCompileExec341871608.dir/CheckSymbolExists.c.o  -o cmTryCompileExec341871608 -rdynamic 
+CMakeFiles/cmTryCompileExec341871608.dir/CheckSymbolExists.c.o: In function `main':
+CheckSymbolExists.c:(.text+0x16): undefined reference to `pthread_create'
+collect2: error: ld returned 1 exit status
+make[2]: *** [cmTryCompileExec341871608] Error 1
+make[2]: Leaving directory `/home/roboops/RoboOps-Senior-Design/Source/RoboOps_ControllerCode/manual_keyboard_control/build/CMakeFiles/CMakeTmp'
+make[1]: *** [cmTryCompileExec341871608/fast] Error 2
+make[1]: Leaving directory `/home/roboops/RoboOps-Senior-Design/Source/RoboOps_ControllerCode/manual_keyboard_control/build/CMakeFiles/CMakeTmp'
+
+File /home/roboops/RoboOps-Senior-Design/Source/RoboOps_ControllerCode/manual_keyboard_control/build/CMakeFiles/CMakeTmp/CheckSymbolExists.c:
+/* */
+#include <pthread.h>
+
+int main(int argc, char** argv)
+{
+  (void)argv;
+#ifndef pthread_create
+  return ((int*)(&pthread_create))[argc];
+#else
+  (void)argc;
+  return 0;
+#endif
+}
+
+Determining if the function pthread_create exists in the pthreads failed with the following output:
+Change Dir: /home/roboops/RoboOps-Senior-Design/Source/RoboOps_ControllerCode/manual_keyboard_control/build/CMakeFiles/CMakeTmp
+
+Run Build Command:/usr/bin/make "cmTryCompileExec3654339402/fast"
+make[1]: Entering directory `/home/roboops/RoboOps-Senior-Design/Source/RoboOps_ControllerCode/manual_keyboard_control/build/CMakeFiles/CMakeTmp'
+/usr/bin/make -f CMakeFiles/cmTryCompileExec3654339402.dir/build.make CMakeFiles/cmTryCompileExec3654339402.dir/build
+make[2]: Entering directory `/home/roboops/RoboOps-Senior-Design/Source/RoboOps_ControllerCode/manual_keyboard_control/build/CMakeFiles/CMakeTmp'
+/usr/bin/cmake -E cmake_progress_report /home/roboops/RoboOps-Senior-Design/Source/RoboOps_ControllerCode/manual_keyboard_control/build/CMakeFiles/CMakeTmp/CMakeFiles 1
+Building C object CMakeFiles/cmTryCompileExec3654339402.dir/CheckFunctionExists.c.o
+/usr/bin/cc   -DCHECK_FUNCTION_EXISTS=pthread_create   -o CMakeFiles/cmTryCompileExec3654339402.dir/CheckFunctionExists.c.o   -c /usr/share/cmake-2.8/Modules/CheckFunctionExists.c
+Linking C executable cmTryCompileExec3654339402
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTryCompileExec3654339402.dir/link.txt --verbose=1
+/usr/bin/cc   -DCHECK_FUNCTION_EXISTS=pthread_create    CMakeFiles/cmTryCompileExec3654339402.dir/CheckFunctionExists.c.o  -o cmTryCompileExec3654339402 -rdynamic -lpthreads 
+/usr/bin/ld: cannot find -lpthreads
+collect2: error: ld returned 1 exit status
+make[2]: *** [cmTryCompileExec3654339402] Error 1
+make[2]: Leaving directory `/home/roboops/RoboOps-Senior-Design/Source/RoboOps_ControllerCode/manual_keyboard_control/build/CMakeFiles/CMakeTmp'
+make[1]: *** [cmTryCompileExec3654339402/fast] Error 2
+make[1]: Leaving directory `/home/roboops/RoboOps-Senior-Design/Source/RoboOps_ControllerCode/manual_keyboard_control/build/CMakeFiles/CMakeTmp'
+
+
+Determining if the pthread_create exist failed with the following output:
+Change Dir: /home/roboops/RoboOps-Senior-Design/Source/RoboOps_ControllerCode/manual_keyboard_control/build/CMakeFiles/CMakeTmp
+
+Run Build Command:/usr/bin/make "cmTryCompileExec1327981991/fast"
+make[1]: Entering directory `/home/roboops/RoboOps-Senior-Design/Source/RoboOps_ControllerCode/manual_keyboard_control/build/CMakeFiles/CMakeTmp'
+/usr/bin/make -f CMakeFiles/cmTryCompileExec1327981991.dir/build.make CMakeFiles/cmTryCompileExec1327981991.dir/build
+make[2]: Entering directory `/home/roboops/RoboOps-Senior-Design/Source/RoboOps_ControllerCode/manual_keyboard_control/build/CMakeFiles/CMakeTmp'
+/usr/bin/cmake -E cmake_progress_report /home/roboops/RoboOps-Senior-Design/Source/RoboOps_ControllerCode/manual_keyboard_control/build/CMakeFiles/CMakeTmp/CMakeFiles 1
+Building C object CMakeFiles/cmTryCompileExec1327981991.dir/CheckSymbolExists.c.o
+/usr/bin/cc    -o CMakeFiles/cmTryCompileExec1327981991.dir/CheckSymbolExists.c.o   -c /home/roboops/RoboOps-Senior-Design/Source/RoboOps_ControllerCode/manual_keyboard_control/build/CMakeFiles/CMakeTmp/CheckSymbolExists.c
+Linking C executable cmTryCompileExec1327981991
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTryCompileExec1327981991.dir/link.txt --verbose=1
+/usr/bin/cc       CMakeFiles/cmTryCompileExec1327981991.dir/CheckSymbolExists.c.o  -o cmTryCompileExec1327981991 -rdynamic 
+CMakeFiles/cmTryCompileExec1327981991.dir/CheckSymbolExists.c.o: In function `main':
+CheckSymbolExists.c:(.text+0x16): undefined reference to `pthread_create'
+collect2: error: ld returned 1 exit status
+make[2]: *** [cmTryCompileExec1327981991] Error 1
+make[2]: Leaving directory `/home/roboops/RoboOps-Senior-Design/Source/RoboOps_ControllerCode/manual_keyboard_control/build/CMakeFiles/CMakeTmp'
+make[1]: *** [cmTryCompileExec1327981991/fast] Error 2
+make[1]: Leaving directory `/home/roboops/RoboOps-Senior-Design/Source/RoboOps_ControllerCode/manual_keyboard_control/build/CMakeFiles/CMakeTmp'
+
+File /home/roboops/RoboOps-Senior-Design/Source/RoboOps_ControllerCode/manual_keyboard_control/build/CMakeFiles/CMakeTmp/CheckSymbolExists.c:
+/* */
+#include <pthread.h>
+
+int main(int argc, char** argv)
+{
+  (void)argv;
+#ifndef pthread_create
+  return ((int*)(&pthread_create))[argc];
+#else
+  (void)argc;
+  return 0;
+#endif
+}
+
+Determining if the function pthread_create exists in the pthreads failed with the following output:
+Change Dir: /home/roboops/RoboOps-Senior-Design/Source/RoboOps_ControllerCode/manual_keyboard_control/build/CMakeFiles/CMakeTmp
+
+Run Build Command:/usr/bin/make "cmTryCompileExec1971837749/fast"
+make[1]: Entering directory `/home/roboops/RoboOps-Senior-Design/Source/RoboOps_ControllerCode/manual_keyboard_control/build/CMakeFiles/CMakeTmp'
+/usr/bin/make -f CMakeFiles/cmTryCompileExec1971837749.dir/build.make CMakeFiles/cmTryCompileExec1971837749.dir/build
+make[2]: Entering directory `/home/roboops/RoboOps-Senior-Design/Source/RoboOps_ControllerCode/manual_keyboard_control/build/CMakeFiles/CMakeTmp'
+/usr/bin/cmake -E cmake_progress_report /home/roboops/RoboOps-Senior-Design/Source/RoboOps_ControllerCode/manual_keyboard_control/build/CMakeFiles/CMakeTmp/CMakeFiles 1
+Building C object CMakeFiles/cmTryCompileExec1971837749.dir/CheckFunctionExists.c.o
+/usr/bin/cc   -DCHECK_FUNCTION_EXISTS=pthread_create   -o CMakeFiles/cmTryCompileExec1971837749.dir/CheckFunctionExists.c.o   -c /usr/share/cmake-2.8/Modules/CheckFunctionExists.c
+Linking C executable cmTryCompileExec1971837749
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTryCompileExec1971837749.dir/link.txt --verbose=1
+/usr/bin/cc   -DCHECK_FUNCTION_EXISTS=pthread_create    CMakeFiles/cmTryCompileExec1971837749.dir/CheckFunctionExists.c.o  -o cmTryCompileExec1971837749 -rdynamic -lpthreads 
+/usr/bin/ld: cannot find -lpthreads
+collect2: error: ld returned 1 exit status
+make[2]: *** [cmTryCompileExec1971837749] Error 1
+make[2]: Leaving directory `/home/roboops/RoboOps-Senior-Design/Source/RoboOps_ControllerCode/manual_keyboard_control/build/CMakeFiles/CMakeTmp'
+make[1]: *** [cmTryCompileExec1971837749/fast] Error 2
+make[1]: Leaving directory `/home/roboops/RoboOps-Senior-Design/Source/RoboOps_ControllerCode/manual_keyboard_control/build/CMakeFiles/CMakeTmp'
+
+
+Determining if the pthread_create exist failed with the following output:
+Change Dir: /home/roboops/RoboOps-Senior-Design/Source/RoboOps_ControllerCode/manual_keyboard_control/build/CMakeFiles/CMakeTmp
+
+Run Build Command:/usr/bin/make "cmTryCompileExec4119790627/fast"
+make[1]: Entering directory `/home/roboops/RoboOps-Senior-Design/Source/RoboOps_ControllerCode/manual_keyboard_control/build/CMakeFiles/CMakeTmp'
+/usr/bin/make -f CMakeFiles/cmTryCompileExec4119790627.dir/build.make CMakeFiles/cmTryCompileExec4119790627.dir/build
+make[2]: Entering directory `/home/roboops/RoboOps-Senior-Design/Source/RoboOps_ControllerCode/manual_keyboard_control/build/CMakeFiles/CMakeTmp'
+/usr/bin/cmake -E cmake_progress_report /home/roboops/RoboOps-Senior-Design/Source/RoboOps_ControllerCode/manual_keyboard_control/build/CMakeFiles/CMakeTmp/CMakeFiles 1
+Building C object CMakeFiles/cmTryCompileExec4119790627.dir/CheckSymbolExists.c.o
+/usr/bin/cc    -o CMakeFiles/cmTryCompileExec4119790627.dir/CheckSymbolExists.c.o   -c /home/roboops/RoboOps-Senior-Design/Source/RoboOps_ControllerCode/manual_keyboard_control/build/CMakeFiles/CMakeTmp/CheckSymbolExists.c
+Linking C executable cmTryCompileExec4119790627
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTryCompileExec4119790627.dir/link.txt --verbose=1
+/usr/bin/cc       CMakeFiles/cmTryCompileExec4119790627.dir/CheckSymbolExists.c.o  -o cmTryCompileExec4119790627 -rdynamic 
+CMakeFiles/cmTryCompileExec4119790627.dir/CheckSymbolExists.c.o: In function `main':
+CheckSymbolExists.c:(.text+0x16): undefined reference to `pthread_create'
+collect2: error: ld returned 1 exit status
+make[2]: *** [cmTryCompileExec4119790627] Error 1
+make[2]: Leaving directory `/home/roboops/RoboOps-Senior-Design/Source/RoboOps_ControllerCode/manual_keyboard_control/build/CMakeFiles/CMakeTmp'
+make[1]: *** [cmTryCompileExec4119790627/fast] Error 2
+make[1]: Leaving directory `/home/roboops/RoboOps-Senior-Design/Source/RoboOps_ControllerCode/manual_keyboard_control/build/CMakeFiles/CMakeTmp'
+
+File /home/roboops/RoboOps-Senior-Design/Source/RoboOps_ControllerCode/manual_keyboard_control/build/CMakeFiles/CMakeTmp/CheckSymbolExists.c:
+/* */
+#include <pthread.h>
+
+int main(int argc, char** argv)
+{
+  (void)argv;
+#ifndef pthread_create
+  return ((int*)(&pthread_create))[argc];
+#else
+  (void)argc;
+  return 0;
+#endif
+}
+
+Determining if the function pthread_create exists in the pthreads failed with the following output:
+Change Dir: /home/roboops/RoboOps-Senior-Design/Source/RoboOps_ControllerCode/manual_keyboard_control/build/CMakeFiles/CMakeTmp
+
+Run Build Command:/usr/bin/make "cmTryCompileExec1398274737/fast"
+make[1]: Entering directory `/home/roboops/RoboOps-Senior-Design/Source/RoboOps_ControllerCode/manual_keyboard_control/build/CMakeFiles/CMakeTmp'
+/usr/bin/make -f CMakeFiles/cmTryCompileExec1398274737.dir/build.make CMakeFiles/cmTryCompileExec1398274737.dir/build
+make[2]: Entering directory `/home/roboops/RoboOps-Senior-Design/Source/RoboOps_ControllerCode/manual_keyboard_control/build/CMakeFiles/CMakeTmp'
+/usr/bin/cmake -E cmake_progress_report /home/roboops/RoboOps-Senior-Design/Source/RoboOps_ControllerCode/manual_keyboard_control/build/CMakeFiles/CMakeTmp/CMakeFiles 1
+Building C object CMakeFiles/cmTryCompileExec1398274737.dir/CheckFunctionExists.c.o
+/usr/bin/cc   -DCHECK_FUNCTION_EXISTS=pthread_create   -o CMakeFiles/cmTryCompileExec1398274737.dir/CheckFunctionExists.c.o   -c /usr/share/cmake-2.8/Modules/CheckFunctionExists.c
+Linking C executable cmTryCompileExec1398274737
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTryCompileExec1398274737.dir/link.txt --verbose=1
+/usr/bin/cc   -DCHECK_FUNCTION_EXISTS=pthread_create    CMakeFiles/cmTryCompileExec1398274737.dir/CheckFunctionExists.c.o  -o cmTryCompileExec1398274737 -rdynamic -lpthreads 
+/usr/bin/ld: cannot find -lpthreads
+collect2: error: ld returned 1 exit status
+make[2]: *** [cmTryCompileExec1398274737] Error 1
+make[2]: Leaving directory `/home/roboops/RoboOps-Senior-Design/Source/RoboOps_ControllerCode/manual_keyboard_control/build/CMakeFiles/CMakeTmp'
+make[1]: *** [cmTryCompileExec1398274737/fast] Error 2
+make[1]: Leaving directory `/home/roboops/RoboOps-Senior-Design/Source/RoboOps_ControllerCode/manual_keyboard_control/build/CMakeFiles/CMakeTmp'
+
+
+Determining if the pthread_create exist failed with the following output:
+Change Dir: /home/roboops/RoboOps-Senior-Design/Source/RoboOps_ControllerCode/manual_keyboard_control/build/CMakeFiles/CMakeTmp
+
+Run Build Command:/usr/bin/make "cmTryCompileExec2356698944/fast"
+make[1]: Entering directory `/home/roboops/RoboOps-Senior-Design/Source/RoboOps_ControllerCode/manual_keyboard_control/build/CMakeFiles/CMakeTmp'
+/usr/bin/make -f CMakeFiles/cmTryCompileExec2356698944.dir/build.make CMakeFiles/cmTryCompileExec2356698944.dir/build
+make[2]: Entering directory `/home/roboops/RoboOps-Senior-Design/Source/RoboOps_ControllerCode/manual_keyboard_control/build/CMakeFiles/CMakeTmp'
+/usr/bin/cmake -E cmake_progress_report /home/roboops/RoboOps-Senior-Design/Source/RoboOps_ControllerCode/manual_keyboard_control/build/CMakeFiles/CMakeTmp/CMakeFiles 1
+Building C object CMakeFiles/cmTryCompileExec2356698944.dir/CheckSymbolExists.c.o
+/usr/bin/cc    -o CMakeFiles/cmTryCompileExec2356698944.dir/CheckSymbolExists.c.o   -c /home/roboops/RoboOps-Senior-Design/Source/RoboOps_ControllerCode/manual_keyboard_control/build/CMakeFiles/CMakeTmp/CheckSymbolExists.c
+Linking C executable cmTryCompileExec2356698944
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTryCompileExec2356698944.dir/link.txt --verbose=1
+/usr/bin/cc       CMakeFiles/cmTryCompileExec2356698944.dir/CheckSymbolExists.c.o  -o cmTryCompileExec2356698944 -rdynamic 
+CMakeFiles/cmTryCompileExec2356698944.dir/CheckSymbolExists.c.o: In function `main':
+CheckSymbolExists.c:(.text+0x16): undefined reference to `pthread_create'
+collect2: error: ld returned 1 exit status
+make[2]: *** [cmTryCompileExec2356698944] Error 1
+make[2]: Leaving directory `/home/roboops/RoboOps-Senior-Design/Source/RoboOps_ControllerCode/manual_keyboard_control/build/CMakeFiles/CMakeTmp'
+make[1]: *** [cmTryCompileExec2356698944/fast] Error 2
+make[1]: Leaving directory `/home/roboops/RoboOps-Senior-Design/Source/RoboOps_ControllerCode/manual_keyboard_control/build/CMakeFiles/CMakeTmp'
+
+File /home/roboops/RoboOps-Senior-Design/Source/RoboOps_ControllerCode/manual_keyboard_control/build/CMakeFiles/CMakeTmp/CheckSymbolExists.c:
+/* */
+#include <pthread.h>
+
+int main(int argc, char** argv)
+{
+  (void)argv;
+#ifndef pthread_create
+  return ((int*)(&pthread_create))[argc];
+#else
+  (void)argc;
+  return 0;
+#endif
+}
+
+Determining if the function pthread_create exists in the pthreads failed with the following output:
+Change Dir: /home/roboops/RoboOps-Senior-Design/Source/RoboOps_ControllerCode/manual_keyboard_control/build/CMakeFiles/CMakeTmp
+
+Run Build Command:/usr/bin/make "cmTryCompileExec706032565/fast"
+make[1]: Entering directory `/home/roboops/RoboOps-Senior-Design/Source/RoboOps_ControllerCode/manual_keyboard_control/build/CMakeFiles/CMakeTmp'
+/usr/bin/make -f CMakeFiles/cmTryCompileExec706032565.dir/build.make CMakeFiles/cmTryCompileExec706032565.dir/build
+make[2]: Entering directory `/home/roboops/RoboOps-Senior-Design/Source/RoboOps_ControllerCode/manual_keyboard_control/build/CMakeFiles/CMakeTmp'
+/usr/bin/cmake -E cmake_progress_report /home/roboops/RoboOps-Senior-Design/Source/RoboOps_ControllerCode/manual_keyboard_control/build/CMakeFiles/CMakeTmp/CMakeFiles 1
+Building C object CMakeFiles/cmTryCompileExec706032565.dir/CheckFunctionExists.c.o
+/usr/bin/cc   -DCHECK_FUNCTION_EXISTS=pthread_create   -o CMakeFiles/cmTryCompileExec706032565.dir/CheckFunctionExists.c.o   -c /usr/share/cmake-2.8/Modules/CheckFunctionExists.c
+Linking C executable cmTryCompileExec706032565
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTryCompileExec706032565.dir/link.txt --verbose=1
+/usr/bin/cc   -DCHECK_FUNCTION_EXISTS=pthread_create    CMakeFiles/cmTryCompileExec706032565.dir/CheckFunctionExists.c.o  -o cmTryCompileExec706032565 -rdynamic -lpthreads 
+/usr/bin/ld: cannot find -lpthreads
+collect2: error: ld returned 1 exit status
+make[2]: *** [cmTryCompileExec706032565] Error 1
+make[2]: Leaving directory `/home/roboops/RoboOps-Senior-Design/Source/RoboOps_ControllerCode/manual_keyboard_control/build/CMakeFiles/CMakeTmp'
+make[1]: *** [cmTryCompileExec706032565/fast] Error 2
+make[1]: Leaving directory `/home/roboops/RoboOps-Senior-Design/Source/RoboOps_ControllerCode/manual_keyboard_control/build/CMakeFiles/CMakeTmp'
+
+
+Determining if the pthread_create exist failed with the following output:
+Change Dir: /home/roboops/RoboOps-Senior-Design/Source/RoboOps_ControllerCode/manual_keyboard_control/build/CMakeFiles/CMakeTmp
+
+Run Build Command:/usr/bin/make "cmTryCompileExec3552531573/fast"
+make[1]: Entering directory `/home/roboops/RoboOps-Senior-Design/Source/RoboOps_ControllerCode/manual_keyboard_control/build/CMakeFiles/CMakeTmp'
+/usr/bin/make -f CMakeFiles/cmTryCompileExec3552531573.dir/build.make CMakeFiles/cmTryCompileExec3552531573.dir/build
+make[2]: Entering directory `/home/roboops/RoboOps-Senior-Design/Source/RoboOps_ControllerCode/manual_keyboard_control/build/CMakeFiles/CMakeTmp'
+/usr/bin/cmake -E cmake_progress_report /home/roboops/RoboOps-Senior-Design/Source/RoboOps_ControllerCode/manual_keyboard_control/build/CMakeFiles/CMakeTmp/CMakeFiles 1
+Building C object CMakeFiles/cmTryCompileExec3552531573.dir/CheckSymbolExists.c.o
+/usr/bin/cc    -o CMakeFiles/cmTryCompileExec3552531573.dir/CheckSymbolExists.c.o   -c /home/roboops/RoboOps-Senior-Design/Source/RoboOps_ControllerCode/manual_keyboard_control/build/CMakeFiles/CMakeTmp/CheckSymbolExists.c
+Linking C executable cmTryCompileExec3552531573
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTryCompileExec3552531573.dir/link.txt --verbose=1
+/usr/bin/cc       CMakeFiles/cmTryCompileExec3552531573.dir/CheckSymbolExists.c.o  -o cmTryCompileExec3552531573 -rdynamic 
+CMakeFiles/cmTryCompileExec3552531573.dir/CheckSymbolExists.c.o: In function `main':
+CheckSymbolExists.c:(.text+0x16): undefined reference to `pthread_create'
+collect2: error: ld returned 1 exit status
+make[2]: *** [cmTryCompileExec3552531573] Error 1
+make[2]: Leaving directory `/home/roboops/RoboOps-Senior-Design/Source/RoboOps_ControllerCode/manual_keyboard_control/build/CMakeFiles/CMakeTmp'
+make[1]: *** [cmTryCompileExec3552531573/fast] Error 2
+make[1]: Leaving directory `/home/roboops/RoboOps-Senior-Design/Source/RoboOps_ControllerCode/manual_keyboard_control/build/CMakeFiles/CMakeTmp'
+
+File /home/roboops/RoboOps-Senior-Design/Source/RoboOps_ControllerCode/manual_keyboard_control/build/CMakeFiles/CMakeTmp/CheckSymbolExists.c:
+/* */
+#include <pthread.h>
+
+int main(int argc, char** argv)
+{
+  (void)argv;
+#ifndef pthread_create
+  return ((int*)(&pthread_create))[argc];
+#else
+  (void)argc;
+  return 0;
+#endif
+}
+
+Determining if the function pthread_create exists in the pthreads failed with the following output:
+Change Dir: /home/roboops/RoboOps-Senior-Design/Source/RoboOps_ControllerCode/manual_keyboard_control/build/CMakeFiles/CMakeTmp
+
+Run Build Command:/usr/bin/make "cmTryCompileExec1191622159/fast"
+make[1]: Entering directory `/home/roboops/RoboOps-Senior-Design/Source/RoboOps_ControllerCode/manual_keyboard_control/build/CMakeFiles/CMakeTmp'
+/usr/bin/make -f CMakeFiles/cmTryCompileExec1191622159.dir/build.make CMakeFiles/cmTryCompileExec1191622159.dir/build
+make[2]: Entering directory `/home/roboops/RoboOps-Senior-Design/Source/RoboOps_ControllerCode/manual_keyboard_control/build/CMakeFiles/CMakeTmp'
+/usr/bin/cmake -E cmake_progress_report /home/roboops/RoboOps-Senior-Design/Source/RoboOps_ControllerCode/manual_keyboard_control/build/CMakeFiles/CMakeTmp/CMakeFiles 1
+Building C object CMakeFiles/cmTryCompileExec1191622159.dir/CheckFunctionExists.c.o
+/usr/bin/cc   -DCHECK_FUNCTION_EXISTS=pthread_create   -o CMakeFiles/cmTryCompileExec1191622159.dir/CheckFunctionExists.c.o   -c /usr/share/cmake-2.8/Modules/CheckFunctionExists.c
+Linking C executable cmTryCompileExec1191622159
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTryCompileExec1191622159.dir/link.txt --verbose=1
+/usr/bin/cc   -DCHECK_FUNCTION_EXISTS=pthread_create    CMakeFiles/cmTryCompileExec1191622159.dir/CheckFunctionExists.c.o  -o cmTryCompileExec1191622159 -rdynamic -lpthreads 
+/usr/bin/ld: cannot find -lpthreads
+collect2: error: ld returned 1 exit status
+make[2]: *** [cmTryCompileExec1191622159] Error 1
+make[2]: Leaving directory `/home/roboops/RoboOps-Senior-Design/Source/RoboOps_ControllerCode/manual_keyboard_control/build/CMakeFiles/CMakeTmp'
+make[1]: *** [cmTryCompileExec1191622159/fast] Error 2
+make[1]: Leaving directory `/home/roboops/RoboOps-Senior-Design/Source/RoboOps_ControllerCode/manual_keyboard_control/build/CMakeFiles/CMakeTmp'
+
+
+Determining if the pthread_create exist failed with the following output:
+Change Dir: /home/roboops/RoboOps-Senior-Design/Source/RoboOps_ControllerCode/manual_keyboard_control/build/CMakeFiles/CMakeTmp
+
+Run Build Command:/usr/bin/make "cmTryCompileExec1981479875/fast"
+make[1]: Entering directory `/home/roboops/RoboOps-Senior-Design/Source/RoboOps_ControllerCode/manual_keyboard_control/build/CMakeFiles/CMakeTmp'
+/usr/bin/make -f CMakeFiles/cmTryCompileExec1981479875.dir/build.make CMakeFiles/cmTryCompileExec1981479875.dir/build
+make[2]: Entering directory `/home/roboops/RoboOps-Senior-Design/Source/RoboOps_ControllerCode/manual_keyboard_control/build/CMakeFiles/CMakeTmp'
+/usr/bin/cmake -E cmake_progress_report /home/roboops/RoboOps-Senior-Design/Source/RoboOps_ControllerCode/manual_keyboard_control/build/CMakeFiles/CMakeTmp/CMakeFiles 1
+Building C object CMakeFiles/cmTryCompileExec1981479875.dir/CheckSymbolExists.c.o
+/usr/bin/cc    -o CMakeFiles/cmTryCompileExec1981479875.dir/CheckSymbolExists.c.o   -c /home/roboops/RoboOps-Senior-Design/Source/RoboOps_ControllerCode/manual_keyboard_control/build/CMakeFiles/CMakeTmp/CheckSymbolExists.c
+Linking C executable cmTryCompileExec1981479875
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTryCompileExec1981479875.dir/link.txt --verbose=1
+/usr/bin/cc       CMakeFiles/cmTryCompileExec1981479875.dir/CheckSymbolExists.c.o  -o cmTryCompileExec1981479875 -rdynamic 
+CMakeFiles/cmTryCompileExec1981479875.dir/CheckSymbolExists.c.o: In function `main':
+CheckSymbolExists.c:(.text+0x16): undefined reference to `pthread_create'
+collect2: error: ld returned 1 exit status
+make[2]: *** [cmTryCompileExec1981479875] Error 1
+make[2]: Leaving directory `/home/roboops/RoboOps-Senior-Design/Source/RoboOps_ControllerCode/manual_keyboard_control/build/CMakeFiles/CMakeTmp'
+make[1]: *** [cmTryCompileExec1981479875/fast] Error 2
+make[1]: Leaving directory `/home/roboops/RoboOps-Senior-Design/Source/RoboOps_ControllerCode/manual_keyboard_control/build/CMakeFiles/CMakeTmp'
+
+File /home/roboops/RoboOps-Senior-Design/Source/RoboOps_ControllerCode/manual_keyboard_control/build/CMakeFiles/CMakeTmp/CheckSymbolExists.c:
+/* */
+#include <pthread.h>
+
+int main(int argc, char** argv)
+{
+  (void)argv;
+#ifndef pthread_create
+  return ((int*)(&pthread_create))[argc];
+#else
+  (void)argc;
+  return 0;
+#endif
+}
+
+Determining if the function pthread_create exists in the pthreads failed with the following output:
+Change Dir: /home/roboops/RoboOps-Senior-Design/Source/RoboOps_ControllerCode/manual_keyboard_control/build/CMakeFiles/CMakeTmp
+
+Run Build Command:/usr/bin/make "cmTryCompileExec713316530/fast"
+make[1]: Entering directory `/home/roboops/RoboOps-Senior-Design/Source/RoboOps_ControllerCode/manual_keyboard_control/build/CMakeFiles/CMakeTmp'
+/usr/bin/make -f CMakeFiles/cmTryCompileExec713316530.dir/build.make CMakeFiles/cmTryCompileExec713316530.dir/build
+make[2]: Entering directory `/home/roboops/RoboOps-Senior-Design/Source/RoboOps_ControllerCode/manual_keyboard_control/build/CMakeFiles/CMakeTmp'
+/usr/bin/cmake -E cmake_progress_report /home/roboops/RoboOps-Senior-Design/Source/RoboOps_ControllerCode/manual_keyboard_control/build/CMakeFiles/CMakeTmp/CMakeFiles 1
+Building C object CMakeFiles/cmTryCompileExec713316530.dir/CheckFunctionExists.c.o
+/usr/bin/cc   -DCHECK_FUNCTION_EXISTS=pthread_create   -o CMakeFiles/cmTryCompileExec713316530.dir/CheckFunctionExists.c.o   -c /usr/share/cmake-2.8/Modules/CheckFunctionExists.c
+Linking C executable cmTryCompileExec713316530
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTryCompileExec713316530.dir/link.txt --verbose=1
+/usr/bin/cc   -DCHECK_FUNCTION_EXISTS=pthread_create    CMakeFiles/cmTryCompileExec713316530.dir/CheckFunctionExists.c.o  -o cmTryCompileExec713316530 -rdynamic -lpthreads 
+/usr/bin/ld: cannot find -lpthreads
+collect2: error: ld returned 1 exit status
+make[2]: *** [cmTryCompileExec713316530] Error 1
+make[2]: Leaving directory `/home/roboops/RoboOps-Senior-Design/Source/RoboOps_ControllerCode/manual_keyboard_control/build/CMakeFiles/CMakeTmp'
+make[1]: *** [cmTryCompileExec713316530/fast] Error 2
+make[1]: Leaving directory `/home/roboops/RoboOps-Senior-Design/Source/RoboOps_ControllerCode/manual_keyboard_control/build/CMakeFiles/CMakeTmp'
+
+
+Determining if the pthread_create exist failed with the following output:
+Change Dir: /home/roboops/RoboOps-Senior-Design/Source/RoboOps_ControllerCode/manual_keyboard_control/build/CMakeFiles/CMakeTmp
+
+Run Build Command:/usr/bin/make "cmTryCompileExec2042025741/fast"
+make[1]: Entering directory `/home/roboops/RoboOps-Senior-Design/Source/RoboOps_ControllerCode/manual_keyboard_control/build/CMakeFiles/CMakeTmp'
+/usr/bin/make -f CMakeFiles/cmTryCompileExec2042025741.dir/build.make CMakeFiles/cmTryCompileExec2042025741.dir/build
+make[2]: Entering directory `/home/roboops/RoboOps-Senior-Design/Source/RoboOps_ControllerCode/manual_keyboard_control/build/CMakeFiles/CMakeTmp'
+/usr/bin/cmake -E cmake_progress_report /home/roboops/RoboOps-Senior-Design/Source/RoboOps_ControllerCode/manual_keyboard_control/build/CMakeFiles/CMakeTmp/CMakeFiles 1
+Building C object CMakeFiles/cmTryCompileExec2042025741.dir/CheckSymbolExists.c.o
+/usr/bin/cc    -o CMakeFiles/cmTryCompileExec2042025741.dir/CheckSymbolExists.c.o   -c /home/roboops/RoboOps-Senior-Design/Source/RoboOps_ControllerCode/manual_keyboard_control/build/CMakeFiles/CMakeTmp/CheckSymbolExists.c
+Linking C executable cmTryCompileExec2042025741
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTryCompileExec2042025741.dir/link.txt --verbose=1
+/usr/bin/cc       CMakeFiles/cmTryCompileExec2042025741.dir/CheckSymbolExists.c.o  -o cmTryCompileExec2042025741 -rdynamic 
+CMakeFiles/cmTryCompileExec2042025741.dir/CheckSymbolExists.c.o: In function `main':
+CheckSymbolExists.c:(.text+0x16): undefined reference to `pthread_create'
+collect2: error: ld returned 1 exit status
+make[2]: *** [cmTryCompileExec2042025741] Error 1
+make[2]: Leaving directory `/home/roboops/RoboOps-Senior-Design/Source/RoboOps_ControllerCode/manual_keyboard_control/build/CMakeFiles/CMakeTmp'
+make[1]: *** [cmTryCompileExec2042025741/fast] Error 2
+make[1]: Leaving directory `/home/roboops/RoboOps-Senior-Design/Source/RoboOps_ControllerCode/manual_keyboard_control/build/CMakeFiles/CMakeTmp'
+
+File /home/roboops/RoboOps-Senior-Design/Source/RoboOps_ControllerCode/manual_keyboard_control/build/CMakeFiles/CMakeTmp/CheckSymbolExists.c:
+/* */
+#include <pthread.h>
+
+int main(int argc, char** argv)
+{
+  (void)argv;
+#ifndef pthread_create
+  return ((int*)(&pthread_create))[argc];
+#else
+  (void)argc;
+  return 0;
+#endif
+}
+
+Determining if the function pthread_create exists in the pthreads failed with the following output:
+Change Dir: /home/roboops/RoboOps-Senior-Design/Source/RoboOps_ControllerCode/manual_keyboard_control/build/CMakeFiles/CMakeTmp
+
+Run Build Command:/usr/bin/make "cmTryCompileExec1551814828/fast"
+make[1]: Entering directory `/home/roboops/RoboOps-Senior-Design/Source/RoboOps_ControllerCode/manual_keyboard_control/build/CMakeFiles/CMakeTmp'
+/usr/bin/make -f CMakeFiles/cmTryCompileExec1551814828.dir/build.make CMakeFiles/cmTryCompileExec1551814828.dir/build
+make[2]: Entering directory `/home/roboops/RoboOps-Senior-Design/Source/RoboOps_ControllerCode/manual_keyboard_control/build/CMakeFiles/CMakeTmp'
+/usr/bin/cmake -E cmake_progress_report /home/roboops/RoboOps-Senior-Design/Source/RoboOps_ControllerCode/manual_keyboard_control/build/CMakeFiles/CMakeTmp/CMakeFiles 1
+Building C object CMakeFiles/cmTryCompileExec1551814828.dir/CheckFunctionExists.c.o
+/usr/bin/cc   -DCHECK_FUNCTION_EXISTS=pthread_create   -o CMakeFiles/cmTryCompileExec1551814828.dir/CheckFunctionExists.c.o   -c /usr/share/cmake-2.8/Modules/CheckFunctionExists.c
+Linking C executable cmTryCompileExec1551814828
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTryCompileExec1551814828.dir/link.txt --verbose=1
+/usr/bin/cc   -DCHECK_FUNCTION_EXISTS=pthread_create    CMakeFiles/cmTryCompileExec1551814828.dir/CheckFunctionExists.c.o  -o cmTryCompileExec1551814828 -rdynamic -lpthreads 
+/usr/bin/ld: cannot find -lpthreads
+collect2: error: ld returned 1 exit status
+make[2]: *** [cmTryCompileExec1551814828] Error 1
+make[2]: Leaving directory `/home/roboops/RoboOps-Senior-Design/Source/RoboOps_ControllerCode/manual_keyboard_control/build/CMakeFiles/CMakeTmp'
+make[1]: *** [cmTryCompileExec1551814828/fast] Error 2
+make[1]: Leaving directory `/home/roboops/RoboOps-Senior-Design/Source/RoboOps_ControllerCode/manual_keyboard_control/build/CMakeFiles/CMakeTmp'
+
+
+Determining if the pthread_create exist failed with the following output:
+Change Dir: /home/roboops/RoboOps-Senior-Design/Source/RoboOps_ControllerCode/manual_keyboard_control/build/CMakeFiles/CMakeTmp
+
+Run Build Command:/usr/bin/make "cmTryCompileExec642134974/fast"
+make[1]: Entering directory `/home/roboops/RoboOps-Senior-Design/Source/RoboOps_ControllerCode/manual_keyboard_control/build/CMakeFiles/CMakeTmp'
+/usr/bin/make -f CMakeFiles/cmTryCompileExec642134974.dir/build.make CMakeFiles/cmTryCompileExec642134974.dir/build
+make[2]: Entering directory `/home/roboops/RoboOps-Senior-Design/Source/RoboOps_ControllerCode/manual_keyboard_control/build/CMakeFiles/CMakeTmp'
+/usr/bin/cmake -E cmake_progress_report /home/roboops/RoboOps-Senior-Design/Source/RoboOps_ControllerCode/manual_keyboard_control/build/CMakeFiles/CMakeTmp/CMakeFiles 1
+Building C object CMakeFiles/cmTryCompileExec642134974.dir/CheckSymbolExists.c.o
+/usr/bin/cc    -o CMakeFiles/cmTryCompileExec642134974.dir/CheckSymbolExists.c.o   -c /home/roboops/RoboOps-Senior-Design/Source/RoboOps_ControllerCode/manual_keyboard_control/build/CMakeFiles/CMakeTmp/CheckSymbolExists.c
+Linking C executable cmTryCompileExec642134974
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTryCompileExec642134974.dir/link.txt --verbose=1
+/usr/bin/cc       CMakeFiles/cmTryCompileExec642134974.dir/CheckSymbolExists.c.o  -o cmTryCompileExec642134974 -rdynamic 
+CMakeFiles/cmTryCompileExec642134974.dir/CheckSymbolExists.c.o: In function `main':
+CheckSymbolExists.c:(.text+0x16): undefined reference to `pthread_create'
+collect2: error: ld returned 1 exit status
+make[2]: *** [cmTryCompileExec642134974] Error 1
+make[2]: Leaving directory `/home/roboops/RoboOps-Senior-Design/Source/RoboOps_ControllerCode/manual_keyboard_control/build/CMakeFiles/CMakeTmp'
+make[1]: *** [cmTryCompileExec642134974/fast] Error 2
+make[1]: Leaving directory `/home/roboops/RoboOps-Senior-Design/Source/RoboOps_ControllerCode/manual_keyboard_control/build/CMakeFiles/CMakeTmp'
+
+File /home/roboops/RoboOps-Senior-Design/Source/RoboOps_ControllerCode/manual_keyboard_control/build/CMakeFiles/CMakeTmp/CheckSymbolExists.c:
+/* */
+#include <pthread.h>
+
+int main(int argc, char** argv)
+{
+  (void)argv;
+#ifndef pthread_create
+  return ((int*)(&pthread_create))[argc];
+#else
+  (void)argc;
+  return 0;
+#endif
+}
+
+Determining if the function pthread_create exists in the pthreads failed with the following output:
+Change Dir: /home/roboops/RoboOps-Senior-Design/Source/RoboOps_ControllerCode/manual_keyboard_control/build/CMakeFiles/CMakeTmp
+
+Run Build Command:/usr/bin/make "cmTryCompileExec383549771/fast"
+make[1]: Entering directory `/home/roboops/RoboOps-Senior-Design/Source/RoboOps_ControllerCode/manual_keyboard_control/build/CMakeFiles/CMakeTmp'
+/usr/bin/make -f CMakeFiles/cmTryCompileExec383549771.dir/build.make CMakeFiles/cmTryCompileExec383549771.dir/build
+make[2]: Entering directory `/home/roboops/RoboOps-Senior-Design/Source/RoboOps_ControllerCode/manual_keyboard_control/build/CMakeFiles/CMakeTmp'
+/usr/bin/cmake -E cmake_progress_report /home/roboops/RoboOps-Senior-Design/Source/RoboOps_ControllerCode/manual_keyboard_control/build/CMakeFiles/CMakeTmp/CMakeFiles 1
+Building C object CMakeFiles/cmTryCompileExec383549771.dir/CheckFunctionExists.c.o
+/usr/bin/cc   -DCHECK_FUNCTION_EXISTS=pthread_create   -o CMakeFiles/cmTryCompileExec383549771.dir/CheckFunctionExists.c.o   -c /usr/share/cmake-2.8/Modules/CheckFunctionExists.c
+Linking C executable cmTryCompileExec383549771
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTryCompileExec383549771.dir/link.txt --verbose=1
+/usr/bin/cc   -DCHECK_FUNCTION_EXISTS=pthread_create    CMakeFiles/cmTryCompileExec383549771.dir/CheckFunctionExists.c.o  -o cmTryCompileExec383549771 -rdynamic -lpthreads 
+/usr/bin/ld: cannot find -lpthreads
+collect2: error: ld returned 1 exit status
+make[2]: *** [cmTryCompileExec383549771] Error 1
+make[2]: Leaving directory `/home/roboops/RoboOps-Senior-Design/Source/RoboOps_ControllerCode/manual_keyboard_control/build/CMakeFiles/CMakeTmp'
+make[1]: *** [cmTryCompileExec383549771/fast] Error 2
+make[1]: Leaving directory `/home/roboops/RoboOps-Senior-Design/Source/RoboOps_ControllerCode/manual_keyboard_control/build/CMakeFiles/CMakeTmp'
+
+
+Determining if the pthread_create exist failed with the following output:
+Change Dir: /home/roboops/RoboOps-Senior-Design/Source/RoboOps_ControllerCode/manual_keyboard_control/build/CMakeFiles/CMakeTmp
+
+Run Build Command:/usr/bin/make "cmTryCompileExec3356476181/fast"
+make[1]: Entering directory `/home/roboops/RoboOps-Senior-Design/Source/RoboOps_ControllerCode/manual_keyboard_control/build/CMakeFiles/CMakeTmp'
+/usr/bin/make -f CMakeFiles/cmTryCompileExec3356476181.dir/build.make CMakeFiles/cmTryCompileExec3356476181.dir/build
+make[2]: Entering directory `/home/roboops/RoboOps-Senior-Design/Source/RoboOps_ControllerCode/manual_keyboard_control/build/CMakeFiles/CMakeTmp'
+/usr/bin/cmake -E cmake_progress_report /home/roboops/RoboOps-Senior-Design/Source/RoboOps_ControllerCode/manual_keyboard_control/build/CMakeFiles/CMakeTmp/CMakeFiles 1
+Building C object CMakeFiles/cmTryCompileExec3356476181.dir/CheckSymbolExists.c.o
+/usr/bin/cc    -o CMakeFiles/cmTryCompileExec3356476181.dir/CheckSymbolExists.c.o   -c /home/roboops/RoboOps-Senior-Design/Source/RoboOps_ControllerCode/manual_keyboard_control/build/CMakeFiles/CMakeTmp/CheckSymbolExists.c
+Linking C executable cmTryCompileExec3356476181
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTryCompileExec3356476181.dir/link.txt --verbose=1
+/usr/bin/cc       CMakeFiles/cmTryCompileExec3356476181.dir/CheckSymbolExists.c.o  -o cmTryCompileExec3356476181 -rdynamic 
+CMakeFiles/cmTryCompileExec3356476181.dir/CheckSymbolExists.c.o: In function `main':
+CheckSymbolExists.c:(.text+0x16): undefined reference to `pthread_create'
+collect2: error: ld returned 1 exit status
+make[2]: *** [cmTryCompileExec3356476181] Error 1
+make[2]: Leaving directory `/home/roboops/RoboOps-Senior-Design/Source/RoboOps_ControllerCode/manual_keyboard_control/build/CMakeFiles/CMakeTmp'
+make[1]: *** [cmTryCompileExec3356476181/fast] Error 2
+make[1]: Leaving directory `/home/roboops/RoboOps-Senior-Design/Source/RoboOps_ControllerCode/manual_keyboard_control/build/CMakeFiles/CMakeTmp'
+
+File /home/roboops/RoboOps-Senior-Design/Source/RoboOps_ControllerCode/manual_keyboard_control/build/CMakeFiles/CMakeTmp/CheckSymbolExists.c:
+/* */
+#include <pthread.h>
+
+int main(int argc, char** argv)
+{
+  (void)argv;
+#ifndef pthread_create
+  return ((int*)(&pthread_create))[argc];
+#else
+  (void)argc;
+  return 0;
+#endif
+}
+
+Determining if the function pthread_create exists in the pthreads failed with the following output:
+Change Dir: /home/roboops/RoboOps-Senior-Design/Source/RoboOps_ControllerCode/manual_keyboard_control/build/CMakeFiles/CMakeTmp
+
+Run Build Command:/usr/bin/make "cmTryCompileExec1512979531/fast"
+make[1]: Entering directory `/home/roboops/RoboOps-Senior-Design/Source/RoboOps_ControllerCode/manual_keyboard_control/build/CMakeFiles/CMakeTmp'
+/usr/bin/make -f CMakeFiles/cmTryCompileExec1512979531.dir/build.make CMakeFiles/cmTryCompileExec1512979531.dir/build
+make[2]: Entering directory `/home/roboops/RoboOps-Senior-Design/Source/RoboOps_ControllerCode/manual_keyboard_control/build/CMakeFiles/CMakeTmp'
+/usr/bin/cmake -E cmake_progress_report /home/roboops/RoboOps-Senior-Design/Source/RoboOps_ControllerCode/manual_keyboard_control/build/CMakeFiles/CMakeTmp/CMakeFiles 1
+Building C object CMakeFiles/cmTryCompileExec1512979531.dir/CheckFunctionExists.c.o
+/usr/bin/cc   -DCHECK_FUNCTION_EXISTS=pthread_create   -o CMakeFiles/cmTryCompileExec1512979531.dir/CheckFunctionExists.c.o   -c /usr/share/cmake-2.8/Modules/CheckFunctionExists.c
+Linking C executable cmTryCompileExec1512979531
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTryCompileExec1512979531.dir/link.txt --verbose=1
+/usr/bin/cc   -DCHECK_FUNCTION_EXISTS=pthread_create    CMakeFiles/cmTryCompileExec1512979531.dir/CheckFunctionExists.c.o  -o cmTryCompileExec1512979531 -rdynamic -lpthreads 
+/usr/bin/ld: cannot find -lpthreads
+collect2: error: ld returned 1 exit status
+make[2]: *** [cmTryCompileExec1512979531] Error 1
+make[2]: Leaving directory `/home/roboops/RoboOps-Senior-Design/Source/RoboOps_ControllerCode/manual_keyboard_control/build/CMakeFiles/CMakeTmp'
+make[1]: *** [cmTryCompileExec1512979531/fast] Error 2
+make[1]: Leaving directory `/home/roboops/RoboOps-Senior-Design/Source/RoboOps_ControllerCode/manual_keyboard_control/build/CMakeFiles/CMakeTmp'
+
+
+Determining if the pthread_create exist failed with the following output:
+Change Dir: /home/roboops/RoboOps-Senior-Design/Source/RoboOps_ControllerCode/manual_keyboard_control/build/CMakeFiles/CMakeTmp
+
+Run Build Command:/usr/bin/make "cmTryCompileExec1894990035/fast"
+make[1]: Entering directory `/home/roboops/RoboOps-Senior-Design/Source/RoboOps_ControllerCode/manual_keyboard_control/build/CMakeFiles/CMakeTmp'
+/usr/bin/make -f CMakeFiles/cmTryCompileExec1894990035.dir/build.make CMakeFiles/cmTryCompileExec1894990035.dir/build
+make[2]: Entering directory `/home/roboops/RoboOps-Senior-Design/Source/RoboOps_ControllerCode/manual_keyboard_control/build/CMakeFiles/CMakeTmp'
+/usr/bin/cmake -E cmake_progress_report /home/roboops/RoboOps-Senior-Design/Source/RoboOps_ControllerCode/manual_keyboard_control/build/CMakeFiles/CMakeTmp/CMakeFiles 1
+Building C object CMakeFiles/cmTryCompileExec1894990035.dir/CheckSymbolExists.c.o
+/usr/bin/cc    -o CMakeFiles/cmTryCompileExec1894990035.dir/CheckSymbolExists.c.o   -c /home/roboops/RoboOps-Senior-Design/Source/RoboOps_ControllerCode/manual_keyboard_control/build/CMakeFiles/CMakeTmp/CheckSymbolExists.c
+Linking C executable cmTryCompileExec1894990035
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTryCompileExec1894990035.dir/link.txt --verbose=1
+/usr/bin/cc       CMakeFiles/cmTryCompileExec1894990035.dir/CheckSymbolExists.c.o  -o cmTryCompileExec1894990035 -rdynamic 
+CMakeFiles/cmTryCompileExec1894990035.dir/CheckSymbolExists.c.o: In function `main':
+CheckSymbolExists.c:(.text+0x16): undefined reference to `pthread_create'
+collect2: error: ld returned 1 exit status
+make[2]: *** [cmTryCompileExec1894990035] Error 1
+make[2]: Leaving directory `/home/roboops/RoboOps-Senior-Design/Source/RoboOps_ControllerCode/manual_keyboard_control/build/CMakeFiles/CMakeTmp'
+make[1]: *** [cmTryCompileExec1894990035/fast] Error 2
+make[1]: Leaving directory `/home/roboops/RoboOps-Senior-Design/Source/RoboOps_ControllerCode/manual_keyboard_control/build/CMakeFiles/CMakeTmp'
+
+File /home/roboops/RoboOps-Senior-Design/Source/RoboOps_ControllerCode/manual_keyboard_control/build/CMakeFiles/CMakeTmp/CheckSymbolExists.c:
+/* */
+#include <pthread.h>
+
+int main(int argc, char** argv)
+{
+  (void)argv;
+#ifndef pthread_create
+  return ((int*)(&pthread_create))[argc];
+#else
+  (void)argc;
+  return 0;
+#endif
+}
+
+Determining if the function pthread_create exists in the pthreads failed with the following output:
+Change Dir: /home/roboops/RoboOps-Senior-Design/Source/RoboOps_ControllerCode/manual_keyboard_control/build/CMakeFiles/CMakeTmp
+
+Run Build Command:/usr/bin/make "cmTryCompileExec2828371762/fast"
+make[1]: Entering directory `/home/roboops/RoboOps-Senior-Design/Source/RoboOps_ControllerCode/manual_keyboard_control/build/CMakeFiles/CMakeTmp'
+/usr/bin/make -f CMakeFiles/cmTryCompileExec2828371762.dir/build.make CMakeFiles/cmTryCompileExec2828371762.dir/build
+make[2]: Entering directory `/home/roboops/RoboOps-Senior-Design/Source/RoboOps_ControllerCode/manual_keyboard_control/build/CMakeFiles/CMakeTmp'
+/usr/bin/cmake -E cmake_progress_report /home/roboops/RoboOps-Senior-Design/Source/RoboOps_ControllerCode/manual_keyboard_control/build/CMakeFiles/CMakeTmp/CMakeFiles 1
+Building C object CMakeFiles/cmTryCompileExec2828371762.dir/CheckFunctionExists.c.o
+/usr/bin/cc   -DCHECK_FUNCTION_EXISTS=pthread_create   -o CMakeFiles/cmTryCompileExec2828371762.dir/CheckFunctionExists.c.o   -c /usr/share/cmake-2.8/Modules/CheckFunctionExists.c
+Linking C executable cmTryCompileExec2828371762
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTryCompileExec2828371762.dir/link.txt --verbose=1
+/usr/bin/cc   -DCHECK_FUNCTION_EXISTS=pthread_create    CMakeFiles/cmTryCompileExec2828371762.dir/CheckFunctionExists.c.o  -o cmTryCompileExec2828371762 -rdynamic -lpthreads 
+/usr/bin/ld: cannot find -lpthreads
+collect2: error: ld returned 1 exit status
+make[2]: *** [cmTryCompileExec2828371762] Error 1
+make[2]: Leaving directory `/home/roboops/RoboOps-Senior-Design/Source/RoboOps_ControllerCode/manual_keyboard_control/build/CMakeFiles/CMakeTmp'
+make[1]: *** [cmTryCompileExec2828371762/fast] Error 2
+make[1]: Leaving directory `/home/roboops/RoboOps-Senior-Design/Source/RoboOps_ControllerCode/manual_keyboard_control/build/CMakeFiles/CMakeTmp'
+
+
+Determining if the pthread_create exist failed with the following output:
+Change Dir: /home/roboops/RoboOps-Senior-Design/Source/RoboOps_ControllerCode/manual_keyboard_control/build/CMakeFiles/CMakeTmp
+
+Run Build Command:/usr/bin/make "cmTryCompileExec2232829426/fast"
+make[1]: Entering directory `/home/roboops/RoboOps-Senior-Design/Source/RoboOps_ControllerCode/manual_keyboard_control/build/CMakeFiles/CMakeTmp'
+/usr/bin/make -f CMakeFiles/cmTryCompileExec2232829426.dir/build.make CMakeFiles/cmTryCompileExec2232829426.dir/build
+make[2]: Entering directory `/home/roboops/RoboOps-Senior-Design/Source/RoboOps_ControllerCode/manual_keyboard_control/build/CMakeFiles/CMakeTmp'
+/usr/bin/cmake -E cmake_progress_report /home/roboops/RoboOps-Senior-Design/Source/RoboOps_ControllerCode/manual_keyboard_control/build/CMakeFiles/CMakeTmp/CMakeFiles 1
+Building C object CMakeFiles/cmTryCompileExec2232829426.dir/CheckSymbolExists.c.o
+/usr/bin/cc    -o CMakeFiles/cmTryCompileExec2232829426.dir/CheckSymbolExists.c.o   -c /home/roboops/RoboOps-Senior-Design/Source/RoboOps_ControllerCode/manual_keyboard_control/build/CMakeFiles/CMakeTmp/CheckSymbolExists.c
+Linking C executable cmTryCompileExec2232829426
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTryCompileExec2232829426.dir/link.txt --verbose=1
+/usr/bin/cc       CMakeFiles/cmTryCompileExec2232829426.dir/CheckSymbolExists.c.o  -o cmTryCompileExec2232829426 -rdynamic 
+CMakeFiles/cmTryCompileExec2232829426.dir/CheckSymbolExists.c.o: In function `main':
+CheckSymbolExists.c:(.text+0x16): undefined reference to `pthread_create'
+collect2: error: ld returned 1 exit status
+make[2]: *** [cmTryCompileExec2232829426] Error 1
+make[2]: Leaving directory `/home/roboops/RoboOps-Senior-Design/Source/RoboOps_ControllerCode/manual_keyboard_control/build/CMakeFiles/CMakeTmp'
+make[1]: *** [cmTryCompileExec2232829426/fast] Error 2
+make[1]: Leaving directory `/home/roboops/RoboOps-Senior-Design/Source/RoboOps_ControllerCode/manual_keyboard_control/build/CMakeFiles/CMakeTmp'
+
+File /home/roboops/RoboOps-Senior-Design/Source/RoboOps_ControllerCode/manual_keyboard_control/build/CMakeFiles/CMakeTmp/CheckSymbolExists.c:
+/* */
+#include <pthread.h>
+
+int main(int argc, char** argv)
+{
+  (void)argv;
+#ifndef pthread_create
+  return ((int*)(&pthread_create))[argc];
+#else
+  (void)argc;
+  return 0;
+#endif
+}
+
+Determining if the function pthread_create exists in the pthreads failed with the following output:
+Change Dir: /home/roboops/RoboOps-Senior-Design/Source/RoboOps_ControllerCode/manual_keyboard_control/build/CMakeFiles/CMakeTmp
+
+Run Build Command:/usr/bin/make "cmTryCompileExec1659591381/fast"
+make[1]: Entering directory `/home/roboops/RoboOps-Senior-Design/Source/RoboOps_ControllerCode/manual_keyboard_control/build/CMakeFiles/CMakeTmp'
+/usr/bin/make -f CMakeFiles/cmTryCompileExec1659591381.dir/build.make CMakeFiles/cmTryCompileExec1659591381.dir/build
+make[2]: Entering directory `/home/roboops/RoboOps-Senior-Design/Source/RoboOps_ControllerCode/manual_keyboard_control/build/CMakeFiles/CMakeTmp'
+/usr/bin/cmake -E cmake_progress_report /home/roboops/RoboOps-Senior-Design/Source/RoboOps_ControllerCode/manual_keyboard_control/build/CMakeFiles/CMakeTmp/CMakeFiles 1
+Building C object CMakeFiles/cmTryCompileExec1659591381.dir/CheckFunctionExists.c.o
+/usr/bin/cc   -DCHECK_FUNCTION_EXISTS=pthread_create   -o CMakeFiles/cmTryCompileExec1659591381.dir/CheckFunctionExists.c.o   -c /usr/share/cmake-2.8/Modules/CheckFunctionExists.c
+Linking C executable cmTryCompileExec1659591381
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTryCompileExec1659591381.dir/link.txt --verbose=1
+/usr/bin/cc   -DCHECK_FUNCTION_EXISTS=pthread_create    CMakeFiles/cmTryCompileExec1659591381.dir/CheckFunctionExists.c.o  -o cmTryCompileExec1659591381 -rdynamic -lpthreads 
+/usr/bin/ld: cannot find -lpthreads
+collect2: error: ld returned 1 exit status
+make[2]: *** [cmTryCompileExec1659591381] Error 1
+make[2]: Leaving directory `/home/roboops/RoboOps-Senior-Design/Source/RoboOps_ControllerCode/manual_keyboard_control/build/CMakeFiles/CMakeTmp'
+make[1]: *** [cmTryCompileExec1659591381/fast] Error 2
+make[1]: Leaving directory `/home/roboops/RoboOps-Senior-Design/Source/RoboOps_ControllerCode/manual_keyboard_control/build/CMakeFiles/CMakeTmp'
+
+
+Determining if the pthread_create exist failed with the following output:
+Change Dir: /home/roboops/RoboOps-Senior-Design/Source/RoboOps_ControllerCode/manual_keyboard_control/build/CMakeFiles/CMakeTmp
+
+Run Build Command:/usr/bin/make "cmTryCompileExec2410299496/fast"
+make[1]: Entering directory `/home/roboops/RoboOps-Senior-Design/Source/RoboOps_ControllerCode/manual_keyboard_control/build/CMakeFiles/CMakeTmp'
+/usr/bin/make -f CMakeFiles/cmTryCompileExec2410299496.dir/build.make CMakeFiles/cmTryCompileExec2410299496.dir/build
+make[2]: Entering directory `/home/roboops/RoboOps-Senior-Design/Source/RoboOps_ControllerCode/manual_keyboard_control/build/CMakeFiles/CMakeTmp'
+/usr/bin/cmake -E cmake_progress_report /home/roboops/RoboOps-Senior-Design/Source/RoboOps_ControllerCode/manual_keyboard_control/build/CMakeFiles/CMakeTmp/CMakeFiles 1
+Building C object CMakeFiles/cmTryCompileExec2410299496.dir/CheckSymbolExists.c.o
+/usr/bin/cc    -o CMakeFiles/cmTryCompileExec2410299496.dir/CheckSymbolExists.c.o   -c /home/roboops/RoboOps-Senior-Design/Source/RoboOps_ControllerCode/manual_keyboard_control/build/CMakeFiles/CMakeTmp/CheckSymbolExists.c
+Linking C executable cmTryCompileExec2410299496
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTryCompileExec2410299496.dir/link.txt --verbose=1
+/usr/bin/cc       CMakeFiles/cmTryCompileExec2410299496.dir/CheckSymbolExists.c.o  -o cmTryCompileExec2410299496 -rdynamic 
+CMakeFiles/cmTryCompileExec2410299496.dir/CheckSymbolExists.c.o: In function `main':
+CheckSymbolExists.c:(.text+0x16): undefined reference to `pthread_create'
+collect2: error: ld returned 1 exit status
+make[2]: *** [cmTryCompileExec2410299496] Error 1
+make[2]: Leaving directory `/home/roboops/RoboOps-Senior-Design/Source/RoboOps_ControllerCode/manual_keyboard_control/build/CMakeFiles/CMakeTmp'
+make[1]: *** [cmTryCompileExec2410299496/fast] Error 2
+make[1]: Leaving directory `/home/roboops/RoboOps-Senior-Design/Source/RoboOps_ControllerCode/manual_keyboard_control/build/CMakeFiles/CMakeTmp'
+
+File /home/roboops/RoboOps-Senior-Design/Source/RoboOps_ControllerCode/manual_keyboard_control/build/CMakeFiles/CMakeTmp/CheckSymbolExists.c:
+/* */
+#include <pthread.h>
+
+int main(int argc, char** argv)
+{
+  (void)argv;
+#ifndef pthread_create
+  return ((int*)(&pthread_create))[argc];
+#else
+  (void)argc;
+  return 0;
+#endif
+}
+
+Determining if the function pthread_create exists in the pthreads failed with the following output:
+Change Dir: /home/roboops/RoboOps-Senior-Design/Source/RoboOps_ControllerCode/manual_keyboard_control/build/CMakeFiles/CMakeTmp
+
+Run Build Command:/usr/bin/make "cmTryCompileExec2723807591/fast"
+make[1]: Entering directory `/home/roboops/RoboOps-Senior-Design/Source/RoboOps_ControllerCode/manual_keyboard_control/build/CMakeFiles/CMakeTmp'
+/usr/bin/make -f CMakeFiles/cmTryCompileExec2723807591.dir/build.make CMakeFiles/cmTryCompileExec2723807591.dir/build
+make[2]: Entering directory `/home/roboops/RoboOps-Senior-Design/Source/RoboOps_ControllerCode/manual_keyboard_control/build/CMakeFiles/CMakeTmp'
+/usr/bin/cmake -E cmake_progress_report /home/roboops/RoboOps-Senior-Design/Source/RoboOps_ControllerCode/manual_keyboard_control/build/CMakeFiles/CMakeTmp/CMakeFiles 1
+Building C object CMakeFiles/cmTryCompileExec2723807591.dir/CheckFunctionExists.c.o
+/usr/bin/cc   -DCHECK_FUNCTION_EXISTS=pthread_create   -o CMakeFiles/cmTryCompileExec2723807591.dir/CheckFunctionExists.c.o   -c /usr/share/cmake-2.8/Modules/CheckFunctionExists.c
+Linking C executable cmTryCompileExec2723807591
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTryCompileExec2723807591.dir/link.txt --verbose=1
+/usr/bin/cc   -DCHECK_FUNCTION_EXISTS=pthread_create    CMakeFiles/cmTryCompileExec2723807591.dir/CheckFunctionExists.c.o  -o cmTryCompileExec2723807591 -rdynamic -lpthreads 
+/usr/bin/ld: cannot find -lpthreads
+collect2: error: ld returned 1 exit status
+make[2]: *** [cmTryCompileExec2723807591] Error 1
+make[2]: Leaving directory `/home/roboops/RoboOps-Senior-Design/Source/RoboOps_ControllerCode/manual_keyboard_control/build/CMakeFiles/CMakeTmp'
+make[1]: *** [cmTryCompileExec2723807591/fast] Error 2
+make[1]: Leaving directory `/home/roboops/RoboOps-Senior-Design/Source/RoboOps_ControllerCode/manual_keyboard_control/build/CMakeFiles/CMakeTmp'
+
+
