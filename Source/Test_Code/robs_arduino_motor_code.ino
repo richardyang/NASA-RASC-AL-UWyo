@@ -57,7 +57,7 @@ void stop() {
  	TEMP2->run(RELEASE);
  	TEMP3->run(RELEASE);
  	current_direction = RELEASE;
-}
+} 
 
 /*
 	Sets motor speeds
