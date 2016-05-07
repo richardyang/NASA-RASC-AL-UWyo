@@ -81,9 +81,9 @@ const PROGMEM int STEER_PWM_360_DEGREES = 720;
 
 //----------   D C   M O T O R   C O N S T A N T S   ----------
 // # If the motor pwms are too close to neutral (4096/2 +- ~5%)
-const PROGMEM int MIN_FORWARD_SPEED_PWM = 2248; // Max DC motor pwm
-const PROGMEM int MIN_REVERSE_SPEED_PWM = 1848; // Min DC motor pwm
-const PROGMEM int NEUTRAL_SPEED_PWM     = 2048; // Stopped DC motor pwm
+//const PROGMEM int MIN_FORWARD_SPEED_PWM = 2248; // Upper Deadzone Limit
+//const PROGMEM int MIN_REVERSE_SPEED_PWM = 1848; // Lower Deadzone Limit
+const PROGMEM int NEUTRAL_SPEED_PWM     = 292; // Neutral speed PWM value
 
 
 //-----------------------------------------------------------------------------------
@@ -154,7 +154,7 @@ const PROGMEM int MOTOR_PTHREAD_DELAY = 20; // Motor speed update delay (in ms)
 uint16_t target_motor_pwm[5];               // Target pulse for DC motors
 uint16_t current_motor_pwm[5];              // Target pulse for DC motors
 
-const PROGMEM uint16_t motor_increment = 50;
+const PROGMEM uint16_t motor_increment = 1;
 
 //----------    O T H E R   V A R I A B L E S    ----------
 // ROS node handle (makes everything work)
@@ -180,23 +180,19 @@ Adafruit_PWMServoDriver pwm = Adafruit_PWMServoDriver();
       else decrement CURRENT
     else return
 */
-void pthread_motor_helper(int motor_index, int drive_pwm_pin, int drive_activate_pin) {
-  if (target_motor_pwm[motor_index] > current_motor_pwm[motor_index]) {
-    if (current_motor_pwm[motor_index] == NEUTRAL_SPEED_PWM ) {
-      current_motor_pwm[motor_index] = MIN_FORWARD_SPEED_PWM;
-    } else {
-      current_motor_pwm[motor_index] += motor_increment;
-    }
-  } else if (target_motor_pwm[motor_index] < current_motor_pwm[motor_index]) {
-    if (current_motor_pwm[motor_index] == NEUTRAL_SPEED_PWM ) {
-      current_motor_pwm[motor_index] = MIN_REVERSE_SPEED_PWM;
-    } else {
-      current_motor_pwm[motor_index] -= motor_increment;
-    }
-  } else {
-    return;   // Exit if there is nothing to change
-  }
 
+void pthread_motor_helper(int motor_index, int drive_pwm_pin) {
+  if (target_motor_pwm[motor_index] > current_motor_pwm[motor_index]) {
+    // The target speed is higher than current speed
+    current_motor_pwm[motor_index] += motor_increment;
+  } else if (target_motor_pwm[motor_index] < current_motor_pwm[motor_index]) {
+    // The target speed is lower than the current speed
+    current_motor_pwm[motor_index] -= motor_increment;
+  } else {
+    // We are at target speed
+    return;
+  }
+/*
   // Check if within range for activate pin ("NEUTRAL_SPEED_PWM" +- 5/10%)
   if (MIN_FORWARD_SPEED_PWM > current_motor_pwm[motor_index] 
     && current_motor_pwm[motor_index] > MIN_REVERSE_SPEED_PWM) {
@@ -209,6 +205,7 @@ void pthread_motor_helper(int motor_index, int drive_pwm_pin, int drive_activate
   }
   // If the desired speed is too close "NEUTRAL_SPEED_PWM", 
   //  turn off activate pin and set speed to "NEUTRAL_SPEED_PWM"
+  */
   pwm.setPWM(drive_pwm_pin, 0, current_motor_pwm[motor_index]);
 }
 
@@ -220,20 +217,15 @@ static int pthread_update_DC_motors(struct pt * pt) {
     timestamp = millis();
     
     pthread_motor_helper(DRIVE_ARRAY_INDEX_R,
-                         DRIVE_PWM_PIN_R, 
-                         DRIVE_ACTIVATE_PIN_R);
+                         DRIVE_PWM_PIN_R);
     pthread_motor_helper(DRIVE_ARRAY_INDEX_S_R,
-                         DRIVE_PWM_PIN_S_R, 
-                         DRIVE_ACTIVATE_PIN_S_R);
+                         DRIVE_PWM_PIN_S_R);
     pthread_motor_helper(DRIVE_ARRAY_INDEX_S_L, 
-                         DRIVE_PWM_PIN_S_L, 
-                         DRIVE_ACTIVATE_PIN_S_L);
+                         DRIVE_PWM_PIN_S_L);
     pthread_motor_helper(DRIVE_ARRAY_INDEX_F_R, 
-                         DRIVE_PWM_PIN_F_R,
-                         DRIVE_ACTIVATE_PIN_F_R);
+                         DRIVE_PWM_PIN_F_R);
     pthread_motor_helper(DRIVE_ARRAY_INDEX_F_L,
-                         DRIVE_PWM_PIN_F_L,
-                         DRIVE_ACTIVATE_PIN_F_L);
+                         DRIVE_PWM_PIN_F_L);
   }
   PT_END(pt);
 }
@@ -294,6 +286,21 @@ void arduino_cmd_callback(const std_msgs::UInt16MultiArray& cmd_msg) {
   }
 
   //----------  D R I V E   M O T O R S  ----------
+
+/*
+  valueReadFromArray = ((uint16_t) cmd_msg.data[MSG_INDEX_DRIVE_R]);
+  pwm.setPWM(11, 0, valueReadFromArray);
+  valueReadFromArray = ((uint16_t) cmd_msg.data[MSG_INDEX_DRIVE_S_R]);
+  pwm.setPWM(12, 0, valueReadFromArray);
+  valueReadFromArray = ((uint16_t) cmd_msg.data[MSG_INDEX_DRIVE_S_L]);
+  pwm.setPWM(13, 0, valueReadFromArray);
+  valueReadFromArray = ((uint16_t) cmd_msg.data[MSG_INDEX_DRIVE_F_R]);
+  pwm.setPWM(14, 0, valueReadFromArray);
+  valueReadFromArray = ((uint16_t) cmd_msg.data[MSG_INDEX_DRIVE_F_L]);
+  pwm.setPWM(15, 0, valueReadFromArray);
+*/
+
+  
   // Update rear drive motor
   valueReadFromArray = ((uint16_t) cmd_msg.data[MSG_INDEX_DRIVE_R]);
   if (ABSOLUTE_MIN_PWM <= valueReadFromArray && valueReadFromArray <= ABSOLUTE_MAX_PWM) {
@@ -319,6 +326,7 @@ void arduino_cmd_callback(const std_msgs::UInt16MultiArray& cmd_msg) {
   if (ABSOLUTE_MIN_PWM <= valueReadFromArray && valueReadFromArray <= ABSOLUTE_MAX_PWM) {
     target_motor_pwm[DRIVE_ARRAY_INDEX_F_L] = valueReadFromArray;
   }
+  
 
   //----------  MAST STEPPER  ----------
   // TODO

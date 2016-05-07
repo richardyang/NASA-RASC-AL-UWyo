@@ -126,11 +126,11 @@ void publish_steer_servo_update() {
     Publishes a new angle for the specified drive servo.
     @INPUT int servo_index - index of servo to be published     */
 void publish_drive_motor_update() {
-    drive_motor_message.data[0] = drive_motors[0];
-    drive_motor_message.data[1] = drive_motors[1];
-    drive_motor_message.data[2] = drive_motors[2];
-    drive_motor_message.data[3] = drive_motors[3];
-    drive_motor_message.data[4] = drive_motors[4];
+    drive_motor_message.data[DRIVE_REAR] = drive_motors[DRIVE_REAR];
+    drive_motor_message.data[DRIVE_SIDE_RIGHT] = drive_motors[DRIVE_SIDE_RIGHT];
+    drive_motor_message.data[DRIVE_SIDE_LEFT] = drive_motors[DRIVE_SIDE_LEFT];
+    drive_motor_message.data[DRIVE_FRONT_RIGHT] = drive_motors[DRIVE_FRONT_RIGHT];
+    drive_motor_message.data[DRIVE_FRONT_LEFT] = drive_motors[DRIVE_FRONT_LEFT];
     drive_cmd_manual->publish(drive_motor_message);
 }
 

@@ -51,8 +51,6 @@ To test this code without running the "Mission Control" code:
 //----------   P W M    C O N S T A N T S   ----------
 #define PWM_FREQUENCY     50
 #define PWM_RESOLUTION    4096
-#define ABSOLUTE_MAX_PWM  4093  // avoid extremes
-#define ABSOLUTE_MIN_PWM  3     // avoid extremes
 
 //----------   A R M   S E R V O   C O N S T A N T S   ----------
 // # Hitec HS-785HB 
@@ -74,9 +72,11 @@ To test this code without running the "Mission Control" code:
 
 //----------   D C   M O T O R   C O N S T A N T S   ----------
 // # If the motor pwms are too close to neutral (4096/2 +- ~5%)
-#define MIN_FORWARD_SPEED_PWM  2248 // Max DC motor pwm
-#define MIN_REVERSE_SPEED_PWM  1848 // Min DC motor pwm
-#define SPEED_PWM_NEUTRAL      2048 // Stopped DC motor pwm
+//#define FORWARD_DEADZONE_CUTOFF_PWM  2248 // Max DC motor pwm
+//#define REVERSE_DEADZONE_CUTOFF_PWM  1848 // Min DC motor pwm
+#define MAX_FORWARD_SPEED_PWM  345  // avoid extremes (SHOULD BE 345)
+#define MAX_REVERSE_SPEED_PWM  248  // avoid extremes 
+#define NEUTRAL_SPEED_PWM      292 	// Stopped DC motor pwm
 
 
 //-----------------------------------------------------------------------------------
@@ -178,24 +178,24 @@ uint16_t steer_angle_to_pulse(int int_angle) {
 /***** drive_speed_to_pulse() ###
   Converts a drive speed to a PWM pulse,
     checking if this pulse is within range
-    and is not too close to "SPEED_PWM_NEUTRAL"
+    and is not too close to "NEUTRAL_SPEED_PWM"
 
   !!! THIS FUNCTION SHOULD NEVER RETURN ANY VALUE 
   !!! WITHIN THE MIN FORWARD/BACKWARD PWMs
-  !!! OTHER THAN "neutral" (ie SPEED_PWM_NEUTRAL )
+  !!! OTHER THAN "neutral" (ie NEUTRAL_SPEED_PWM )
 */
 uint16_t drive_speed_to_pulse(int int_speed) {
   // Typecast angle to double to prevent overflow
-  double speed = int_speed * 1.0 + SPEED_PWM_NEUTRAL ;
-  uint16_t pulse = (uint16_t) speed;
-  if (pulse > ABSOLUTE_MAX_PWM) { 
-    pulse = ABSOLUTE_MAX_PWM;
-  } else if (ABSOLUTE_MIN_PWM < 0) {
-    pulse = ABSOLUTE_MIN_PWM;
-  } else if (MIN_FORWARD_SPEED_PWM > pulse && pulse > MIN_REVERSE_SPEED_PWM) {
-    // Too close to "SPEED_PWM_NEUTRAL"... set to "SPEED_PWM_NEUTRAL"
-    pulse = SPEED_PWM_NEUTRAL;
+  double speed = int_speed * 1.0;
+  uint16_t pulse;
+  if (int_speed < 0) {
+    speed = NEUTRAL_SPEED_PWM + (speed / 2000) * (NEUTRAL_SPEED_PWM - MAX_REVERSE_SPEED_PWM);
+  } else if (int_speed > 0) {
+    speed = NEUTRAL_SPEED_PWM + (speed / 2000) * (MAX_FORWARD_SPEED_PWM - NEUTRAL_SPEED_PWM);      
+  } else {
+    speed = NEUTRAL_SPEED_PWM;
   }
+  pulse = (uint16_t) speed;
   return pulse;
 }
 
@@ -256,24 +256,24 @@ void drive_cmd_manual_callback(const std_msgs::Int16MultiArray& cmd_msg) {
 	int16_t  newSpeed;	// Reading from array
 	uint16_t newPulse;	// Pulse to send to arduino
 
-	// Set steer front left
+	// Set drive rear
 	newSpeed = -((int16_t) cmd_msg.data[IN_MSG_INDEX_DRIVE_R]);
 	newPulse = drive_speed_to_pulse(newSpeed);
 	command_message_array.data[OUT_MSG_INDEX_DRIVE_R] = newPulse;
-	// Set steer front left
+	// Set drive side right
 	newSpeed = (int16_t) cmd_msg.data[IN_MSG_INDEX_DRIVE_S_R];
 	newPulse = drive_speed_to_pulse(newSpeed);
 	command_message_array.data[OUT_MSG_INDEX_DRIVE_S_R] = newPulse;
-	// Set steer front left
-	newSpeed = -((int16_t) cmd_msg.data[IN_MSG_INDEX_DRIVE_S_L]);
+	// Set drive side left
+	newSpeed = ((int16_t) cmd_msg.data[IN_MSG_INDEX_DRIVE_S_L]);
 	newPulse = drive_speed_to_pulse(newSpeed);
 	command_message_array.data[OUT_MSG_INDEX_DRIVE_S_L] = newPulse;
-	// Set steer front left
+	// Set drive front right
 	newSpeed = (int16_t) cmd_msg.data[IN_MSG_INDEX_DRIVE_F_R];
 	newPulse = drive_speed_to_pulse(newSpeed);
 	command_message_array.data[OUT_MSG_INDEX_DRIVE_F_R] = newPulse;
-	// Set steer front left
-	newSpeed = -((int16_t) cmd_msg.data[IN_MSG_INDEX_DRIVE_F_L]);
+	// Set drive front left
+	newSpeed = ((int16_t) cmd_msg.data[IN_MSG_INDEX_DRIVE_F_L]);
 	newPulse = drive_speed_to_pulse(newSpeed);
 	command_message_array.data[OUT_MSG_INDEX_DRIVE_F_L] = newPulse;
 
@@ -297,11 +297,11 @@ void initialize_command_message_array() {
 	command_message_array.data[OUT_MSG_INDEX_STEER_R]      = STEER_PWM_NEUTRAL;	// Initialize steering servos
 	command_message_array.data[OUT_MSG_INDEX_STEER_F_R]    = STEER_PWM_NEUTRAL;
 	command_message_array.data[OUT_MSG_INDEX_STEER_F_L]    = STEER_PWM_NEUTRAL;
-	command_message_array.data[OUT_MSG_INDEX_DRIVE_R]      = SPEED_PWM_NEUTRAL;	// Initialize drive motors
-	command_message_array.data[OUT_MSG_INDEX_DRIVE_S_R]    = SPEED_PWM_NEUTRAL;
-	command_message_array.data[OUT_MSG_INDEX_DRIVE_S_L]    = SPEED_PWM_NEUTRAL;
-	command_message_array.data[OUT_MSG_INDEX_DRIVE_F_R]    = SPEED_PWM_NEUTRAL;
-	command_message_array.data[OUT_MSG_INDEX_DRIVE_F_L]    = SPEED_PWM_NEUTRAL;
+	command_message_array.data[OUT_MSG_INDEX_DRIVE_R]      = NEUTRAL_SPEED_PWM;	// Initialize drive motors
+	command_message_array.data[OUT_MSG_INDEX_DRIVE_S_R]    = NEUTRAL_SPEED_PWM;
+	command_message_array.data[OUT_MSG_INDEX_DRIVE_S_L]    = NEUTRAL_SPEED_PWM;
+	command_message_array.data[OUT_MSG_INDEX_DRIVE_F_R]    = NEUTRAL_SPEED_PWM;
+	command_message_array.data[OUT_MSG_INDEX_DRIVE_F_L]    = NEUTRAL_SPEED_PWM;
 }
 
 int main(int argc, char **argv) {
