@@ -12,7 +12,6 @@ SET(CMAKE_MAKEFILE_DEPENDS
   "CMakeFiles/2.8.12.2/CMakeCXXCompiler.cmake"
   "CMakeFiles/2.8.12.2/CMakeSystem.cmake"
   "catkin/catkin_generated/version/package.cmake"
-  "catkin_generated/installspace/_setup_util.py"
   "catkin_generated/ordered_paths.cmake"
   "/opt/ros/indigo/share/catkin/cmake/../package.xml"
   "/opt/ros/indigo/share/catkin/cmake/all.cmake"
@@ -129,7 +128,6 @@ SET(CMAKE_MAKEFILE_OUTPUTS
 SET(CMAKE_MAKEFILE_PRODUCTS
   "catkin_generated/stamps/manual_keyboard_control/package.xml.stamp"
   "catkin_generated/installspace/_setup_util.py"
-  "catkin_generated/stamps/manual_keyboard_control/_setup_util.py.stamp"
   "catkin_generated/installspace/env.sh"
   "catkin_generated/installspace/setup.bash"
   "catkin_generated/installspace/setup.sh"
@@ -151,6 +149,7 @@ SET(CMAKE_DEPEND_INFO_FILES
   "CMakeFiles/_catkin_empty_exported_target.dir/DependInfo.cmake"
   "CMakeFiles/arduino_command_translator.dir/DependInfo.cmake"
   "CMakeFiles/clean_test_results.dir/DependInfo.cmake"
+  "CMakeFiles/clean_test_results_manual_keyboard_control.dir/DependInfo.cmake"
   "CMakeFiles/download_extra_data.dir/DependInfo.cmake"
   "CMakeFiles/doxygen.dir/DependInfo.cmake"
   "CMakeFiles/manual_keyboard_control.dir/DependInfo.cmake"
