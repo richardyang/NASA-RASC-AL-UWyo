@@ -39,10 +39,10 @@ RM = /usr/bin/cmake -E remove -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/roboops/RoboOps-Senior-Design/Source/RoboOps_ControllerCode/manual_keyboard_control
+CMAKE_SOURCE_DIR = /home/jr/github/RoboOps-Senior-Design/Source/RoboOps_ControllerCode/manual_keyboard_control
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/roboops/RoboOps-Senior-Design/Source/RoboOps_ControllerCode/manual_keyboard_control/build
+CMAKE_BINARY_DIR = /home/jr/github/RoboOps-Senior-Design/Source/RoboOps_ControllerCode/manual_keyboard_control/build
 
 #=============================================================================
 # Targets provided globally by CMake.
@@ -100,9 +100,9 @@ rebuild_cache/fast: rebuild_cache
 
 # The main all target
 all: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/roboops/RoboOps-Senior-Design/Source/RoboOps_ControllerCode/manual_keyboard_control/build/CMakeFiles /home/roboops/RoboOps-Senior-Design/Source/RoboOps_ControllerCode/manual_keyboard_control/build/CMakeFiles/progress.marks
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/jr/github/RoboOps-Senior-Design/Source/RoboOps_ControllerCode/manual_keyboard_control/build/CMakeFiles /home/jr/github/RoboOps-Senior-Design/Source/RoboOps_ControllerCode/manual_keyboard_control/build/CMakeFiles/progress.marks
 	$(MAKE) -f CMakeFiles/Makefile2 all
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/roboops/RoboOps-Senior-Design/Source/RoboOps_ControllerCode/manual_keyboard_control/build/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/jr/github/RoboOps-Senior-Design/Source/RoboOps_ControllerCode/manual_keyboard_control/build/CMakeFiles 0
 .PHONY : all
 
 # The main clean target
@@ -219,19 +219,6 @@ clean_test_results: cmake_check_build_system
 clean_test_results/fast:
 	$(MAKE) -f CMakeFiles/clean_test_results.dir/build.make CMakeFiles/clean_test_results.dir/build
 .PHONY : clean_test_results/fast
-
-#=============================================================================
-# Target rules for targets named clean_test_results_manual_keyboard_control
-
-# Build rule for target.
-clean_test_results_manual_keyboard_control: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 clean_test_results_manual_keyboard_control
-.PHONY : clean_test_results_manual_keyboard_control
-
-# fast build rule for target.
-clean_test_results_manual_keyboard_control/fast:
-	$(MAKE) -f CMakeFiles/clean_test_results_manual_keyboard_control.dir/build.make CMakeFiles/clean_test_results_manual_keyboard_control.dir/build
-.PHONY : clean_test_results_manual_keyboard_control/fast
 
 #=============================================================================
 # Target rules for targets named download_extra_data
@@ -515,7 +502,6 @@ help:
 	@echo "... _catkin_empty_exported_target"
 	@echo "... arduino_command_translator"
 	@echo "... clean_test_results"
-	@echo "... clean_test_results_manual_keyboard_control"
 	@echo "... download_extra_data"
 	@echo "... doxygen"
 	@echo "... edit_cache"

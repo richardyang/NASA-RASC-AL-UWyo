@@ -35,10 +35,10 @@ RM = /usr/bin/cmake -E remove -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/roboops/RoboOps-Senior-Design/Source/RoboOps_ControllerCode/manual_keyboard_control
+CMAKE_SOURCE_DIR = /home/jr/github/RoboOps-Senior-Design/Source/RoboOps_ControllerCode/manual_keyboard_control
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/roboops/RoboOps-Senior-Design/Source/RoboOps_ControllerCode/manual_keyboard_control/build
+CMAKE_BINARY_DIR = /home/jr/github/RoboOps-Senior-Design/Source/RoboOps_ControllerCode/manual_keyboard_control/build
 
 # Include any dependencies generated for this target.
 include CMakeFiles/arduino_command_translator.dir/depend.make
@@ -56,11 +56,11 @@ CMakeFiles/arduino_command_translator.dir/src/arduino_command_translator.cpp.o: 
 CMakeFiles/arduino_command_translator.dir/src/arduino_command_translator.cpp.o: /opt/ros/indigo/share/rostime/package.xml
 CMakeFiles/arduino_command_translator.dir/src/arduino_command_translator.cpp.o: /opt/ros/indigo/share/roscpp_traits/package.xml
 CMakeFiles/arduino_command_translator.dir/src/arduino_command_translator.cpp.o: /opt/ros/indigo/share/roscpp_serialization/package.xml
+CMakeFiles/arduino_command_translator.dir/src/arduino_command_translator.cpp.o: /opt/ros/indigo/share/catkin/package.xml
 CMakeFiles/arduino_command_translator.dir/src/arduino_command_translator.cpp.o: /opt/ros/indigo/share/genmsg/package.xml
 CMakeFiles/arduino_command_translator.dir/src/arduino_command_translator.cpp.o: /opt/ros/indigo/share/genpy/package.xml
 CMakeFiles/arduino_command_translator.dir/src/arduino_command_translator.cpp.o: /opt/ros/indigo/share/message_runtime/package.xml
 CMakeFiles/arduino_command_translator.dir/src/arduino_command_translator.cpp.o: /opt/ros/indigo/share/std_msgs/package.xml
-CMakeFiles/arduino_command_translator.dir/src/arduino_command_translator.cpp.o: /opt/ros/indigo/share/catkin/package.xml
 CMakeFiles/arduino_command_translator.dir/src/arduino_command_translator.cpp.o: /opt/ros/indigo/share/gencpp/package.xml
 CMakeFiles/arduino_command_translator.dir/src/arduino_command_translator.cpp.o: /opt/ros/indigo/share/genlisp/package.xml
 CMakeFiles/arduino_command_translator.dir/src/arduino_command_translator.cpp.o: /opt/ros/indigo/share/message_generation/package.xml
@@ -74,17 +74,17 @@ CMakeFiles/arduino_command_translator.dir/src/arduino_command_translator.cpp.o: 
 CMakeFiles/arduino_command_translator.dir/src/arduino_command_translator.cpp.o: /opt/ros/indigo/share/roslib/package.xml
 CMakeFiles/arduino_command_translator.dir/src/arduino_command_translator.cpp.o: /opt/ros/indigo/share/rospy/package.xml
 CMakeFiles/arduino_command_translator.dir/src/arduino_command_translator.cpp.o: /opt/ros/indigo/share/keyboard/package.xml
-	$(CMAKE_COMMAND) -E cmake_progress_report /home/roboops/RoboOps-Senior-Design/Source/RoboOps_ControllerCode/manual_keyboard_control/build/CMakeFiles $(CMAKE_PROGRESS_1)
+	$(CMAKE_COMMAND) -E cmake_progress_report /home/jr/github/RoboOps-Senior-Design/Source/RoboOps_ControllerCode/manual_keyboard_control/build/CMakeFiles $(CMAKE_PROGRESS_1)
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Building CXX object CMakeFiles/arduino_command_translator.dir/src/arduino_command_translator.cpp.o"
-	/usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/arduino_command_translator.dir/src/arduino_command_translator.cpp.o -c /home/roboops/RoboOps-Senior-Design/Source/RoboOps_ControllerCode/manual_keyboard_control/src/arduino_command_translator.cpp
+	/usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/arduino_command_translator.dir/src/arduino_command_translator.cpp.o -c /home/jr/github/RoboOps-Senior-Design/Source/RoboOps_ControllerCode/manual_keyboard_control/src/arduino_command_translator.cpp
 
 CMakeFiles/arduino_command_translator.dir/src/arduino_command_translator.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/arduino_command_translator.dir/src/arduino_command_translator.cpp.i"
-	/usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -E /home/roboops/RoboOps-Senior-Design/Source/RoboOps_ControllerCode/manual_keyboard_control/src/arduino_command_translator.cpp > CMakeFiles/arduino_command_translator.dir/src/arduino_command_translator.cpp.i
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -E /home/jr/github/RoboOps-Senior-Design/Source/RoboOps_ControllerCode/manual_keyboard_control/src/arduino_command_translator.cpp > CMakeFiles/arduino_command_translator.dir/src/arduino_command_translator.cpp.i
 
 CMakeFiles/arduino_command_translator.dir/src/arduino_command_translator.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/arduino_command_translator.dir/src/arduino_command_translator.cpp.s"
-	/usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -S /home/roboops/RoboOps-Senior-Design/Source/RoboOps_ControllerCode/manual_keyboard_control/src/arduino_command_translator.cpp -o CMakeFiles/arduino_command_translator.dir/src/arduino_command_translator.cpp.s
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -S /home/jr/github/RoboOps-Senior-Design/Source/RoboOps_ControllerCode/manual_keyboard_control/src/arduino_command_translator.cpp -o CMakeFiles/arduino_command_translator.dir/src/arduino_command_translator.cpp.s
 
 CMakeFiles/arduino_command_translator.dir/src/arduino_command_translator.cpp.o.requires:
 .PHONY : CMakeFiles/arduino_command_translator.dir/src/arduino_command_translator.cpp.o.requires
@@ -129,6 +129,6 @@ CMakeFiles/arduino_command_translator.dir/clean:
 .PHONY : CMakeFiles/arduino_command_translator.dir/clean
 
 CMakeFiles/arduino_command_translator.dir/depend:
-	cd /home/roboops/RoboOps-Senior-Design/Source/RoboOps_ControllerCode/manual_keyboard_control/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/roboops/RoboOps-Senior-Design/Source/RoboOps_ControllerCode/manual_keyboard_control /home/roboops/RoboOps-Senior-Design/Source/RoboOps_ControllerCode/manual_keyboard_control /home/roboops/RoboOps-Senior-Design/Source/RoboOps_ControllerCode/manual_keyboard_control/build /home/roboops/RoboOps-Senior-Design/Source/RoboOps_ControllerCode/manual_keyboard_control/build /home/roboops/RoboOps-Senior-Design/Source/RoboOps_ControllerCode/manual_keyboard_control/build/CMakeFiles/arduino_command_translator.dir/DependInfo.cmake --color=$(COLOR)
+	cd /home/jr/github/RoboOps-Senior-Design/Source/RoboOps_ControllerCode/manual_keyboard_control/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/jr/github/RoboOps-Senior-Design/Source/RoboOps_ControllerCode/manual_keyboard_control /home/jr/github/RoboOps-Senior-Design/Source/RoboOps_ControllerCode/manual_keyboard_control /home/jr/github/RoboOps-Senior-Design/Source/RoboOps_ControllerCode/manual_keyboard_control/build /home/jr/github/RoboOps-Senior-Design/Source/RoboOps_ControllerCode/manual_keyboard_control/build /home/jr/github/RoboOps-Senior-Design/Source/RoboOps_ControllerCode/manual_keyboard_control/build/CMakeFiles/arduino_command_translator.dir/DependInfo.cmake --color=$(COLOR)
 .PHONY : CMakeFiles/arduino_command_translator.dir/depend
 

@@ -1,0 +1,36 @@
+#!/bin/bash
+
+DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+export ROS_PACKAGE_PATH=$ROS_PACKAGE_PATH:$DIR
+
+echo ""
+echo ""
+echo "MAKE SURE YOU RAN THIS SCRIPT LIKE SO:"
+echo "   \"\$ . export_ROS_PACKAGE_PATH"\"
+echo ""
+echo "IF YOU DID, ROS_PACKAGE_PATH SHOULD NOW BE:"
+echo "   '$ROS_PACKAGE_PATH'"
+echo ""
+echo "CHECK BY RUNNING:"
+echo "   \"\$ echo \$ROS_PACKAGE_PATH\""
+echo ""
+echo ""
+
+export ROS_MASTER_URI="http://10.8.0.30:11311"
+export ROS_IP=10.8.0.30
+
+echo ""
+echo ""
+echo "MAKE SURE YOU RAN THIS SCRIPT LIKE SO:"
+echo "   \"\$ . export_ROS_variables"\"
+echo ""
+echo "IF YOU DID, VARIABLES SHOULD NOW BE:"
+echo "   ROS_MASTER_URI: '$ROS_MASTER_URI'"
+echo "   ROS_IP: '$ROS_IP'"
+echo ""
+echo "CHECK BY RUNNING:"
+echo "   \"\$ echo \$ROS_MASTER_URI\""
+echo "AND"
+echo "   \"\$ echo \$ROS_IP\""
+echo ""
+echo ""

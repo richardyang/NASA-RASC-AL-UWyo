@@ -6,11 +6,11 @@
 
 #IncludeRegexTransform: 
 
-/home/roboops/RoboOps-Senior-Design/Source/RoboOps_ControllerCode/manual_keyboard_control/src/manual_keyboard_control.cpp
+/home/jr/github/RoboOps-Senior-Design/Source/RoboOps_ControllerCode/manual_keyboard_control/src/manual_keyboard_control.cpp
 ros/ros.h
-/home/roboops/RoboOps-Senior-Design/Source/RoboOps_ControllerCode/manual_keyboard_control/src/ros/ros.h
+/home/jr/github/RoboOps-Senior-Design/Source/RoboOps_ControllerCode/manual_keyboard_control/src/ros/ros.h
 std_msgs/String.h
-/home/roboops/RoboOps-Senior-Design/Source/RoboOps_ControllerCode/manual_keyboard_control/src/std_msgs/String.h
+/home/jr/github/RoboOps-Senior-Design/Source/RoboOps_ControllerCode/manual_keyboard_control/src/std_msgs/String.h
 std_msgs/Int16.h
 -
 std_msgs/Int16MultiArray.h
