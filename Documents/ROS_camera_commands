@@ -1,0 +1,2 @@
+Compressed camera stream:
+rosrun image_view image_view image:=USB_cam/image_raw _image_transport:=(compressed/theora)
