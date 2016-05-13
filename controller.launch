@@ -1,0 +1,26 @@
+<launch>
+
+  <node name="keyboard" pkg="keyboard" type="keyboard" respawn="true" />
+
+  <node name="command_translator" pkg="manual_keyboard_control" type="arduino_command_translator" respawn="true" />
+
+  <node name="keyboard_control" pkg="manual_keyboard_control" type="manual_keyboard_control" respawn="true" />
+ 
+  <node name="serial" pkg="rosserial_python" type="serial_node.py" respawn="true">
+  <param name="port" value="/dev/ttyUSB0">
+  </node>
+ 
+
+</launch>
+
+
+
+
+
+
+
+
+
+
+
+
