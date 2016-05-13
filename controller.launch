@@ -5,11 +5,12 @@
   <node name="command_translator" pkg="manual_keyboard_control" type="arduino_command_translator" respawn="true" />
 
   <node name="keyboard_control" pkg="manual_keyboard_control" type="manual_keyboard_control" respawn="true" />
- 
-  <!-- node name="serial" pkg="rosserial_python" type="serial_node.py" respawn="true">
-  <param name="port" value="/dev/ttyUSB0">
-  </node> -->
- 
+
+ <node name="image_view" pkg="image_view" type="image_view" respawn="true">
+ <param name="image" value="/usb_cam/image_raw">
+ <param name="image_transport" value="theora">
+ </node>
+
 
 </launch>
 
