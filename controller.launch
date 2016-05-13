@@ -6,9 +6,9 @@
 
   <node name="keyboard_control" pkg="manual_keyboard_control" type="manual_keyboard_control" respawn="true" />
  
-  <node name="serial" pkg="rosserial_python" type="serial_node.py" respawn="true">
+  <!-- node name="serial" pkg="rosserial_python" type="serial_node.py" respawn="true">
   <param name="port" value="/dev/ttyUSB0">
-  </node>
+  </node> -->
  
 
 </launch>

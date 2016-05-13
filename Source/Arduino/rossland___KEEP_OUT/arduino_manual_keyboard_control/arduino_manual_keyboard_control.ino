@@ -74,10 +74,17 @@ const PROGMEM int ARM_PWM_360_DEGREES = 216;  // "360 degrees", one full rotatio
 
 //----------   S T E E R I N G   S E R V O   C O N S T A N T S   ----------
 const PROGMEM int STEER_PWM_MIN         = 105;
-const PROGMEM int STEER_PWM_MAX         = 495; 
+const PROGMEM int STEER_PWM_MAX         = 495;
 const PROGMEM int STEER_PWM_NEUTRAL     = 295;
 const PROGMEM int STEER_PWM_360_DEGREES = 720;
 //const PROGMEM int STEER_PWM_360_DEGREES = 716; // <--- ACTUAL VALUE
+
+
+//----------   G R I P P E R   S E R V O   C O N S T A N T S   ----------
+const PROGMEM int GRIPPER_PWM_MIN         =  ;
+const PROGMEM int GRIPPER_PWM_MAX         =  ;
+const PROGMEM int GRIPPER_PWM_NEUTRAL     =  ;
+const PROGMEM int GRIPPER_PWM_360_DEGREES =  ;
 
 //----------   D C   M O T O R   C O N S T A N T S   ----------
 // # If the motor pwms are too close to neutral (4096/2 +- ~5%)
@@ -126,20 +133,22 @@ const PROGMEM int DRIVE_ACTIVATE_PIN_F_L = 12;
 //--------------   A R R A Y   &   M E S S A G E   C O S N T A N T S   --------------
 //-----------------------------------------------------------------------------------
 //----------    M E S S A G E   I N D E C E S    ----------
-const PROGMEM int MSG_INDEX_ARM_BASE     =  0;
-const PROGMEM int MSG_INDEX_ARM_SHOULDER =  1;
-const PROGMEM int MSG_INDEX_ARM_ELBOW    =  2;
-const PROGMEM int MSG_INDEX_ARM_WRIST    =  3;
-const PROGMEM int MSG_INDEX_GRIPPER      =  4;
-const PROGMEM int MSG_INDEX_STEER_R      =  5;
-const PROGMEM int MSG_INDEX_STEER_F_R    =  6;
-const PROGMEM int MSG_INDEX_STEER_F_L    =  7;
-const PROGMEM int MSG_INDEX_DRIVE_R      =  8;
-const PROGMEM int MSG_INDEX_DRIVE_S_R    =  9;
-const PROGMEM int MSG_INDEX_DRIVE_S_L    = 10;
-const PROGMEM int MSG_INDEX_DRIVE_F_R    = 11;
-const PROGMEM int MSG_INDEX_DRIVE_F_L    = 12;
-//const PROGMEM int MSG_INDEX_MAST_STEPPER = 13;  // MIGHT NOT BE USED...
+const PROGMEM int MSG_INDEX_ARM_BASE       =  0;
+const PROGMEM int MSG_INDEX_ARM_SHOULDER   =  1;
+const PROGMEM int MSG_INDEX_ARM_ELBOW      =  2;
+const PROGMEM int MSG_INDEX_ARM_WRIST      =  3;
+const PROGMEM int MSG_INDEX_GRIPPER        =  4;
+const PROGMEM int MSG_INDEX_STEER_R        =  5;
+const PROGMEM int MSG_INDEX_STEER_F_R      =  6;
+const PROGMEM int MSG_INDEX_STEER_F_L      =  7;
+const PROGMEM int MSG_INDEX_DRIVE_R        =  8;
+const PROGMEM int MSG_INDEX_DRIVE_S_R      =  9;
+const PROGMEM int MSG_INDEX_DRIVE_S_L      = 10;
+const PROGMEM int MSG_INDEX_DRIVE_F_R      = 11;
+const PROGMEM int MSG_INDEX_DRIVE_F_L      = 12;
+const PROGMEM int MSG_INDEX_GRIPPER_ROTATE = 13;  
+const PROGMEM int MSG_INDEX_GRIPPER_CLAW   = 14;  
+//const PROGMEM int MSG_INDEX_MAST_STEPPER = 15;  // MIGHT NOT BE USED...
 
 //----------    M O T O R   A R R A Y   I N D E C E S    ----------
 const PROGMEM int DRIVE_ARRAY_INDEX_R   = 0;
