@@ -93,12 +93,16 @@ const PROGMEM int NEUTRAL_SPEED_PWM     = 292; // Neutral speed PWM value
 const PROGMEM int ARM_PWM_PIN_BASE     = 0;
 const PROGMEM int ARM_PWM_PIN_SHOULDER = 1;
 const PROGMEM int ARM_PWM_PIN_ELBOW    = 2;
-const PROGMEM int ARM_PWM_PIN_WRIST    = 3;  
+const PROGMEM int ARM_PWM_PIN_WRIST    = 3;
 
 //----------    S T E E R   P I N S    ----------
 const PROGMEM int STEER_PWM_PIN_R   = 4;
-const PROGMEM int STEER_PWM_PIN_F_R = 5; 
+const PROGMEM int STEER_PWM_PIN_F_R = 5;
 const PROGMEM int STEER_PWM_PIN_F_L = 6;
+
+//----------    G R I P P E R   P I N S    ----------
+const PROGMEM int GRIPPER_ROTATE    = 8;
+const PROGMEM int GRIPPER_CLAW      = 9;
 
 //----------    D R I V E   P I N S    ----------
 const PROGMEM int DRIVE_PWM_PIN_R   = 11;
