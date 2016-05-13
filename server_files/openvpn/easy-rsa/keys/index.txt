@@ -1,0 +1,10 @@
+V	260126225841Z		01	unknown	/C=US/ST=WY/L=Laramie/O=Cowboy Robotics/OU=Computer Science/CN=cowboyrobotics.com/name=server/emailAddress=bmoore16@uwyo.edu
+V	260126230041Z		02	unknown	/C=US/ST=WY/L=Laramie/O=Cowboy Robotics/OU=Computer Science/CN=steamboat/name=server/emailAddress=bmoore16@uwyo.edu
+V	260126230115Z		03	unknown	/C=US/ST=WY/L=Laramie/O=Cowboy Robotics/OU=Computer Science/CN=rover2/name=server/emailAddress=bmoore16@uwyo.edu
+V	260126230133Z		04	unknown	/C=US/ST=WY/L=Laramie/O=Cowboy Robotics/OU=Computer Science/CN=missionControl/name=server/emailAddress=bmoore16@uwyo.edu
+V	260126230153Z		05	unknown	/C=US/ST=WY/L=Laramie/O=Cowboy Robotics/OU=Computer Science/CN=cowboyManager/name=server/emailAddress=bmoore16@uwyo.edu
+V	260126230211Z		06	unknown	/C=US/ST=WY/L=Laramie/O=Cowboy Robotics/OU=Computer Science/CN=brianVPN/name=server/emailAddress=bmoore16@uwyo.edu
+V	260126230227Z		07	unknown	/C=US/ST=WY/L=Laramie/O=Cowboy Robotics/OU=Computer Science/CN=robVPN/name=server/emailAddress=bmoore16@uwyo.edu
+V	260126230244Z		08	unknown	/C=US/ST=WY/L=Laramie/O=Cowboy Robotics/OU=Computer Science/CN=richieVPN/name=server/emailAddress=bmoore16@uwyo.edu
+V	260126230301Z		09	unknown	/C=US/ST=WY/L=Laramie/O=Cowboy Robotics/OU=Computer Science/CN=nasserVPN/name=server/emailAddress=bmoore16@uwyo.edu
+V	260310151822Z		0A	unknown	/C=US/ST=WY/L=Laramie/O=Cowboy Robotics/OU=Computer Science/CN=brian/name=server/emailAddress=bmoore16@uwyo.edu

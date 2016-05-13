@@ -1,0 +1,98 @@
+Certificate:
+    Data:
+        Version: 3 (0x2)
+        Serial Number: 10 (0xa)
+    Signature Algorithm: sha256WithRSAEncryption
+        Issuer: C=US, ST=WY, L=Laramie, O=Cowboy Robotics, OU=Computer Science, CN=cowboyrobotics.com/name=server/emailAddress=bmoore16@uwyo.edu
+        Validity
+            Not Before: Mar 12 15:18:22 2016 GMT
+            Not After : Mar 10 15:18:22 2026 GMT
+        Subject: C=US, ST=WY, L=Laramie, O=Cowboy Robotics, OU=Computer Science, CN=brian/name=server/emailAddress=bmoore16@uwyo.edu
+        Subject Public Key Info:
+            Public Key Algorithm: rsaEncryption
+                Public-Key: (2048 bit)
+                Modulus:
+                    00:c0:d7:88:01:48:2a:91:6d:f7:fb:3e:80:36:c8:
+                    4a:60:93:56:29:d0:b4:97:f4:63:37:5e:37:ca:88:
+                    3c:18:f9:c0:92:4c:53:c9:13:81:7c:39:70:02:68:
+                    df:36:97:83:08:f2:d5:5f:ec:63:43:7a:cf:15:bf:
+                    70:c2:7c:36:92:a7:99:a7:f6:33:ef:8e:1e:ad:ea:
+                    8f:8c:4e:3b:73:0e:33:29:85:a6:91:db:a9:9b:2a:
+                    f9:2c:61:86:de:4a:e4:14:e7:f7:56:a0:4a:7b:2a:
+                    ba:b7:32:c6:b2:4d:f5:eb:f1:46:90:45:9f:97:c4:
+                    fa:ec:b2:be:f9:6d:1c:fc:9b:18:8f:19:f7:4e:cb:
+                    3c:30:1f:04:16:83:5d:f2:93:3e:bc:9e:26:2d:c2:
+                    b5:56:3f:09:6d:bf:c0:82:13:58:2d:7c:97:02:5b:
+                    68:dd:c8:1d:da:98:b9:60:1c:6b:fa:b6:88:3d:81:
+                    20:80:1e:9d:80:da:62:45:ac:ae:52:d7:7c:2c:e9:
+                    9d:1d:c7:c1:92:ea:4e:21:e5:1c:1f:fc:b8:f5:00:
+                    cf:2c:58:51:7b:02:cc:c6:c2:fa:72:23:25:77:1d:
+                    9a:c1:67:c2:46:da:ac:49:83:70:4c:86:9a:e3:4d:
+                    91:24:ce:09:92:ae:51:68:0b:34:72:2e:ed:10:ec:
+                    56:c1
+                Exponent: 65537 (0x10001)
+        X509v3 extensions:
+            X509v3 Basic Constraints: 
+                CA:FALSE
+            Netscape Comment: 
+                Easy-RSA Generated Certificate
+            X509v3 Subject Key Identifier: 
+                8A:EB:6D:E4:DB:A4:98:3A:23:AC:DB:7D:6C:80:55:EC:D7:CE:73:13
+            X509v3 Authority Key Identifier: 
+                keyid:E5:57:6C:58:1D:C6:83:59:8B:99:1A:6D:E9:88:1C:82:25:E1:C9:D1
+                DirName:/C=US/ST=WY/L=Laramie/O=Cowboy Robotics/OU=Computer Science/CN=cowboyrobotics.com/name=server/emailAddress=bmoore16@uwyo.edu
+                serial:A7:24:C2:EF:95:5D:15:20
+
+            X509v3 Extended Key Usage: 
+                TLS Web Client Authentication
+            X509v3 Key Usage: 
+                Digital Signature
+            X509v3 Subject Alternative Name: 
+                DNS:brian
+    Signature Algorithm: sha256WithRSAEncryption
+         75:e7:f6:6e:82:08:8f:de:d6:2d:f2:e1:88:2f:e3:b4:36:a5:
+         ce:08:73:d8:fe:06:e7:1b:22:30:1c:88:f0:19:36:d9:64:d1:
+         5b:1b:19:ff:f0:17:b2:46:43:73:fd:b6:4c:1c:75:4a:e7:83:
+         22:73:9e:e3:03:b6:0a:a1:ae:b3:22:3b:21:da:9b:9e:99:2b:
+         a1:a3:d2:cc:ee:86:04:12:0b:17:25:14:cd:6b:ca:c3:cc:db:
+         02:ae:3f:85:64:75:ea:85:cb:ef:da:a7:d2:84:bc:49:8b:6b:
+         31:3b:fb:a4:e7:1a:22:be:db:11:b2:60:0d:c2:35:41:34:b1:
+         d0:10:62:1c:7e:04:aa:3f:e5:5b:48:1e:39:1c:58:2b:b3:02:
+         b9:d4:64:04:3b:d2:58:fd:da:86:5f:a2:16:74:f5:85:3b:4f:
+         af:59:a5:b1:9b:35:46:81:8f:3d:10:b8:80:e7:73:44:29:55:
+         f5:04:f9:5e:d4:97:64:b7:ee:aa:70:5c:d7:4d:c2:81:b9:5f:
+         e5:07:b4:1b:00:33:92:c9:7d:a2:10:eb:86:71:ec:c0:81:8b:
+         2e:0b:11:a6:31:f8:2c:fc:67:1e:fb:5c:dd:4f:35:48:aa:30:
+         a6:4f:27:7a:2b:5e:93:58:4a:a4:13:ea:f2:76:35:f5:b5:7e:
+         d3:9e:67:18
+-----BEGIN CERTIFICATE-----
+MIIFTjCCBDagAwIBAgIBCjANBgkqhkiG9w0BAQsFADCBsTELMAkGA1UEBhMCVVMx
+CzAJBgNVBAgTAldZMRAwDgYDVQQHEwdMYXJhbWllMRgwFgYDVQQKEw9Db3dib3kg
+Um9ib3RpY3MxGTAXBgNVBAsTEENvbXB1dGVyIFNjaWVuY2UxGzAZBgNVBAMTEmNv
+d2JveXJvYm90aWNzLmNvbTEPMA0GA1UEKRMGc2VydmVyMSAwHgYJKoZIhvcNAQkB
+FhFibW9vcmUxNkB1d3lvLmVkdTAeFw0xNjAzMTIxNTE4MjJaFw0yNjAzMTAxNTE4
+MjJaMIGkMQswCQYDVQQGEwJVUzELMAkGA1UECBMCV1kxEDAOBgNVBAcTB0xhcmFt
+aWUxGDAWBgNVBAoTD0Nvd2JveSBSb2JvdGljczEZMBcGA1UECxMQQ29tcHV0ZXIg
+U2NpZW5jZTEOMAwGA1UEAxMFYnJpYW4xDzANBgNVBCkTBnNlcnZlcjEgMB4GCSqG
+SIb3DQEJARYRYm1vb3JlMTZAdXd5by5lZHUwggEiMA0GCSqGSIb3DQEBAQUAA4IB
+DwAwggEKAoIBAQDA14gBSCqRbff7PoA2yEpgk1Yp0LSX9GM3XjfKiDwY+cCSTFPJ
+E4F8OXACaN82l4MI8tVf7GNDes8Vv3DCfDaSp5mn9jPvjh6t6o+MTjtzDjMphaaR
+26mbKvksYYbeSuQU5/dWoEp7Krq3MsayTfXr8UaQRZ+XxPrssr75bRz8mxiPGfdO
+yzwwHwQWg13ykz68niYtwrVWPwltv8CCE1gtfJcCW2jdyB3amLlgHGv6tog9gSCA
+Hp2A2mJFrK5S13ws6Z0dx8GS6k4h5Rwf/Lj1AM8sWFF7AszGwvpyIyV3HZrBZ8JG
+2qxJg3BMhprjTZEkzgmSrlFoCzRyLu0Q7FbBAgMBAAGjggF6MIIBdjAJBgNVHRME
+AjAAMC0GCWCGSAGG+EIBDQQgFh5FYXN5LVJTQSBHZW5lcmF0ZWQgQ2VydGlmaWNh
+dGUwHQYDVR0OBBYEFIrrbeTbpJg6I6zbfWyAVezXznMTMIHmBgNVHSMEgd4wgduA
+FOVXbFgdxoNZi5kabemIHIIl4cnRoYG3pIG0MIGxMQswCQYDVQQGEwJVUzELMAkG
+A1UECBMCV1kxEDAOBgNVBAcTB0xhcmFtaWUxGDAWBgNVBAoTD0Nvd2JveSBSb2Jv
+dGljczEZMBcGA1UECxMQQ29tcHV0ZXIgU2NpZW5jZTEbMBkGA1UEAxMSY293Ym95
+cm9ib3RpY3MuY29tMQ8wDQYDVQQpEwZzZXJ2ZXIxIDAeBgkqhkiG9w0BCQEWEWJt
+b29yZTE2QHV3eW8uZWR1ggkApyTC75VdFSAwEwYDVR0lBAwwCgYIKwYBBQUHAwIw
+CwYDVR0PBAQDAgeAMBAGA1UdEQQJMAeCBWJyaWFuMA0GCSqGSIb3DQEBCwUAA4IB
+AQB15/ZuggiP3tYt8uGIL+O0NqXOCHPY/gbnGyIwHIjwGTbZZNFbGxn/8BeyRkNz
+/bZMHHVK54Mic57jA7YKoa6zIjsh2puemSuho9LM7oYEEgsXJRTNa8rDzNsCrj+F
+ZHXqhcvv2qfShLxJi2sxO/uk5xoivtsRsmANwjVBNLHQEGIcfgSqP+VbSB45HFgr
+swK51GQEO9JY/dqGX6IWdPWFO0+vWaWxmzVGgY89ELiA53NEKVX1BPle1Jdkt+6q
+cFzXTcKBuV/lB7QbADOSyX2iEOuGcezAgYsuCxGmMfgs/Gce+1zdTzVIqjCmTyd6
+K16TWEqkE+rydjX1tX7TnmcY
+-----END CERTIFICATE-----
