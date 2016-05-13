@@ -1,7 +1,7 @@
 <launch>
  
   <node name="serial" pkg="rosserial_python" type="serial_node.py" respawn="true">
-  <param name="port" value="/dev/ttyUSB0">
+  <param name="port" value="/dev/ttyUSB0" />
   </node>
 
   <node name="usb_cam" pkg="usb_cam" type="usb_cam_node" respawn="true" >
