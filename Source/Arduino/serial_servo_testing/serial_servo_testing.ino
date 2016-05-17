@@ -28,16 +28,20 @@ const uint8_t PWM_PIN = 3;
 void setup() {
   // Start serial communication
   Serial.begin(9600);
-  Serial.println("Serial print test...");
+  Serial.println("Setup Started...");
 
   // Initialize Adafruit PWM Board (50 Hz yo...)
   pwm.begin();
   pwm.setPWMFreq(50);
 
+  Serial.println("PWM board Initialized...");
+
   // Set all servos to approximate, default "neutral"
   for (int servoNumber = 0; servoNumber <= 15; servoNumber ++) {
-    pwm.setPWM(servoNumber, 0, PWM_NEUTRAL)
+    pwm.setPWM(servoNumber, 0, PWM_NEUTRAL);
   }
+
+  Serial.println("All PWM pins set to neutral (" + PWM_NEUTRAL + ")...");
 }
 
 void loop() {
