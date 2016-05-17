@@ -41,7 +41,9 @@ void setup() {
     pwm.setPWM(servoNumber, 0, PWM_NEUTRAL);
   }
 
-  Serial.println("All PWM pins set to neutral (" + PWM_NEUTRAL + ")...");
+  Serial.print("All PWM pins set to neutral (");
+  Serial.print(PWM_NEUTRAL);
+  Serial.print(")...");
 }
 
 void loop() {
