@@ -43,7 +43,7 @@ void setup() {
 
   Serial.print("All PWM pins set to neutral (");
   Serial.print(PWM_NEUTRAL);
-  Serial.print(")...");
+  Serial.println(")...");
 }
 
 void loop() {

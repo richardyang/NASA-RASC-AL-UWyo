@@ -30,30 +30,31 @@ To test this code without running the "Mission Control" code:
 //------------------    P I N   R E F E R E N C E   T A B L E    --------------------
 //-----------------------------------------------------------------------------------
 # Servo and DC Motor reference
-+---------+-----+-------+-------+-------+--------------------------+
-| \\  //  ‖ I2C |  MSG  | ARRAY |  ATM  | DESCRIPTION              |
-|   ||    ‖ PIN | INDEX | INDEX | ACTV8 |                          |
-| //  \\  ‖     |       |       |  PIN  |                          |
-+=========+=====+=======+=======+=======+==========================+
-|         ‖  0  |   0   |   0   |  N/A  | Arm Base                 |
-|  Arm    ‖  1  |   1   |   1   |  N/A  | Arm Shoulder             |
-| Servos  ‖  2  |   2   |   2   |  N/A  | Arm Elbow                |
-|         ‖  3  |   3   |   3   |  N/A  | Arm Wrist                |
-+---------+-----+-------+-------+-------+--------------------------+
-| Gripper ‖ N/A |   4   |  N/A  |  13   | Gripper vacuum           |
-+---------+-----+-------+-------+-------+--------------------------+
-|  Drive  ‖  4  |   5   |   0   |  N/A  | Rear Wheel               |
-| Servos  ‖  5  |   6   |   1   |  N/A  | Front Right Wheel        |
-|         ‖  6  |   7   |   2   |  N/A  | Front Left Wheel         |
-+---------+-----+-------+-------+-------+--------------------------+
-|         ‖ 11  |   8   |   0   |   2   | Rear Wheel               |
-|  Drive  ‖ 12  |   9   |   1   |   4   | Side Right Wheels (BOTH) |
-|   DC    ‖ 13  |  10   |   2   |   7   | Side Left Wheels (BOTH)  |
-| Motors  ‖ 14  |  11   |   3   |   8   | Front Right Wheel        |
-|         ‖ 15  |  12   |   4   |  12   | Front Left Wheels        |
-+---------+-----+-------+-------+-------+--------------------------+  
-|  Mast   ‖  8  |  13   |   0   |  N/A  | Mast Servo               |
-+---------+-----+-------+-------+-------+--------------------------+              */
++---------+-----+-------+-------+--------------------------+
+| \\  //  ‖ I2C |  MSG  | ARRAY | DESCRIPTION              |
+|   ||    ‖ PIN | INDEX | INDEX |                          |
+| //  \\  ‖     |       |       |                          |
++=========+=====+=======+=======+==========================+
+|         ‖  0  |   0   |  N/A  | Arm Base                 |
+|  Arm    ‖  1  |   1   |  N/A  | Arm Shoulder             |
+| Servos  ‖  2  |   2   |  N/A  | Arm Elbow                |
+|         ‖  3  |   3   |  N/A  | Arm Wrist                |
++---------+-----+-------+-------+--------------------------+
+|  Drive  ‖  4  |   5   |  N/A  | Rear Wheel               |
+| Servos  ‖  5  |   6   |  N/A  | Front Right Wheel        |
+|         ‖  6  |   7   |  N/A  | Front Left Wheel         |
++---------+-----+-------+-------+--------------------------+
+| Gripper ‖  8  |  13   |  N/A  | Gripper Rotation Servo   |
+| Servos  ‖  9  |  14   |  N/A  | Gripper Claw Servo       |
++---------+-----+-------+-------+--------------------------+
+|         ‖ 11  |   8   |   0   | Rear Wheel               |
+|  Drive  ‖ 12  |   9   |   1   | Side Right Wheels (BOTH) |
+|   DC    ‖ 13  |  10   |   2   | Side Left Wheels (BOTH)  |
+| Motors  ‖ 14  |  11   |   3   | Front Right Wheel        |
+|         ‖ 15  |  12   |   4   | Front Left Wheels        |
++---------+-----+-------+-------+--------------------------+  
+|  Mast   ‖  7  |  15   |  N/A  | Mast Servo               |
++---------+-----+-------+-------+--------------------------+              */
 
 
 //-----------------------------------------------------------------------------------
@@ -77,19 +78,18 @@ const PROGMEM int STEER_PWM_MIN         = 105;
 const PROGMEM int STEER_PWM_MAX         = 495;
 const PROGMEM int STEER_PWM_NEUTRAL     = 295;
 const PROGMEM int STEER_PWM_360_DEGREES = 720;
-//const PROGMEM int STEER_PWM_360_DEGREES = 716; // <--- ACTUAL VALUE
-
 
 //----------   G R I P P E R   S E R V O   C O N S T A N T S   ----------
-const PROGMEM int GRIPPER_PWM_MIN         =  ;
-const PROGMEM int GRIPPER_PWM_MAX         =  ;
-const PROGMEM int GRIPPER_PWM_NEUTRAL     =  ;
-const PROGMEM int GRIPPER_PWM_360_DEGREES =  ;
+// # Hitec HS-422 (gripper rotation servo)
+const PROGMEM int GRIPPER_ROTATE_PWM_MIN         = 105;
+const PROGMEM int GRIPPER_ROTATE_PWM_MAX         = 495;
+const PROGMEM int GRIPPER_ROTATE_PWM_NEUTRAL     = 295;
+const PROGMEM int GRIPPER_ROTATE_PWM_360_DEGREES = 720;
+// # Hitec HS-322HD (gripper claw servo)
+const PROGMEM int GRIPPER_CLAW_PWM_CLOSED = 276;
+const PROGMEM int GRIPPER_CLAW_PWM_OPEN   = 355;
 
 //----------   D C   M O T O R   C O N S T A N T S   ----------
-// # If the motor pwms are too close to neutral (4096/2 +- ~5%)
-//const PROGMEM int MIN_FORWARD_SPEED_PWM = 2248; // Upper Deadzone Limit
-//const PROGMEM int MIN_REVERSE_SPEED_PWM = 1848; // Lower Deadzone Limit
 const PROGMEM int NEUTRAL_SPEED_PWM     = 292; // Neutral speed PWM value
 
 
@@ -108,8 +108,8 @@ const PROGMEM int STEER_PWM_PIN_F_R = 5;
 const PROGMEM int STEER_PWM_PIN_F_L = 6;
 
 //----------    G R I P P E R   P I N S    ----------
-const PROGMEM int GRIPPER_ROTATE    = 8;
-const PROGMEM int GRIPPER_CLAW      = 9;
+const PROGMEM int GRIPPER_PWM_PIN_ROTATE = 8;
+const PROGMEM int GRIPPER_PWM_PIN_CLAW 	 = 9;
 
 //----------    D R I V E   P I N S    ----------
 const PROGMEM int DRIVE_PWM_PIN_R   = 11;
@@ -117,16 +117,6 @@ const PROGMEM int DRIVE_PWM_PIN_S_R = 12;
 const PROGMEM int DRIVE_PWM_PIN_S_L = 13;
 const PROGMEM int DRIVE_PWM_PIN_F_R = 14;
 const PROGMEM int DRIVE_PWM_PIN_F_L = 15;
-
-//----------    A T M E G A   G R I P P E R   P I N     ----------
-const PROGMEM int GRIPPER_VACUUM_PIN = 8;
-
-//----------    A T M E G A   M O T O R   A C T I V A T E   P I N S     ----------
-const PROGMEM int DRIVE_ACTIVATE_PIN_R   = 9;
-const PROGMEM int DRIVE_ACTIVATE_PIN_S_R = 10;
-const PROGMEM int DRIVE_ACTIVATE_PIN_S_L = 3;
-const PROGMEM int DRIVE_ACTIVATE_PIN_F_R = 11;
-const PROGMEM int DRIVE_ACTIVATE_PIN_F_L = 12;
 
 
 //-----------------------------------------------------------------------------------
@@ -193,7 +183,6 @@ Adafruit_PWMServoDriver pwm = Adafruit_PWMServoDriver();
       else decrement CURRENT
     else return
 */
-
 void pthread_motor_helper(int motor_index, int drive_pwm_pin) {
   if (target_motor_pwm[motor_index] > current_motor_pwm[motor_index]) {
     // The target speed is higher than current speed
@@ -205,20 +194,7 @@ void pthread_motor_helper(int motor_index, int drive_pwm_pin) {
     // We are at target speed
     return;
   }
-/*
-  // Check if within range for activate pin ("NEUTRAL_SPEED_PWM" +- 5/10%)
-  if (MIN_FORWARD_SPEED_PWM > current_motor_pwm[motor_index] 
-    && current_motor_pwm[motor_index] > MIN_REVERSE_SPEED_PWM) {
-    // Deactivate motor and set to "NEUTRAL_SPEED_PWM"
-    //  (if the speed is too low, the H-BRIDGE MIGHT OVERHEAT)
-    current_motor_pwm[motor_index] = NEUTRAL_SPEED_PWM ;
-    digitalWrite(drive_activate_pin, LOW);
-  } else {
-    digitalWrite(drive_activate_pin, HIGH);
-  }
-  // If the desired speed is too close "NEUTRAL_SPEED_PWM", 
-  //  turn off activate pin and set speed to "NEUTRAL_SPEED_PWM"
-  */
+
   pwm.setPWM(drive_pwm_pin, 0, current_motor_pwm[motor_index]);
 }
 
@@ -273,13 +249,6 @@ void arduino_cmd_callback(const std_msgs::UInt16MultiArray& cmd_msg) {
     pwm.setPWM(ARM_PWM_PIN_WRIST, 0, valueReadFromArray);
   }
 
-  //----------  G R I P P E R   V A C U U M  ----------
-  valueReadFromArray =  ((uint16_t) cmd_msg.data[MSG_INDEX_ARM_BASE]);
-  if (valueReadFromArray == 0) {
-    digitalWrite(GRIPPER_VACUUM_PIN, LOW);
-  } else if (valueReadFromArray == 1) {
-    digitalWrite(GRIPPER_VACUUM_PIN, HIGH);
-  }
 
   //----------  S T E E R   S E R V O S  ----------
   // Update rear steer servo
@@ -300,20 +269,6 @@ void arduino_cmd_callback(const std_msgs::UInt16MultiArray& cmd_msg) {
 
   //----------  D R I V E   M O T O R S  ----------
 
-/*
-  valueReadFromArray = ((uint16_t) cmd_msg.data[MSG_INDEX_DRIVE_R]);
-  pwm.setPWM(11, 0, valueReadFromArray);
-  valueReadFromArray = ((uint16_t) cmd_msg.data[MSG_INDEX_DRIVE_S_R]);
-  pwm.setPWM(12, 0, valueReadFromArray);
-  valueReadFromArray = ((uint16_t) cmd_msg.data[MSG_INDEX_DRIVE_S_L]);
-  pwm.setPWM(13, 0, valueReadFromArray);
-  valueReadFromArray = ((uint16_t) cmd_msg.data[MSG_INDEX_DRIVE_F_R]);
-  pwm.setPWM(14, 0, valueReadFromArray);
-  valueReadFromArray = ((uint16_t) cmd_msg.data[MSG_INDEX_DRIVE_F_L]);
-  pwm.setPWM(15, 0, valueReadFromArray);
-*/
-
-  
   // Update rear drive motor
   valueReadFromArray = ((uint16_t) cmd_msg.data[MSG_INDEX_DRIVE_R]);
   if (ABSOLUTE_MIN_PWM <= valueReadFromArray && valueReadFromArray <= ABSOLUTE_MAX_PWM) {
@@ -339,7 +294,19 @@ void arduino_cmd_callback(const std_msgs::UInt16MultiArray& cmd_msg) {
   if (ABSOLUTE_MIN_PWM <= valueReadFromArray && valueReadFromArray <= ABSOLUTE_MAX_PWM) {
     target_motor_pwm[DRIVE_ARRAY_INDEX_F_L] = valueReadFromArray;
   }
-  
+
+
+  //----------  G R I P P E R   ----------
+ 	// Update gripper rotation
+  valueReadFromArray =  ((uint16_t) cmd_msg.data[MSG_INDEX_GRIPPER_ROTATE]);
+  if (GRIPPER_ROTATE_PWM_MIN <= valueReadFromArray && valueReadFromArray <= GRIPPER_ROTATE_PWM_MAX) {
+    pwm.setPWM(GRIPPER_PWM_PIN_ROTATE, 0,valueReadFromArray);
+  }
+  // Update gripper claw
+  valueReadFromArray =  ((uint16_t) cmd_msg.data[MSG_INDEX_GRIPPER_CLAW]);
+  if (GRIPPER_CLAW_PWM_OPEN <= valueReadFromArray && valueReadFromArray <= GRIPPER_CLAW_PWM_CLOSED) {
+    pwm.setPWM(GRIPPER_PWM_PIN_CLAW, 0,valueReadFromArray);
+  }
 
   //----------  MAST STEPPER  ----------
   // TODO
@@ -364,40 +331,30 @@ void setup(){
   pwm.setPWM(ARM_PWM_PIN_ELBOW, 0, ARM_PWM_NEUTRAL);
   pwm.setPWM(ARM_PWM_PIN_WRIST, 0, ARM_PWM_NEUTRAL);
 
-  // Initialize vacuum pump controls
-  pinMode(GRIPPER_VACUUM_PIN, OUTPUT);
-  digitalWrite(GRIPPER_VACUUM_PIN, LOW);
-
   // Initialize steer servos (set to neutral)
   pwm.setPWM(STEER_PWM_PIN_R, 0, STEER_PWM_NEUTRAL);
   pwm.setPWM(STEER_PWM_PIN_F_R, 0, STEER_PWM_NEUTRAL);
   pwm.setPWM(STEER_PWM_PIN_F_L, 0, STEER_PWM_NEUTRAL);
 
+  // Initialize gripper servos: 
+  //	- 0 degres rotation
+  //	- open claw
+  pwm.setPWM(GRIPPER_PWM_PIN_CLAW, 0, GRIPPER_CLAW_PWM_OPEN);
+  pwm.setPWM(GRIPPER_PWM_PIN_ROTATE, 0, GRIPPER_ROTATE_PWM_NEUTRAL);
+
   // Initialize array for "target" motor pwm (to "NEUTRAL_SPEED_PWM")
-  target_motor_pwm[DRIVE_ARRAY_INDEX_R]   = NEUTRAL_SPEED_PWM ;
-  target_motor_pwm[DRIVE_ARRAY_INDEX_S_R] = NEUTRAL_SPEED_PWM ;
-  target_motor_pwm[DRIVE_ARRAY_INDEX_S_L] = NEUTRAL_SPEED_PWM ;
-  target_motor_pwm[DRIVE_ARRAY_INDEX_F_R] = NEUTRAL_SPEED_PWM ;
-  target_motor_pwm[DRIVE_ARRAY_INDEX_F_L] = NEUTRAL_SPEED_PWM ;
+  target_motor_pwm[DRIVE_ARRAY_INDEX_R]   = NEUTRAL_SPEED_PWM;
+  target_motor_pwm[DRIVE_ARRAY_INDEX_S_R] = NEUTRAL_SPEED_PWM;
+  target_motor_pwm[DRIVE_ARRAY_INDEX_S_L] = NEUTRAL_SPEED_PWM;
+  target_motor_pwm[DRIVE_ARRAY_INDEX_F_R] = NEUTRAL_SPEED_PWM;
+  target_motor_pwm[DRIVE_ARRAY_INDEX_F_L] = NEUTRAL_SPEED_PWM;
 
   // Initialize array for "current" motor pwm (to "NEUTRAL_SPEED_PWM")
-  current_motor_pwm[DRIVE_ARRAY_INDEX_R]   = NEUTRAL_SPEED_PWM ;
-  current_motor_pwm[DRIVE_ARRAY_INDEX_S_R] = NEUTRAL_SPEED_PWM ;
-  current_motor_pwm[DRIVE_ARRAY_INDEX_S_L] = NEUTRAL_SPEED_PWM ;
-  current_motor_pwm[DRIVE_ARRAY_INDEX_F_R] = NEUTRAL_SPEED_PWM ;
-  current_motor_pwm[DRIVE_ARRAY_INDEX_F_L] = NEUTRAL_SPEED_PWM ;
-
-  // Initialize motor "activate" pins
-  pinMode(DRIVE_ACTIVATE_PIN_R, OUTPUT);
-  pinMode(DRIVE_ACTIVATE_PIN_S_R, OUTPUT);
-  pinMode(DRIVE_ACTIVATE_PIN_S_L, OUTPUT);
-  pinMode(DRIVE_ACTIVATE_PIN_F_R, OUTPUT);
-  pinMode(DRIVE_ACTIVATE_PIN_F_L, OUTPUT);
-  digitalWrite(DRIVE_ACTIVATE_PIN_R, LOW);
-  digitalWrite(DRIVE_ACTIVATE_PIN_S_R, LOW);
-  digitalWrite(DRIVE_ACTIVATE_PIN_S_L, LOW);
-  digitalWrite(DRIVE_ACTIVATE_PIN_F_R, LOW);
-  digitalWrite(DRIVE_ACTIVATE_PIN_F_L, LOW);
+  current_motor_pwm[DRIVE_ARRAY_INDEX_R]   = NEUTRAL_SPEED_PWM;
+  current_motor_pwm[DRIVE_ARRAY_INDEX_S_R] = NEUTRAL_SPEED_PWM;
+  current_motor_pwm[DRIVE_ARRAY_INDEX_S_L] = NEUTRAL_SPEED_PWM;
+  current_motor_pwm[DRIVE_ARRAY_INDEX_F_R] = NEUTRAL_SPEED_PWM;
+  current_motor_pwm[DRIVE_ARRAY_INDEX_F_L] = NEUTRAL_SPEED_PWM;
 
   // Initialize protothread(s)
   PT_INIT(&motor_protothread);
