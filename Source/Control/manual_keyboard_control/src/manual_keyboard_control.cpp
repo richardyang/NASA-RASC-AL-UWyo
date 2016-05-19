@@ -47,7 +47,8 @@ Commands:
 #define ARM_ELBOW 2
 #define ARM_WRIST 3
 // Arm gripper
-#define ARM_GRIPPER 4
+#define ARM_GRIPPER_ROTATE 4
+#define ARM_GRIPPER_CLAW 5
 // Steering servos
 #define STEER_BACK 0
 #define STEER_FRONT_RIGHT 1
@@ -71,7 +72,7 @@ std::map<uint16_t, bool> keys;
 bool CURRENT_VACUUM_STATE = false;
 
 // Arm servo array
-int16_t arm_servo[5];
+int16_t arm_servo[6];
 std_msgs::Int16MultiArray arm_servo_message;
 bool arm_update_needed = false;
 
@@ -112,6 +113,7 @@ void publish_arm_servo_update() {
     arm_servo_message.data[2] = arm_servo[2];
     arm_servo_message.data[3] = arm_servo[3];
     arm_servo_message.data[4] = arm_servo[4];
+    arm_servo_message.data[5] = arm_servo[5];
     arm_cmd_manual->publish(arm_servo_message);
 }
 
@@ -144,9 +146,11 @@ void initialize_servos() {
     arm_servo[2] = 0;
     arm_servo[3] = 0;
     arm_servo[4] = 0;
+    arm_servo[5] = 0;
 
 	// Initialize arm servo update message array
     arm_servo_message.data.clear();
+    arm_servo_message.data.push_back(0);
     arm_servo_message.data.push_back(0);
     arm_servo_message.data.push_back(0);
     arm_servo_message.data.push_back(0);
@@ -192,16 +196,19 @@ void initialize_key_states() {
     keys[keyboard::Key::KEY_o] = false; // Wrist forward
     keys[keyboard::Key::KEY_l] = false; // Wrist backward
     keys[keyboard::Key::KEY_p] = false; // Return home 
-    keys[keyboard::Key::KEY_b] = false; // Toggle vacuum
 
     keys[keyboard::Key::KEY_a] = false; // Steer CCW
     keys[keyboard::Key::KEY_d] = false; // Steer CW
-    keys[keyboard::Key::KEY_f] = false; // Steer back to straight
+    keys[keyboard::Key::KEY_f] = false; // Steer reset (straight ahead)
 
     keys[keyboard::Key::KEY_w] = false; // Drive forward
     keys[keyboard::Key::KEY_s] = false; // Drive backward
     keys[keyboard::Key::KEY_x] = false; // Stop motors
 
+    keys[keyboard::Key::KEY_UP] = false;    // Gripper Open
+    keys[keyboard::Key::KEY_DOWN] = false;  // Gripper Close
+    keys[keyboard::Key::KEY_RIGHT] = false; // Gripper Rotate CW
+    keys[keyboard::Key::KEY_LEFT] = false;  // Gripper Rotate CCW
 }
 
 
@@ -327,11 +334,23 @@ int main(int argc, char **argv) {
             arm_update_needed = true;
         }
         
-        // Arm gripper (b)
-        if (keys[keyboard::Key::KEY_b]) {
-            CURRENT_VACUUM_STATE = !CURRENT_VACUUM_STATE;
-            keys[keyboard::Key::KEY_b] = false;
-            CURRENT_VACUUM_STATE ? arm_servo_message.data[ARM_GRIPPER] = 1 : arm_servo_message.data[ARM_GRIPPER] = 0;
+        // Arm gripper rotate (left arrow and right arrow)
+        if (keys[keyboard::Key::KEY_LEFT]) {
+            arm_servo[ARM_GRIPPER_ROTATE] += 1;
+            arm_update_needed = true;
+        } else if (keys[keyboard::Key::KEY_RIGHT]) {
+            arm_servo[ARM_GRIPPER_ROTATE] -= 1;
+            arm_update_needed = true;
+        }
+
+        // Arm gripper rotate (up arrow and down arrow)
+        if (keys[keyboard::Key::KEY_UP]) {
+            // open gripper
+            arm_servo[ARM_GRIPPER_CLAW] -= 1;
+            arm_update_needed = true;
+        } else if (keys[keyboard::Key::KEY_DOWN]) {
+            // close gripper
+            arm_servo[ARM_GRIPPER_CLAW] += 1;
             arm_update_needed = true;
         }
 
