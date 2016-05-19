@@ -305,7 +305,7 @@ void arduino_cmd_callback(const std_msgs::UInt16MultiArray& cmd_msg) {
   }
   // Update gripper claw
   valueReadFromArray =  ((uint16_t) cmd_msg.data[MSG_INDEX_GRIPPER_CLAW]);
-  if (GRIPPER_CLAW_PWM_OPEN <= valueReadFromArray && valueReadFromArray <= GRIPPER_CLAW_PWM_CLOSED) {
+  if (GRIPPER_CLAW_PWM_CLOSED <= valueReadFromArray && valueReadFromArray <= GRIPPER_CLAW_PWM_OPEN) {
     pwm.setPWM(GRIPPER_PWM_PIN_CLAW, 0,valueReadFromArray);
   }
 
