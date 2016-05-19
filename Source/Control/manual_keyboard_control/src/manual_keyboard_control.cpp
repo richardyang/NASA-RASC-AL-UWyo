@@ -61,6 +61,16 @@ Commands:
 #define DRIVE_FRONT_RIGHT  3
 #define DRIVE_FRONT_LEFT   4
 
+// *************************************** LIMIT VALUES *************************************** //
+#define GRIPPER_ROTATE_INCREMENT 2
+#define GRIPPER_ROTATE_MAX  90
+#define GRIPPER_ROTATE_MIN -90
+#define GRIPPER_CLAW_INCREMENT   2
+#define GRIPPER_CLAW_MAX   100
+#define GRIPPER_CLAW_MIN     0
+
+// *************************************** LIMIT VALUES *************************************** //
+
 
 // ROS variables
 ros::Publisher * arm_cmd_manual;
@@ -245,7 +255,7 @@ int main(int argc, char **argv) {
             int angle_delta = 0;
 
             // For each arm servo
-            for (int i = 0; i < 4; i++) {
+            for (int i = 0; i < 6; i++) {
                 // If the shoulder is extended and the wrist is not brought in
                 // then bring in the wrist (to reduce strain on shoulder servo)
                 //      Which means if the current servo is not the wrist, skip it
@@ -271,7 +281,11 @@ int main(int argc, char **argv) {
                 } else if (i == ARM_WRIST && arm_servo[ARM_SHOULDER] > 50) {
                     // If the current servo is the wrist, and the shoulder is at more than
                     // 50 degrees, set the wrist angle to -40
-                    target_angle = -40;
+                    target_angle = 0;
+                } else if (i == ARM_GRIPPER_ROTATE) {
+                    target_angle = 0;
+                } else if (i == ARM_GRIPPER_CLAW) {
+                    target_angle = 0;
                 } else {
                     // Otherwise set the target angle to "home" (ie 0 degrees)
                     target_angle = 0;
@@ -286,8 +300,8 @@ int main(int argc, char **argv) {
                     angle_delta = 0;
                 }
 
-                // Double speed if not the base
-                if (i == 0 || i == 3) {
+                // Double speed base, wrist gripper rotate or gripper claw
+                if (i == ARM_BASE || i == ARM_WRIST || i == ARM_GRIPPER_ROTATE || i == ARM_GRIPPER_CLAW) {
                     if (arm_servo[i] - 1 != 0 && arm_servo[i] + 1 != 0) {
                         angle_delta *= 2;
                     }
@@ -337,19 +351,37 @@ int main(int argc, char **argv) {
         
         // Arm gripper rotate (left arrow and right arrow)
         if (keys[keyboard::Key::KEY_LEFT]) {
-            arm_servo[ARM_GRIPPER_ROTATE] += 1;
+            if (arm_servo[ARM_GRIPPER_ROTATE] + GRIPPER_ROTATE_INCREMENT >= GRIPPER_ROTATE_MAX) {
+                arm_servo[ARM_GRIPPER_ROTATE] = GRIPPER_ROTATE_MAX;
+            } else {
+                arm_servo[ARM_GRIPPER_ROTATE] += GRIPPER_ROTATE_INCREMENT;
+            }
             arm_update_needed = true;
         } else if (keys[keyboard::Key::KEY_RIGHT]) {
-            arm_servo[ARM_GRIPPER_ROTATE] -= 1;
+            if (arm_servo[ARM_GRIPPER_ROTATE] - GRIPPER_ROTATE_INCREMENT <= GRIPPER_ROTATE_MIN) {
+                arm_servo[ARM_GRIPPER_ROTATE] = GRIPPER_ROTATE_MIN;
+            } else {
+                arm_servo[ARM_GRIPPER_ROTATE] -= GRIPPER_ROTATE_INCREMENT;
+            }
             arm_update_needed = true;
         }
 
         // Arm gripper rotate (up arrow and down arrow)
         if (keys[keyboard::Key::KEY_UP]) {
-            arm_servo[ARM_GRIPPER_CLAW] -= 1; // open gripper
+            // OPEN GRIPPER
+            if (arm_servo[ARM_GRIPPER_CLAW] - GRIPPER_CLAW_INCREMENT <= GRIPPER_CLAW_MIN) {
+                arm_servo[ARM_GRIPPER_CLAW] = GRIPPER_CLAW_MIN;
+            } else {
+                arm_servo[ARM_GRIPPER_CLAW] -= GRIPPER_CLAW_INCREMENT;
+            }
             arm_update_needed = true;
         } else if (keys[keyboard::Key::KEY_DOWN]) {
-            arm_servo[ARM_GRIPPER_CLAW] += 1; // close gripper
+            // CLOSE GRIPPER
+            if (arm_servo[ARM_GRIPPER_CLAW] + GRIPPER_CLAW_INCREMENT >= GRIPPER_CLAW_MAX) {
+                arm_servo[ARM_GRIPPER_CLAW] = GRIPPER_CLAW_MAX;
+            } else {
+                arm_servo[ARM_GRIPPER_CLAW] += GRIPPER_CLAW_INCREMENT;
+            }
             arm_update_needed = true;
         }
 

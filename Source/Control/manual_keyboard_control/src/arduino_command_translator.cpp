@@ -60,16 +60,23 @@ To test this code without running the "Mission Control" code:
 #define ARM_PWM_NEUTRAL      315  // "0 degrees", center pulse length count (out of 4096@50Hz)
 #define ARM_PWM_360_DEGREES  216  // "360 degrees", one full rotation
 
-//----------   G R I P P E R   C O N S T A N T S   ----------
-#define ARM_GRIPPER_OFF 0;
-#define ARM_GRIPPER_ON  1;
-
 //----------   S T E E R I N G   S E R V O   C O N S T A N T S   ----------
 #define STEER_PWM_MIN          105
 #define STEER_PWM_MAX          495 
 #define STEER_PWM_NEUTRAL      295
 #define STEER_PWM_360_DEGREES  720
 //#define STEER_PWM_360_DEGREES  716 // <--- ACTUAL VALUE ???
+
+//----------   G R I P P E R   S E R V O   C O N S T A N T S   ----------
+// # Hitec HS-422 (gripper rotation servo)
+#define GRIPPER_ROTATE_PWM_MIN         105
+#define GRIPPER_ROTATE_PWM_MAX         495
+#define GRIPPER_ROTATE_PWM_NEUTRAL     295
+#define GRIPPER_ROTATE_PWM_360_DEGREES 720
+// # Hitec HS-322HD (gripper claw servo)
+#define GRIPPER_CLAW_CONSTANT    100.0
+#define GRIPPER_CLAW_PWM_CLOSED 276
+#define GRIPPER_CLAW_PWM_OPEN   355
 
 //----------   D C   M O T O R   C O N S T A N T S   ----------
 // # If the motor pwms are too close to neutral (4096/2 +- ~5%)
@@ -177,6 +184,17 @@ uint16_t steer_angle_to_pulse(int int_angle) {
   return angle_to_pulse(int_angle, STEER_PWM_NEUTRAL, 
     STEER_PWM_360_DEGREES, STEER_PWM_MIN, STEER_PWM_MAX);
 }
+uint16_t gripper_angle_to_pulse(int int_angle) {
+  return angle_to_pulse(int_angle, 
+    GRIPPER_ROTATE_PWM_NEUTRAL, GRIPPER_ROTATE_PWM_360_DEGREES, 
+    GRIPPER_ROTATE_PWM_MIN, GRIPPER_ROTATE_PWM_MAX);
+}
+uint16_t gripper_claw_to_pulse(int int_claw) {
+
+  return GRIPPER_CLAW_PWM_OPEN - (
+        (int_claw*1.0)/GRIPPER_CLAW_CONSTANT) * 
+        (GRIPPER_CLAW_PWM_OPEN - GRIPPER_CLAW_PWM_CLOSED);
+}
 
 /***** drive_speed_to_pulse() ###
   Converts a drive speed to a PWM pulse,
@@ -226,8 +244,14 @@ void arm_cmd_manual_callback(const std_msgs::Int16MultiArray& cmd_msg) {
 	newPulse = arm_angle_to_pulse(newAngle);
 	command_message_array.data[OUT_MSG_INDEX_ARM_WRIST] = newPulse;
 
-	// Gripper
-	command_message_array.data[OUT_MSG_INDEX_GRIPPER] = cmd_msg.data[IN_MSG_INDEX_GRIPPER_ROTATE];
+	// Gripper rotation
+  newAngle = (int16_t) cmd_msg.data[IN_MSG_INDEX_GRIPPER_ROTATE];
+  newPulse = gripper_angle_to_pulse(newAngle);
+  command_message_array.data[OUT_MSG_INDEX_GRIPPER_ROTATE] = newPulse;
+  // Gripper claw
+  newAngle = (int16_t) cmd_msg.data[IN_MSG_INDEX_GRIPPER_CLAW];
+  newPulse = gripper_claw_to_pulse(newAngle);
+  command_message_array.data[OUT_MSG_INDEX_GRIPPER_CLAW] = newPulse;
 
 	// Signal updated comamnds
 	UPDATE_NEEDED = true;
@@ -288,7 +312,7 @@ void drive_cmd_manual_callback(const std_msgs::Int16MultiArray& cmd_msg) {
 void initialize_command_message_array() {
 	// Clear and reinitialize the command array
 	command_message_array.data.clear();
-	for (int i = 0; i < 14; i ++) {
+	for (int i = 0; i < 15; i ++) {
 		command_message_array.data.push_back(0);
 	}
 	// Set default values
@@ -296,7 +320,6 @@ void initialize_command_message_array() {
 	command_message_array.data[OUT_MSG_INDEX_ARM_SHOULDER] = ARM_PWM_NEUTRAL;
 	command_message_array.data[OUT_MSG_INDEX_ARM_ELBOW]    = ARM_PWM_NEUTRAL;
 	command_message_array.data[OUT_MSG_INDEX_ARM_WRIST]    = ARM_PWM_NEUTRAL;
-	command_message_array.data[OUT_MSG_INDEX_GRIPPER]      = ARM_GRIPPER_OFF;	// Initialize gripper
 	command_message_array.data[OUT_MSG_INDEX_STEER_R]      = STEER_PWM_NEUTRAL;	// Initialize steering servos
 	command_message_array.data[OUT_MSG_INDEX_STEER_F_R]    = STEER_PWM_NEUTRAL;
 	command_message_array.data[OUT_MSG_INDEX_STEER_F_L]    = STEER_PWM_NEUTRAL;
@@ -305,6 +328,8 @@ void initialize_command_message_array() {
 	command_message_array.data[OUT_MSG_INDEX_DRIVE_S_L]    = NEUTRAL_SPEED_PWM;
 	command_message_array.data[OUT_MSG_INDEX_DRIVE_F_R]    = NEUTRAL_SPEED_PWM;
 	command_message_array.data[OUT_MSG_INDEX_DRIVE_F_L]    = NEUTRAL_SPEED_PWM;
+  command_message_array.data[OUT_MSG_INDEX_GRIPPER_ROTATE] = GRIPPER_ROTATE_PWM_NEUTRAL; // Initialize gripper
+  command_message_array.data[OUT_MSG_INDEX_GRIPPER_CLAW] = GRIPPER_CLAW_PWM_OPEN;
 }
 
 int main(int argc, char **argv) {

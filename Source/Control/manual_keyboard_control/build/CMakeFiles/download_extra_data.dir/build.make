@@ -35,10 +35,10 @@ RM = /usr/bin/cmake -E remove -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/jr/github/RoboOps-Senior-Design/Source/RoboOps_ControllerCode/manual_keyboard_control
+CMAKE_SOURCE_DIR = /home/jr/github/Wyoming-RoboOps-Public/Source/Control/manual_keyboard_control
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/jr/github/RoboOps-Senior-Design/Source/RoboOps_ControllerCode/manual_keyboard_control/build
+CMAKE_BINARY_DIR = /home/jr/github/Wyoming-RoboOps-Public/Source/Control/manual_keyboard_control/build
 
 # Utility rule file for download_extra_data.
 
@@ -60,6 +60,6 @@ CMakeFiles/download_extra_data.dir/clean:
 .PHONY : CMakeFiles/download_extra_data.dir/clean
 
 CMakeFiles/download_extra_data.dir/depend:
-	cd /home/jr/github/RoboOps-Senior-Design/Source/RoboOps_ControllerCode/manual_keyboard_control/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/jr/github/RoboOps-Senior-Design/Source/RoboOps_ControllerCode/manual_keyboard_control /home/jr/github/RoboOps-Senior-Design/Source/RoboOps_ControllerCode/manual_keyboard_control /home/jr/github/RoboOps-Senior-Design/Source/RoboOps_ControllerCode/manual_keyboard_control/build /home/jr/github/RoboOps-Senior-Design/Source/RoboOps_ControllerCode/manual_keyboard_control/build /home/jr/github/RoboOps-Senior-Design/Source/RoboOps_ControllerCode/manual_keyboard_control/build/CMakeFiles/download_extra_data.dir/DependInfo.cmake --color=$(COLOR)
+	cd /home/jr/github/Wyoming-RoboOps-Public/Source/Control/manual_keyboard_control/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/jr/github/Wyoming-RoboOps-Public/Source/Control/manual_keyboard_control /home/jr/github/Wyoming-RoboOps-Public/Source/Control/manual_keyboard_control /home/jr/github/Wyoming-RoboOps-Public/Source/Control/manual_keyboard_control/build /home/jr/github/Wyoming-RoboOps-Public/Source/Control/manual_keyboard_control/build /home/jr/github/Wyoming-RoboOps-Public/Source/Control/manual_keyboard_control/build/CMakeFiles/download_extra_data.dir/DependInfo.cmake --color=$(COLOR)
 .PHONY : CMakeFiles/download_extra_data.dir/depend
 
