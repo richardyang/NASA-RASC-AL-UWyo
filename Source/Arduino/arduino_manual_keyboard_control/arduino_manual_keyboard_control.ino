@@ -40,20 +40,20 @@ To test this code without running the "Mission Control" code:
 | Servos  ‖  2  |   2   |  N/A  | Arm Elbow                |
 |         ‖  3  |   3   |  N/A  | Arm Wrist                |
 +---------+-----+-------+-------+--------------------------+
-|  Drive  ‖  4  |   5   |  N/A  | Rear Wheel               |
-| Servos  ‖  5  |   6   |  N/A  | Front Right Wheel        |
-|         ‖  6  |   7   |  N/A  | Front Left Wheel         |
+| Gripper ‖  8  |  12   |  N/A  | Gripper Rotation Servo   |
+| Servos  ‖  9  |  13   |  N/A  | Gripper Claw Servo       |
 +---------+-----+-------+-------+--------------------------+
-| Gripper ‖  8  |  13   |  N/A  | Gripper Rotation Servo   |
-| Servos  ‖  9  |  14   |  N/A  | Gripper Claw Servo       |
+|  Drive  ‖  4  |   4   |  N/A  | Rear Wheel               |
+| Servos  ‖  5  |   5   |  N/A  | Front Right Wheel        |
+|         ‖  6  |   6   |  N/A  | Front Left Wheel         |
 +---------+-----+-------+-------+--------------------------+
-|         ‖ 11  |   8   |   0   | Rear Wheel               |
-|  Drive  ‖ 12  |   9   |   1   | Side Right Wheels (BOTH) |
-|   DC    ‖ 13  |  10   |   2   | Side Left Wheels (BOTH)  |
-| Motors  ‖ 14  |  11   |   3   | Front Right Wheel        |
-|         ‖ 15  |  12   |   4   | Front Left Wheels        |
+|         ‖ 11  |   7   |   0   | Rear Wheel               |
+|  Drive  ‖ 12  |   8   |   1   | Side Right Wheels (BOTH) |
+|   DC    ‖ 13  |   9   |   2   | Side Left Wheels (BOTH)  |
+| Motors  ‖ 14  |  10   |   3   | Front Right Wheel        |
+|         ‖ 15  |  11   |   4   | Front Left Wheels        |
 +---------+-----+-------+-------+--------------------------+  
-|  Mast   ‖  7  |  15   |  N/A  | Mast Servo               |
+|  Mast   ‖  7  |  14   |  N/A  | Mast Servo               |
 +---------+-----+-------+-------+--------------------------+              */
 
 
@@ -118,6 +118,8 @@ const PROGMEM int DRIVE_PWM_PIN_S_L = 13;
 const PROGMEM int DRIVE_PWM_PIN_F_R = 14;
 const PROGMEM int DRIVE_PWM_PIN_F_L = 15;
 
+//----------    M A S T   P I N    ----------
+const PROGMEM int MAST_PWM_PIN = 7;
 
 //-----------------------------------------------------------------------------------
 //--------------   A R R A Y   &   M E S S A G E   C O S N T A N T S   --------------
@@ -127,18 +129,17 @@ const PROGMEM int MSG_INDEX_ARM_BASE       =  0;
 const PROGMEM int MSG_INDEX_ARM_SHOULDER   =  1;
 const PROGMEM int MSG_INDEX_ARM_ELBOW      =  2;
 const PROGMEM int MSG_INDEX_ARM_WRIST      =  3;
-const PROGMEM int MSG_INDEX_GRIPPER        =  4;
-const PROGMEM int MSG_INDEX_STEER_R        =  5;
-const PROGMEM int MSG_INDEX_STEER_F_R      =  6;
-const PROGMEM int MSG_INDEX_STEER_F_L      =  7;
-const PROGMEM int MSG_INDEX_DRIVE_R        =  8;
-const PROGMEM int MSG_INDEX_DRIVE_S_R      =  9;
-const PROGMEM int MSG_INDEX_DRIVE_S_L      = 10;
-const PROGMEM int MSG_INDEX_DRIVE_F_R      = 11;
-const PROGMEM int MSG_INDEX_DRIVE_F_L      = 12;
-const PROGMEM int MSG_INDEX_GRIPPER_ROTATE = 13;  
-const PROGMEM int MSG_INDEX_GRIPPER_CLAW   = 14;  
-//const PROGMEM int MSG_INDEX_MAST_STEPPER = 15;  // MIGHT NOT BE USED...
+const PROGMEM int MSG_INDEX_STEER_R        =  4;
+const PROGMEM int MSG_INDEX_STEER_F_R      =  5;
+const PROGMEM int MSG_INDEX_STEER_F_L      =  6;
+const PROGMEM int MSG_INDEX_DRIVE_R        =  7;
+const PROGMEM int MSG_INDEX_DRIVE_S_R      =  8;
+const PROGMEM int MSG_INDEX_DRIVE_S_L      =  9;
+const PROGMEM int MSG_INDEX_DRIVE_F_R      = 10;
+const PROGMEM int MSG_INDEX_DRIVE_F_L      = 11;
+const PROGMEM int MSG_INDEX_GRIPPER_ROTATE = 12;  
+const PROGMEM int MSG_INDEX_GRIPPER_CLAW   = 13;  
+//const PROGMEM int MSG_INDEX_MAST_STEPPER = 14;  // MIGHT NOT BE USED...
 
 //----------    M O T O R   A R R A Y   I N D E C E S    ----------
 const PROGMEM int DRIVE_ARRAY_INDEX_R   = 0;

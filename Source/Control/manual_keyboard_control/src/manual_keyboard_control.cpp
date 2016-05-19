@@ -24,7 +24,8 @@ Commands:
 | Servos  ‖   2   | Arm Elbow                 |
 |         ‖   3   | Arm Wrist                 |
 +---------+-------+---------------------------+
-| Gripper ‖   4   | Gripper vacuum            |
+| Gripper ‖   4   | Gripper Rotate            |
+| Gripper ‖   5   | Gripper Claw              |
 +---------+-------+---------------------------+
 |  Drive  ‖   0   | Back Wheel                |
 | Servos  ‖   1   | Front Right Wheel         |
@@ -40,25 +41,25 @@ Commands:
 +---------+-------+---------------------------+   */
 
 // Camera mast
-#define MAST 0
+#define MAST               0
 // Arm servos
-#define ARM_BASE 0
-#define ARM_SHOULDER 1
-#define ARM_ELBOW 2
-#define ARM_WRIST 3
+#define ARM_BASE           0
+#define ARM_SHOULDER       1
+#define ARM_ELBOW          2
+#define ARM_WRIST          3
 // Arm gripper
 #define ARM_GRIPPER_ROTATE 4
-#define ARM_GRIPPER_CLAW 5
+#define ARM_GRIPPER_CLAW   5
 // Steering servos
-#define STEER_BACK 0
-#define STEER_FRONT_RIGHT 1
-#define STEER_FRONT_LEFT 2
+#define STEER_BACK         0
+#define STEER_FRONT_RIGHT  1
+#define STEER_FRONT_LEFT   2
 // Drive motors
-#define DRIVE_REAR 0
-#define DRIVE_SIDE_RIGHT 1
-#define DRIVE_SIDE_LEFT 2
-#define DRIVE_FRONT_RIGHT 3
-#define DRIVE_FRONT_LEFT 4
+#define DRIVE_REAR         0
+#define DRIVE_SIDE_RIGHT   1
+#define DRIVE_SIDE_LEFT    2
+#define DRIVE_FRONT_RIGHT  3
+#define DRIVE_FRONT_LEFT   4
 
 
 // ROS variables
@@ -205,10 +206,10 @@ void initialize_key_states() {
     keys[keyboard::Key::KEY_s] = false; // Drive backward
     keys[keyboard::Key::KEY_x] = false; // Stop motors
 
-    keys[keyboard::Key::KEY_UP] = false;    // Gripper Open
-    keys[keyboard::Key::KEY_DOWN] = false;  // Gripper Close
+    keys[keyboard::Key::KEY_UP]    = false;    // Gripper Open
+    keys[keyboard::Key::KEY_DOWN]  = false;  // Gripper Close
     keys[keyboard::Key::KEY_RIGHT] = false; // Gripper Rotate CW
-    keys[keyboard::Key::KEY_LEFT] = false;  // Gripper Rotate CCW
+    keys[keyboard::Key::KEY_LEFT]  = false;  // Gripper Rotate CCW
 }
 
 
@@ -345,12 +346,10 @@ int main(int argc, char **argv) {
 
         // Arm gripper rotate (up arrow and down arrow)
         if (keys[keyboard::Key::KEY_UP]) {
-            // open gripper
-            arm_servo[ARM_GRIPPER_CLAW] -= 1;
+            arm_servo[ARM_GRIPPER_CLAW] -= 1; // open gripper
             arm_update_needed = true;
         } else if (keys[keyboard::Key::KEY_DOWN]) {
-            // close gripper
-            arm_servo[ARM_GRIPPER_CLAW] += 1;
+            arm_servo[ARM_GRIPPER_CLAW] += 1; // close gripper
             arm_update_needed = true;
         }
 

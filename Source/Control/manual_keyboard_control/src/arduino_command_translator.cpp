@@ -23,25 +23,26 @@ To test this code without running the "Mission Control" code:
 | \\  //  ‖ IN MSG  | OUT MSG | DESCRIPTION              |
 |   ||    ‖  ARRAY  |  ARRAY  |                          |
 | //  \\  ‖  INDEX  |  INDEX  |                          |
-+++++
++=========+=========+=========+==========================+
 |         ‖    0    |    0    | Arm Base                 |
 |  Arm    ‖    1    |    1    | Arm Shoulder             |
 | Servos  ‖    2    |    2    | Arm Elbow                |
 |         ‖    3    |    3    | Arm Wrist                |
 +---------+---------+---------+--------------------------+
-| Gripper ‖    0    |    4    | Gripper vacuum           |
+| Gripper ‖    4    |   12    | Gripper Rotate           |
+| Servos  ‖    5    |   13    | Gripper Claw             |
 +---------+---------+---------+--------------------------+
-|  Drive  ‖    0    |    5    | Rear Wheel               |
-| Servos  ‖    1    |    6    | Front Right Wheel        |
-|         ‖    2    |    7    | Front Left Wheel         |
+|  Drive  ‖    0    |    4    | Rear Wheel               |
+| Servos  ‖    1    |    5    | Front Right Wheel        |
+|         ‖    2    |    6    | Front Left Wheel         |
 +---------+---------+---------+--------------------------+
-|         ‖    0    |    8    | Rear Wheel               |
-|  Drive  ‖    1    |    9    | Side Right Wheels (BOTH) |
-|   DC    ‖    2    |   10    | Side Left Wheels (BOTH)  |
-| Motors  ‖    3    |   11    | Front Right Wheel        |
-|         ‖    4    |   12    | Front Left Wheels        |
+|         ‖    0    |    7    | Rear Wheel               |
+|  Drive  ‖    1    |    8    | Side Right Wheels (BOTH) |
+|   DC    ‖    2    |    9    | Side Left Wheels (BOTH)  |
+| Motors  ‖    3    |   10    | Front Right Wheel        |
+|         ‖    4    |   11    | Front Left Wheels        |
 +---------+---------+---------+--------------------------+
-|  Mast   ‖    0    |   13    | Mast Stepper             |
+|  Mast   ‖    0    |   14    | Mast Stepper             |
 +---------+---------+---------+--------------------------+             */
 
 
@@ -84,40 +85,42 @@ To test this code without running the "Mission Control" code:
 //-----------------------------------------------------------------------------------
 //----------    I N   M E S S A G E   I N D E C E S    ----------
 // Arm servos
-#define IN_MSG_INDEX_ARM_BASE     0
-#define IN_MSG_INDEX_ARM_SHOULDER 1
-#define IN_MSG_INDEX_ARM_ELBOW    2
-#define IN_MSG_INDEX_ARM_WRIST    3
+#define IN_MSG_INDEX_ARM_BASE       0
+#define IN_MSG_INDEX_ARM_SHOULDER   1
+#define IN_MSG_INDEX_ARM_ELBOW      2
+#define IN_MSG_INDEX_ARM_WRIST      3
 // Arm gripper
-#define IN_MSG_INDEX_GRIPPER      4
+#define IN_MSG_INDEX_GRIPPER_ROTATE 4
+#define IN_MSG_INDEX_GRIPPER_CLAW   5
 // Steering servos
-#define IN_MSG_INDEX_STEER_R      0
-#define IN_MSG_INDEX_STEER_F_R    1
-#define IN_MSG_INDEX_STEER_F_L    2
+#define IN_MSG_INDEX_STEER_R        0
+#define IN_MSG_INDEX_STEER_F_R      1
+#define IN_MSG_INDEX_STEER_F_L      2
 // Drive motors
-#define IN_MSG_INDEX_DRIVE_R      0
-#define IN_MSG_INDEX_DRIVE_S_R    1
-#define IN_MSG_INDEX_DRIVE_S_L    2
-#define IN_MSG_INDEX_DRIVE_F_R    3
-#define IN_MSG_INDEX_DRIVE_F_L    4
+#define IN_MSG_INDEX_DRIVE_R        0
+#define IN_MSG_INDEX_DRIVE_S_R      1
+#define IN_MSG_INDEX_DRIVE_S_L      2
+#define IN_MSG_INDEX_DRIVE_F_R      3
+#define IN_MSG_INDEX_DRIVE_F_L      4
 // Mast Stepper
 //#define IN_MSG_INDEX_MAST 0  // MIGHT NOT BE USED...
 
 //----------    O U T   M E S S A G E   I N D E C E S    ----------
-#define OUT_MSG_INDEX_ARM_BASE      0
-#define OUT_MSG_INDEX_ARM_SHOULDER  1
-#define OUT_MSG_INDEX_ARM_ELBOW     2
-#define OUT_MSG_INDEX_ARM_WRIST     3
-#define OUT_MSG_INDEX_GRIPPER       4
-#define OUT_MSG_INDEX_STEER_R       5
-#define OUT_MSG_INDEX_STEER_F_R     6
-#define OUT_MSG_INDEX_STEER_F_L     7
-#define OUT_MSG_INDEX_DRIVE_R       8
-#define OUT_MSG_INDEX_DRIVE_S_R     9
-#define OUT_MSG_INDEX_DRIVE_S_L    10
-#define OUT_MSG_INDEX_DRIVE_F_R    11
-#define OUT_MSG_INDEX_DRIVE_F_L    12
-//#define OUT_MSG_INDEX_MAST_STEPPER  13  // MIGHT NOT BE USED...
+#define OUT_MSG_INDEX_ARM_BASE       0
+#define OUT_MSG_INDEX_ARM_SHOULDER   1
+#define OUT_MSG_INDEX_ARM_ELBOW      2
+#define OUT_MSG_INDEX_ARM_WRIST      3
+#define OUT_MSG_INDEX_STEER_R        4
+#define OUT_MSG_INDEX_STEER_F_R      5
+#define OUT_MSG_INDEX_STEER_F_L      6
+#define OUT_MSG_INDEX_DRIVE_R        7
+#define OUT_MSG_INDEX_DRIVE_S_R      8
+#define OUT_MSG_INDEX_DRIVE_S_L      9
+#define OUT_MSG_INDEX_DRIVE_F_R      10
+#define OUT_MSG_INDEX_DRIVE_F_L      11
+#define OUT_MSG_INDEX_GRIPPER_ROTATE 12
+#define OUT_MSG_INDEX_GRIPPER_CLAW   13
+//#define OUT_MSG_INDEX_MAST_STEPPER  14  // MIGHT NOT BE USED...
 
 
 //-----------------------------------------------------------------------------------
@@ -224,7 +227,7 @@ void arm_cmd_manual_callback(const std_msgs::Int16MultiArray& cmd_msg) {
 	command_message_array.data[OUT_MSG_INDEX_ARM_WRIST] = newPulse;
 
 	// Gripper
-	command_message_array.data[OUT_MSG_INDEX_GRIPPER] = cmd_msg.data[IN_MSG_INDEX_GRIPPER];
+	command_message_array.data[OUT_MSG_INDEX_GRIPPER] = cmd_msg.data[IN_MSG_INDEX_GRIPPER_ROTATE];
 
 	// Signal updated comamnds
 	UPDATE_NEEDED = true;
