@@ -76,6 +76,7 @@ Commands:
 ros::Publisher * arm_cmd_manual;
 ros::Publisher * steer_cmd_manual;
 ros::Publisher * drive_cmd_manual;
+ros::Publisher * mast_cmd_manual;
 
 
 // Keypresses
@@ -96,6 +97,12 @@ bool steer_update_needed = false;
 int16_t drive_motors[5];
 std_msgs::Int16MultiArray drive_motor_message;
 bool drive_update_needed = false;
+
+// Mast servo variable
+int16_t mast_servo = 0;
+std_msgs::Int16 mast_servo_message;
+int mast_release_timeout = 0;
+bool mast_update_needed = false;
 
 
 // ************************************************* KEYBOARD HANDLERS ************************************************* //
@@ -145,6 +152,11 @@ void publish_drive_motor_update() {
     drive_motor_message.data[DRIVE_FRONT_RIGHT] = drive_motors[DRIVE_FRONT_RIGHT];
     drive_motor_message.data[DRIVE_FRONT_LEFT] = drive_motors[DRIVE_FRONT_LEFT];
     drive_cmd_manual->publish(drive_motor_message);
+}
+
+void publish_mast_servo_update() {
+    mast_servo_message.data = mast_servo;
+    mast_cmd_manual->publish(mast_servo);
 }
 
 /***** initialize_servos() ***
@@ -198,6 +210,7 @@ void initialize_servos() {
 /***** initialize_key_states() ***
     Initialize default key press states */
 void initialize_key_states() {
+    // Arm
     keys[keyboard::Key::KEY_n] = false; // Base CCW
     keys[keyboard::Key::KEY_m] = false; // Base CW
     keys[keyboard::Key::KEY_u] = false; // Shoulder back
@@ -208,18 +221,25 @@ void initialize_key_states() {
     keys[keyboard::Key::KEY_l] = false; // Wrist backward
     keys[keyboard::Key::KEY_p] = false; // Return home 
 
+    // Steering
     keys[keyboard::Key::KEY_a] = false; // Steer CCW
     keys[keyboard::Key::KEY_d] = false; // Steer CW
     keys[keyboard::Key::KEY_f] = false; // Steer reset (straight ahead)
 
+    // Motors
     keys[keyboard::Key::KEY_w] = false; // Drive forward
     keys[keyboard::Key::KEY_s] = false; // Drive backward
     keys[keyboard::Key::KEY_x] = false; // Stop motors
 
+    // Gripper
     keys[keyboard::Key::KEY_UP]    = false;    // Gripper Open
     keys[keyboard::Key::KEY_DOWN]  = false;  // Gripper Close
     keys[keyboard::Key::KEY_RIGHT] = false; // Gripper Rotate CW
     keys[keyboard::Key::KEY_LEFT]  = false;  // Gripper Rotate CCW
+
+    // Mast
+    keys[keyboard::Key::KEY_q]  = false;  // Mast Rotate CW
+    keys[keyboard::Key::KEY_e]  = false;  // Mast Rotate CCW
 }
 
 
@@ -229,19 +249,22 @@ int main(int argc, char **argv) {
     ros::NodeHandle n;  
     ros::Rate loop_rate(20);
 
-    // Publishers to motor controller
+    // Publishers for sending commands to motor controller
 	arm_cmd_manual = new ros::Publisher();
     steer_cmd_manual = new ros::Publisher();
 	drive_cmd_manual = new ros::Publisher();
+    mast_cmd_manual = new ros::Publisher();
 
     *arm_cmd_manual = n.advertise<std_msgs::Int16MultiArray>("arm_cmd_manual", 1000);
     *steer_cmd_manual = n.advertise<std_msgs::Int16MultiArray>("steer_cmd_manual", 1000);
     *drive_cmd_manual = n.advertise<std_msgs::Int16MultiArray>("drive_cmd_manual", 1000);
+    *mast_cmd_manual = n.advertise<std_msgs::Int16>("mast_cmd_manual", 1000);
     
     // Keyboard subscribers
     ros::Subscriber keydown = n.subscribe("keyboard/keydown", 10, keyDown);
     ros::Subscriber keyup = n.subscribe("keyboard/keyup", 10, keyUp);
 
+    // Other Initialization code
     initialize_servos();      
     initialize_key_states();
 
@@ -277,7 +300,7 @@ int main(int argc, char **argv) {
                     // If the current servo is the elbow, and either the base is not at 0 or the
                     // shoulder is bigger than 20 degrees, set the target angle for the elbow 
                     // to whatever the shoulder is plus 30 degrees (to avoid collisions)
-                    target_angle = arm_servo[ARM_ELBOW] + 30;
+                    target_angle = arm_servo[ARM_SHOULDER] + 30;
                 } else if (i == ARM_WRIST && arm_servo[ARM_SHOULDER] > 50) {
                     // If the current servo is the wrist, and the shoulder is at more than
                     // 50 degrees, set the wrist angle to -40
@@ -285,7 +308,7 @@ int main(int argc, char **argv) {
                 } else if (i == ARM_GRIPPER_ROTATE) {
                     target_angle = 0;
                 } else if (i == ARM_GRIPPER_CLAW) {
-                    target_angle = 0;
+                    continue;
                 } else {
                     // Otherwise set the target angle to "home" (ie 0 degrees)
                     target_angle = 0;
@@ -430,6 +453,28 @@ int main(int argc, char **argv) {
             drive_update_needed = true;
         }
 
+        // Mast Servo (q & w)
+        if (keys[keyboard::Key::KEY_q]) {
+            mast_servo = 5;
+            if (0 < mast_release_timeout) {
+                // If the mast was not previously moving
+                mast_release_timeout = 0;
+                mast_update_needed = true;
+            }
+        } else if (keys[keyboard::Key::KEY_e]) {
+            mast_servo = -5;
+            if (0 < mast_release_timeout) {
+                // If the mast was not previously moving
+                mast_release_timeout = 0;
+                mast_update_needed = true;
+            }
+        } else if (mast_release_timeout < 5) {
+            // Only execute this code if mast was previously moving
+            mast_release_timeout++;
+            mast_servo = 0;
+            mast_update_needed = true;
+        }
+
         // Check if comamnd updates are needed
         if (arm_update_needed) {
             arm_update_needed = false;
@@ -442,6 +487,10 @@ int main(int argc, char **argv) {
         if (drive_update_needed) {
             drive_update_needed = false;
             publish_drive_motor_update();
+        }
+        if (mast_update_needed) {
+            mast_update_needed = false;
+            publish_mast_servo_update();
         }
 
         // 

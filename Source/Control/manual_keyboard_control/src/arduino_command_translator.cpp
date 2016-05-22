@@ -86,6 +86,14 @@ To test this code without running the "Mission Control" code:
 #define MAX_REVERSE_SPEED_PWM  248  // avoid extremes 
 #define NEUTRAL_SPEED_PWM      292 	// Stopped DC motor pwm
 
+//----------    M A S T   S E R V O   C O N S T A N T S   ----------
+// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+// !!!   NOTE THAT THE MAST SERVO IS CONTINUOUS ROTATION   !!!
+// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+#define MAST_SERVO_PWM_MAX 315
+#define MAST_SERVO_PWM_MIN 305
+#define MAST_SERVO_PWM_IMMOBILE 310
+
 
 //-----------------------------------------------------------------------------------
 //--------------   A R R A Y   &   M E S S A G E   C O S N T A N T S   --------------
@@ -127,7 +135,7 @@ To test this code without running the "Mission Control" code:
 #define OUT_MSG_INDEX_DRIVE_F_L      11
 #define OUT_MSG_INDEX_GRIPPER_ROTATE 12
 #define OUT_MSG_INDEX_GRIPPER_CLAW   13
-//#define OUT_MSG_INDEX_MAST_STEPPER  14  // MIGHT NOT BE USED...
+#define OUT_MSG_MSG_INDEX_MAST       14
 
 
 //-----------------------------------------------------------------------------------
@@ -137,6 +145,7 @@ To test this code without running the "Mission Control" code:
 ros::Subscriber * sub_arm_cmd_manual;
 ros::Subscriber * sub_steer_cmd_manual;
 ros::Subscriber * sub_drive_cmd_manual;
+ros::Subscriber * sub_mast_cmd_manual;
 
 // ROS publisher
 ros::Publisher * pub_arduino_cmd;
@@ -308,6 +317,14 @@ void drive_cmd_manual_callback(const std_msgs::Int16MultiArray& cmd_msg) {
 	UPDATE_NEEDED = true;
 } 
 
+void mast_cmd_manual_callback(const std_msgs::Int16& cmd_msg) {
+  int16_t newSpeed = (int16_t) cmd_msg.data;
+  command_message_array.data[OUT_MSG_MSG_INDEX_MAST] = MAST_SERVO_PWM_IMMOBILE + newSpeed;
+
+  // Signal updated comamnds
+  UPDATE_NEEDED = true;
+}
+
 //----------  I N I T I A L I Z E R   F U N C T I O N S  ---------
 void initialize_command_message_array() {
 	// Clear and reinitialize the command array
@@ -316,20 +333,21 @@ void initialize_command_message_array() {
 		command_message_array.data.push_back(0);
 	}
 	// Set default values
-	command_message_array.data[OUT_MSG_INDEX_ARM_BASE]     = ARM_PWM_NEUTRAL;	// Initialize arm servos
-	command_message_array.data[OUT_MSG_INDEX_ARM_SHOULDER] = ARM_PWM_NEUTRAL;
-	command_message_array.data[OUT_MSG_INDEX_ARM_ELBOW]    = ARM_PWM_NEUTRAL;
-	command_message_array.data[OUT_MSG_INDEX_ARM_WRIST]    = ARM_PWM_NEUTRAL;
-	command_message_array.data[OUT_MSG_INDEX_STEER_R]      = STEER_PWM_NEUTRAL;	// Initialize steering servos
-	command_message_array.data[OUT_MSG_INDEX_STEER_F_R]    = STEER_PWM_NEUTRAL;
-	command_message_array.data[OUT_MSG_INDEX_STEER_F_L]    = STEER_PWM_NEUTRAL;
-	command_message_array.data[OUT_MSG_INDEX_DRIVE_R]      = NEUTRAL_SPEED_PWM;	// Initialize drive motors
-	command_message_array.data[OUT_MSG_INDEX_DRIVE_S_R]    = NEUTRAL_SPEED_PWM;
-	command_message_array.data[OUT_MSG_INDEX_DRIVE_S_L]    = NEUTRAL_SPEED_PWM;
-	command_message_array.data[OUT_MSG_INDEX_DRIVE_F_R]    = NEUTRAL_SPEED_PWM;
-	command_message_array.data[OUT_MSG_INDEX_DRIVE_F_L]    = NEUTRAL_SPEED_PWM;
+	command_message_array.data[OUT_MSG_INDEX_ARM_BASE]       = ARM_PWM_NEUTRAL;	// Initialize arm servos
+	command_message_array.data[OUT_MSG_INDEX_ARM_SHOULDER]   = ARM_PWM_NEUTRAL;
+	command_message_array.data[OUT_MSG_INDEX_ARM_ELBOW]      = ARM_PWM_NEUTRAL;
+	command_message_array.data[OUT_MSG_INDEX_ARM_WRIST]      = ARM_PWM_NEUTRAL;
+	command_message_array.data[OUT_MSG_INDEX_STEER_R]        = STEER_PWM_NEUTRAL;	// Initialize steering servos
+	command_message_array.data[OUT_MSG_INDEX_STEER_F_R]      = STEER_PWM_NEUTRAL;
+	command_message_array.data[OUT_MSG_INDEX_STEER_F_L]      = STEER_PWM_NEUTRAL;
+	command_message_array.data[OUT_MSG_INDEX_DRIVE_R]        = NEUTRAL_SPEED_PWM;	// Initialize drive motors
+	command_message_array.data[OUT_MSG_INDEX_DRIVE_S_R]      = NEUTRAL_SPEED_PWM;
+	command_message_array.data[OUT_MSG_INDEX_DRIVE_S_L]      = NEUTRAL_SPEED_PWM;
+	command_message_array.data[OUT_MSG_INDEX_DRIVE_F_R]      = NEUTRAL_SPEED_PWM;
+	command_message_array.data[OUT_MSG_INDEX_DRIVE_F_L]      = NEUTRAL_SPEED_PWM;
   command_message_array.data[OUT_MSG_INDEX_GRIPPER_ROTATE] = GRIPPER_ROTATE_PWM_NEUTRAL; // Initialize gripper
-  command_message_array.data[OUT_MSG_INDEX_GRIPPER_CLAW] = GRIPPER_CLAW_PWM_OPEN;
+  command_message_array.data[OUT_MSG_INDEX_GRIPPER_CLAW]   = GRIPPER_CLAW_PWM_OPEN;
+  command_message_array.data[OUT_MSG_MSG_INDEX_MAST]       = MAST_SERVO_PWM_IMMOBILE; // Set mast to immobile
 }
 
 int main(int argc, char **argv) {
@@ -343,9 +361,11 @@ int main(int argc, char **argv) {
     sub_arm_cmd_manual = new ros::Subscriber();
     sub_steer_cmd_manual = new ros::Subscriber();
     sub_drive_cmd_manual = new ros::Subscriber();
+    sub_mast_cmd_manual = new ros::Subscriber();
     *sub_arm_cmd_manual = n.subscribe("arm_cmd_manual", 1000, arm_cmd_manual_callback);
     *sub_steer_cmd_manual = n.subscribe("steer_cmd_manual", 1000, steer_cmd_manual_callback);
     *sub_drive_cmd_manual = n.subscribe("drive_cmd_manual", 1000, drive_cmd_manual_callback);
+    *sub_mast_cmd_manual = n.subscribe("mast_cmd_manual", 1000, mast_cmd_manual_callback);
 
     // Create and initialize  publisher
     pub_arduino_cmd = new ros::Publisher();
